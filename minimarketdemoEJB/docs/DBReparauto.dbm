@@ -3,23 +3,20 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1" last-position="1918,557" last-zoom="0.85"
+<dbmodel pgmodeler-ver="0.9.2" last-position="1496,542" last-zoom="0.85" max-obj-count="30"
 	 default-owner="postgres">
 <database name="mipymes" encoding="UTF8" lc-collate="es_EC.UTF-8" lc-ctype="es_EC.UTF-8" is-template="false" allow-conns="true">
 	<tablespace name="pg_default"/>
 </database>
 
-<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+<schema name="public" layer="0" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
 </schema>
 
-<sequence name="seg_usuario_id_seg_usuario_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="seg_usuario_id_seg_usuario_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="seg_usuario">
+<table name="seg_usuario" layer="0" collapse-mode="2" max-obj-count="8">
 	<schema name="public"/>
 	<position x="1420" y="380"/>
 	<column name="id_seg_usuario" not-null="true" sequence="public.seg_usuario_id_seg_usuario_seq">
@@ -48,14 +45,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="seg_modulo_id_seg_modulo_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="seg_modulo_id_seg_modulo_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="seg_modulo">
+<table name="seg_modulo" layer="0" collapse-mode="2" max-obj-count="3">
 	<schema name="public"/>
 	<position x="2500" y="700"/>
 	<column name="id_seg_modulo" not-null="true" sequence="public.seg_modulo_id_seg_modulo_seq">
@@ -75,14 +69,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="seg_asignacion_id_seg_asignacion_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="seg_asignacion_id_seg_asignacion_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="seg_asignacion">
+<table name="seg_asignacion" layer="0" collapse-mode="2" max-obj-count="4">
 	<schema name="public"/>
 	<position x="1940" y="360"/>
 	<column name="id_seg_asignacion" not-null="true" sequence="public.seg_asignacion_id_seg_asignacion_seq">
@@ -102,14 +93,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="aud_bitacora_id_aud_bitacora_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="aud_bitacora_id_aud_bitacora_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="aud_bitacora">
+<table name="aud_bitacora" layer="0" collapse-mode="2" max-obj-count="8">
 	<schema name="public"/>
 	<position x="1040" y="380"/>
 	<column name="id_aud_bitacora" not-null="true" sequence="public.aud_bitacora_id_aud_bitacora_seq">
@@ -138,14 +126,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="thm_cargo_id_thm_cargo_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="thm_cargo_id_thm_cargo_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="thm_cargo">
+<table name="thm_cargo" layer="0" collapse-mode="2" max-obj-count="3">
 	<schema name="public"/>
 	<position x="1580" y="1060"/>
 	<column name="id_thm_cargo" not-null="true" sequence="public.thm_cargo_id_thm_cargo_seq">
@@ -162,14 +147,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="thm_empleado_id_thm_empleado_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="thm_empleado_id_thm_empleado_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="thm_empleado">
+<table name="thm_empleado" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<position x="1620" y="700"/>
 	<column name="id_thm_empleado" not-null="true" sequence="public.thm_empleado_id_thm_empleado_seq">
@@ -198,14 +180,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="thm_rol_cabecera_id_thm_rol_cabecera_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="thm_rol_cabecera_id_thm_rol_cabecera_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="thm_rol_cabecera">
+<table name="thm_rol_cabecera" layer="0" collapse-mode="2" max-obj-count="12">
 	<schema name="public"/>
 	<position x="1060" y="700"/>
 	<column name="id_thm_rol_cabecera" not-null="true" sequence="public.thm_rol_cabecera_id_thm_rol_cabecera_seq">
@@ -243,14 +222,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="thm_rol_detalle_id_thm_rol_detalle_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="thm_rol_detalle_id_thm_rol_detalle_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="thm_rol_detalle">
+<table name="thm_rol_detalle" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<position x="1080" y="1100"/>
 	<column name="id_thm_rol_detalle" not-null="true" sequence="public.thm_rol_detalle_id_thm_rol_detalle_seq">
@@ -276,7 +252,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<view name="vw_thm_consulta_rol">
+<view name="vw_thm_consulta_rol" layer="0" collapse-mode="2" max-obj-count="1">
 	<schema name="public"/>
 	<position x="1080" y="1380"/>
 	<reference>
@@ -293,14 +269,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</reference>
 </view>
 
-<sequence name="pry_proyecto_id_pry_proyecto_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="pry_proyecto_id_pry_proyecto_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="pry_proyecto">
+<table name="pry_proyecto" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<position x="2060" y="700"/>
 	<column name="id_pry_proyecto" not-null="true" sequence="public.pry_proyecto_id_pry_proyecto_seq">
@@ -326,14 +299,11 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="pry_tarea_id_pry_tarea_seq"
-	 start="1" increment="1"
-	 min-value="1" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="pry_tarea_id_pry_tarea_seq" cycle="false" start="1" increment="1" min-value="1" max-value="2147483647" cache="1">
 	<schema name="public"/>
 </sequence>
 
-<table name="pry_tarea">
+<table name="pry_tarea" layer="0" collapse-mode="2" max-obj-count="8">
 	<schema name="public"/>
 	<position x="1480" y="1360"/>
 	<column name="id_pry_tarea" not-null="true" sequence="public.pry_tarea_id_pry_tarea_seq">
@@ -362,7 +332,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="seg_perfil">
+<table name="seg_perfil" layer="0" collapse-mode="2" max-obj-count="4">
 	<schema name="public"/>
 	<position x="2460" y="380"/>
 	<column name="id_seg_perfil" not-null="true">
@@ -382,15 +352,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_material_id_inv_material_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_material_id_inv_material_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_material">
+<table name="inv_material" layer="0" collapse-mode="2" max-obj-count="8">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2080" y="1060"/>
@@ -400,14 +367,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="mat_nombre">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="mat_precio">
+	<column name="mat_precio_venta">
 		<type name="numeric" length="7" precision="2"/>
-	</column>
-	<column name="mat_estado">
-		<type name="boolean" length="0"/>
 	</column>
 	<column name="mat_existencia">
 		<type name="numeric" length="6"/>
+	</column>
+	<column name="mat_unidad_medida">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="mat_estado">
+		<type name="boolean" length="0"/>
 	</column>
 	<column name="tip_id">
 		<type name="integer" length="0"/>
@@ -417,15 +387,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_tipo_id_inv_tipo_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_tipo_id_inv_tipo_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_tipo">
+<table name="inv_tipo" layer="0" collapse-mode="2" max-obj-count="3">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="1880" y="1320"/>
@@ -443,23 +410,17 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_proveedor_id_inv_proveedor_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_proveedor_id_inv_proveedor_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<sequence name="inv_vehiculo_id_inv_vehiculo_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_vehiculo_id_inv_vehiculo_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_proveedor">
+<table name="inv_proveedor" layer="0" collapse-mode="2" max-obj-count="6">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2820" y="1640"/>
@@ -483,7 +444,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="rec_vehiculos">
+<table name="rec_vehiculos" layer="0" collapse-mode="2" max-obj-count="13">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3400" y="740"/>
@@ -525,15 +486,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_salida_id_inv_salida_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_salida_id_inv_salida_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_salida">
+<table name="inv_salida" layer="0" collapse-mode="2" max-obj-count="4">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2940" y="820"/>
@@ -546,25 +504,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="inv_salida_pk" type="pk-constr" table="public.inv_salida">
 		<columns names="sal_id" ref-type="src-columns"/>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="veh_id_rec_vehiculos" index="2"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="rec_vehiculos_fk" index="1"/>
-	</customidxs>
 </table>
 
-<sequence name="inv_ingreso_id_inv_ingreso_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_ingreso_id_inv_ingreso_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_ingreso">
+<table name="inv_ingreso" layer="0" collapse-mode="2" max-obj-count="3">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2840" y="1380"/>
@@ -582,15 +529,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_matsal_id_inv_matsal_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_matsal_id_inv_matsal_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_material_salida">
+<table name="inv_material_salida" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2500" y="1080"/>
@@ -617,15 +561,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="inv_mating_id_inv_mating_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="inv_mating_id_inv_mating_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="inv_material_ingreso">
+<table name="inv_material_ingreso" layer="0" collapse-mode="2" max-obj-count="7">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="2240" y="1420"/>
@@ -641,7 +582,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="mat_ing_cantidad">
 		<type name="numeric" length="6"/>
 	</column>
-	<column name="mat_ing_precio">
+	<column name="mat_ing_precio_compra">
 		<type name="numeric" length="7" precision="2"/>
 	</column>
 	<column name="mat_ing-estado">
@@ -652,7 +593,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<table name="rec_vehiculo_extras">
+<sequence name="rec_vehiculo_id_rec_vehiculo_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="rec_vehiculo_extras" layer="0" collapse-mode="2" max-obj-count="27">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3820" y="1380"/>
@@ -725,26 +671,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<constraint name="rec_vehiculo_extras_pk" type="pk-constr" table="public.rec_vehiculo_extras">
 		<columns names="veh_ext_id" ref-type="src-columns"/>
 	</constraint>
-
-	<customidxs object-type="column">
-		<object name="veh_id_rec_vehiculos" index="21"/>
-	</customidxs>
-
-	<customidxs object-type="constraint">
-		<object name="rec_vehiculo_extras_uq" index="2"/>
-		<object name="rec_vehiculos_fk" index="1"/>
-	</customidxs>
 </table>
 
-<sequence name="rec_vehiculo_id_rec_vehiculo_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="rec_cliente_id_rec_cliente_seq" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="rec_cliente">
+<table name="rec_cliente" layer="0" collapse-mode="2" max-obj-count="9">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3320" y="1600"/>
@@ -777,15 +711,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="rec_cliente_id_rec_cliente_seq"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="rec_recepcion_detalle_id_recepcion_detalle" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="rec_recepcion_detalle">
+<table name="rec_recepcion_detalle" layer="0" collapse-mode="2" max-obj-count="10">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3220" y="1140"/>
@@ -812,27 +743,20 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="id_thm_empleado_thm_empleado" index="7"/>
-		<object name="rec_cab_id_rec_recepcion_cabecera" index="3"/>
 		<object name="rec_ser_id_rec_servicio" index="2"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="rec_recepcion_cabecera_fk" index="2"/>
 		<object name="rec_servicio_fk" index="1"/>
-		<object name="thm_empleado_fk" index="3"/>
 	</customidxs>
 </table>
 
-<sequence name="rec_recepcion_detalle_id_recepcion_detalle"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
+<sequence name="rec_servicio_id_rec_servicio" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
 	<schema name="public"/>
 	<role name="postgres"/>
 </sequence>
 
-<table name="rec_servicio">
+<table name="rec_servicio" layer="0" collapse-mode="2" max-obj-count="4">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3980" y="1180"/>
@@ -853,15 +777,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 </table>
 
-<sequence name="rec_servicio_id_rec_servicio"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
-	<schema name="public"/>
-	<role name="postgres"/>
-</sequence>
-
-<relationship name="rec_servicio_has_many_rec_recepcion_detalle" type="rel1n"
+<relationship name="rec_servicio_has_many_rec_recepcion_detalle" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -870,7 +786,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_detalle"
 	 src-required="false" dst-required="false"/>
 
-<table name="rec_recepcion_cabecera">
+<sequence name="rec_recepcion_cabecera_id_recepcion_cabecera" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="rec_recepcion_cabecera" layer="0" collapse-mode="2" max-obj-count="14">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3960" y="720"/>
@@ -906,27 +827,15 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</constraint>
 
 	<customidxs object-type="column">
-		<object name="cli_id_rec_cliente" index="9"/>
-		<object name="id_seg_usuario_seg_usuario" index="10"/>
 		<object name="veh_id_rec_vehiculos" index="8"/>
 	</customidxs>
 
 	<customidxs object-type="constraint">
-		<object name="rec_cliente_fk" index="2"/>
 		<object name="rec_vehiculos_fk" index="0"/>
-		<object name="seg_usuario_fk" index="3"/>
 	</customidxs>
 </table>
 
-<sequence name="rec_recepcion_cabecera_id_recepcion_cabecera"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
-	<schema name="public"/>
-	<role name="postgres"/>
-</sequence>
-
-<relationship name="rec_vehiculos_has_many_rec_recepcion_cabecera" type="rel1n"
+<relationship name="rec_vehiculos_has_many_rec_recepcion_cabecera" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -935,7 +844,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_cabecera"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rec_recepcion_cabecera_has_many_rec_recepcion_detalle" type="rel1n"
+<relationship name="rec_recepcion_cabecera_has_many_rec_recepcion_detalle" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -944,7 +853,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_detalle"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rec_vehiculo_extras_has_one_rec_vehiculos" type="rel11"
+<relationship name="rec_vehiculo_extras_has_one_rec_vehiculos" type="rel11" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -953,7 +862,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_vehiculo_extras"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rec_cliente_has_many_rec_recepcion_cabecera" type="rel1n"
+<relationship name="rec_cliente_has_many_rec_recepcion_cabecera" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -962,7 +871,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_cabecera"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="seg_usuario_has_many_rec_recepcion_cabecera" type="rel1n"
+<relationship name="seg_usuario_has_many_rec_recepcion_cabecera" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -971,7 +880,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_cabecera"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rec_vehiculos_has_many_inv_salida" type="rel1n"
+<relationship name="rec_vehiculos_has_many_inv_salida" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -980,7 +889,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.inv_salida"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="thm_empleado_has_many_inv_salida" type="rel1n"
+<relationship name="thm_empleado_has_many_inv_salida" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -989,7 +898,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.inv_salida"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="thm_empleado_has_many_rec_recepcion_detalle" type="rel1n"
+<relationship name="thm_empleado_has_many_rec_recepcion_detalle" type="rel1n" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -998,7 +907,12 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	 dst-table="public.rec_recepcion_detalle"
 	 src-required="false" dst-required="false"/>
 
-<table name="pro_nota_venta">
+<sequence name="pro_not_id_pro_not" cycle="false" start="1" increment="1" min-value="0" max-value="2147483647" cache="1">
+	<schema name="public"/>
+	<role name="postgres"/>
+</sequence>
+
+<table name="pro_nota_venta" layer="0" collapse-mode="2" max-obj-count="4">
 	<schema name="public"/>
 	<role name="postgres"/>
 	<position x="3940" y="420"/>
@@ -1025,15 +939,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</customidxs>
 </table>
 
-<sequence name="pro_not_id_pro_not"
-	 start="1" increment="1"
-	 min-value="0" max-value="2147483647"
-	 cache="1" cycle="false">
-	<schema name="public"/>
-	<role name="postgres"/>
-</sequence>
-
-<relationship name="pro_nota_venta_has_one_rec_recepcion_cabecera" type="rel11"
+<relationship name="pro_nota_venta_has_one_rec_recepcion_cabecera" type="rel11" layer="0"
 	 src-col-pattern="{sc}_{st}"
 	 pk-pattern="{dt}_pk" uq-pattern="{dt}_uq"
 	 src-fk-pattern="{st}_fk"
@@ -1132,83 +1038,79 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<columns names="ing_id" ref-type="dst-columns"/>
 </constraint>
 
-<relationship name="rel_seg_asignacion_seg_perfil" type="relfk"
+<relationship name="rel_seg_asignacion_seg_perfil" type="relfk" layer="0"
 	 src-table="public.seg_asignacion"
 	 dst-table="public.seg_perfil" reference-fk="seg_perfil_seg_asignacion_fk"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_seg_asignacion_seg_usuario" type="relfk"
+<relationship name="rel_seg_asignacion_seg_usuario" type="relfk" layer="0"
 	 src-table="public.seg_asignacion"
 	 dst-table="public.seg_usuario" reference-fk="seg_usuario_seg_asignacion_fk"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_thm_empleado_thm_cargo" type="relfk"
+<relationship name="rel_thm_empleado_thm_cargo" type="relfk" layer="0"
 	 src-table="public.thm_empleado"
 	 dst-table="public.thm_cargo" reference-fk="fk_empleado_cargo"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_thm_empleado_seg_usuario" type="relfk"
+<relationship name="rel_thm_empleado_seg_usuario" type="relfk" layer="0"
 	 src-table="public.thm_empleado"
 	 dst-table="public.seg_usuario" reference-fk="fk_empleado_usuario"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_thm_rol_cabecera_thm_empleado" type="relfk"
+<relationship name="rel_thm_rol_cabecera_thm_empleado" type="relfk" layer="0"
 	 src-table="public.thm_rol_cabecera"
 	 dst-table="public.thm_empleado" reference-fk="fk_cab_empleado"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_thm_rol_detalle_thm_rol_cabecera" type="relfk"
+<relationship name="rel_thm_rol_detalle_thm_rol_cabecera" type="relfk" layer="0"
 	 src-table="public.thm_rol_detalle"
 	 dst-table="public.thm_rol_cabecera" reference-fk="fk_det_cab_rol"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_pry_tarea_seg_usuario" type="relfk"
+<relationship name="rel_pry_tarea_seg_usuario" type="relfk" layer="0"
 	 src-table="public.pry_tarea"
 	 dst-table="public.seg_usuario" reference-fk="pry_tarea_id_seg_usuario_fkey"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_pry_tarea_pry_proyecto" type="relfk"
+<relationship name="rel_pry_tarea_pry_proyecto" type="relfk" layer="0"
 	 src-table="public.pry_tarea"
 	 dst-table="public.pry_proyecto" reference-fk="fk_tarea_proyecto"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_seg_perfil_seg_modulo" type="relfk"
+<relationship name="rel_seg_perfil_seg_modulo" type="relfk" layer="0"
 	 src-table="public.seg_perfil"
 	 dst-table="public.seg_modulo" reference-fk="fk_perfil_modulo"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_material_inv_tipo" type="relfk"
+<relationship name="rel_inv_material_inv_tipo" type="relfk" layer="0"
 	 src-table="public.inv_material"
 	 dst-table="public.inv_tipo" reference-fk="rel_inv_tipo_inv_material"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_ingreso_inv_proveedor" type="relfk"
+<relationship name="rel_inv_ingreso_inv_proveedor" type="relfk" layer="0"
 	 src-table="public.inv_ingreso"
 	 dst-table="public.inv_proveedor" reference-fk="rel_inv_proveedor_inv_ingresos"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_mat_sal_inv_material" type="relfk"
+<relationship name="rel_inv_material_salida_inv_material" type="relfk" layer="0"
 	 src-table="public.inv_material_salida"
 	 dst-table="public.inv_material" reference-fk="rel_inv_material_inv_matsal"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_mat_sal_inv_salida" type="relfk"
+<relationship name="rel_inv_material_salida_inv_salida" type="relfk" layer="0"
 	 src-table="public.inv_material_salida"
 	 dst-table="public.inv_salida" reference-fk="rel_inv_salida_inv_matsal"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_mat_ing_inv_material" type="relfk"
+<relationship name="rel_inv_material_ingreso_inv_material" type="relfk" layer="0"
 	 src-table="public.inv_material_ingreso"
 	 dst-table="public.inv_material" reference-fk="rel_inv_material_inv_ingreso"
 	 src-required="false" dst-required="false"/>
 
-<relationship name="rel_inv_mat_ing_inv_ingreso" type="relfk"
+<relationship name="rel_inv_material_ingreso_inv_ingreso" type="relfk" layer="0"
 	 src-table="public.inv_material_ingreso"
 	 dst-table="public.inv_ingreso" reference-fk="rel_inv_ingresos_inv_mating"
-	 src-required="false" dst-required="false">
-	<label ref-type="name-label">
-		<position x="0" y="0"/>
-	</label>
-</relationship>
+	 src-required="false" dst-required="false"/>
 
 </dbmodel>

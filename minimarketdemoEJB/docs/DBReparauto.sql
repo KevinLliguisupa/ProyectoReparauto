@@ -1,5 +1,5 @@
 -- Database generated with pgModeler (PostgreSQL Database Modeler).
--- pgModeler  version: 0.9.1
+-- pgModeler  version: 0.9.2
 -- PostgreSQL version: 10.0
 -- Project Site: pgmodeler.io
 -- Model Author: ---
@@ -31,7 +31,7 @@ CREATE SEQUENCE public.seg_usuario_id_seg_usuario_seq
 
 -- object: public.seg_usuario | type: TABLE --
 -- DROP TABLE IF EXISTS public.seg_usuario CASCADE;
-CREATE TABLE public.seg_usuario(
+CREATE TABLE public.seg_usuario (
 	id_seg_usuario integer NOT NULL DEFAULT nextval('public.seg_usuario_id_seg_usuario_seq'::regclass),
 	codigo character varying(10) NOT NULL,
 	apellidos character varying(50) NOT NULL,
@@ -58,7 +58,7 @@ CREATE SEQUENCE public.seg_modulo_id_seg_modulo_seq
 
 -- object: public.seg_modulo | type: TABLE --
 -- DROP TABLE IF EXISTS public.seg_modulo CASCADE;
-CREATE TABLE public.seg_modulo(
+CREATE TABLE public.seg_modulo (
 	id_seg_modulo integer NOT NULL DEFAULT nextval('public.seg_modulo_id_seg_modulo_seq'::regclass),
 	nombre_modulo character varying(50) NOT NULL,
 	icono character varying(100),
@@ -82,7 +82,7 @@ CREATE SEQUENCE public.seg_asignacion_id_seg_asignacion_seq
 
 -- object: public.seg_asignacion | type: TABLE --
 -- DROP TABLE IF EXISTS public.seg_asignacion CASCADE;
-CREATE TABLE public.seg_asignacion(
+CREATE TABLE public.seg_asignacion (
 	id_seg_asignacion integer NOT NULL DEFAULT nextval('public.seg_asignacion_id_seg_asignacion_seq'::regclass),
 	id_seg_usuario integer NOT NULL,
 	id_seg_perfil integer NOT NULL,
@@ -106,7 +106,7 @@ CREATE SEQUENCE public.aud_bitacora_id_aud_bitacora_seq
 
 -- object: public.aud_bitacora | type: TABLE --
 -- DROP TABLE IF EXISTS public.aud_bitacora CASCADE;
-CREATE TABLE public.aud_bitacora(
+CREATE TABLE public.aud_bitacora (
 	id_aud_bitacora integer NOT NULL DEFAULT nextval('public.aud_bitacora_id_aud_bitacora_seq'::regclass),
 	fecha_evento timestamp NOT NULL,
 	nombre_clase character varying(100) NOT NULL,
@@ -133,7 +133,7 @@ CREATE SEQUENCE public.thm_cargo_id_thm_cargo_seq
 
 -- object: public.thm_cargo | type: TABLE --
 -- DROP TABLE IF EXISTS public.thm_cargo CASCADE;
-CREATE TABLE public.thm_cargo(
+CREATE TABLE public.thm_cargo (
 	id_thm_cargo integer NOT NULL DEFAULT nextval('public.thm_cargo_id_thm_cargo_seq'::regclass),
 	nombre_cargo character varying(50) NOT NULL,
 	remuneracion_mensual numeric(7,2) NOT NULL,
@@ -156,7 +156,7 @@ CREATE SEQUENCE public.thm_empleado_id_thm_empleado_seq
 
 -- object: public.thm_empleado | type: TABLE --
 -- DROP TABLE IF EXISTS public.thm_empleado CASCADE;
-CREATE TABLE public.thm_empleado(
+CREATE TABLE public.thm_empleado (
 	id_thm_empleado integer NOT NULL DEFAULT nextval('public.thm_empleado_id_thm_empleado_seq'::regclass),
 	id_thm_cargo integer NOT NULL,
 	id_seg_usuario integer NOT NULL,
@@ -183,7 +183,7 @@ CREATE SEQUENCE public.thm_rol_cabecera_id_thm_rol_cabecera_seq
 
 -- object: public.thm_rol_cabecera | type: TABLE --
 -- DROP TABLE IF EXISTS public.thm_rol_cabecera CASCADE;
-CREATE TABLE public.thm_rol_cabecera(
+CREATE TABLE public.thm_rol_cabecera (
 	id_thm_rol_cabecera integer NOT NULL DEFAULT nextval('public.thm_rol_cabecera_id_thm_rol_cabecera_seq'::regclass),
 	id_thm_empleado integer NOT NULL,
 	periodo_rol character varying(6) NOT NULL,
@@ -213,7 +213,7 @@ CREATE SEQUENCE public.thm_rol_detalle_id_thm_rol_detalle_seq
 
 -- object: public.thm_rol_detalle | type: TABLE --
 -- DROP TABLE IF EXISTS public.thm_rol_detalle CASCADE;
-CREATE TABLE public.thm_rol_detalle(
+CREATE TABLE public.thm_rol_detalle (
 	id_thm_rol_detalle integer NOT NULL DEFAULT nextval('public.thm_rol_detalle_id_thm_rol_detalle_seq'::regclass),
 	id_thm_rol_cabecera integer NOT NULL,
 	tipo_detalle character varying(2) NOT NULL,
@@ -256,7 +256,7 @@ CREATE SEQUENCE public.pry_proyecto_id_pry_proyecto_seq
 
 -- object: public.pry_proyecto | type: TABLE --
 -- DROP TABLE IF EXISTS public.pry_proyecto CASCADE;
-CREATE TABLE public.pry_proyecto(
+CREATE TABLE public.pry_proyecto (
 	id_pry_proyecto integer NOT NULL DEFAULT nextval('public.pry_proyecto_id_pry_proyecto_seq'::regclass),
 	nombre character varying(100) NOT NULL,
 	fecha_inicio date NOT NULL,
@@ -282,7 +282,7 @@ CREATE SEQUENCE public.pry_tarea_id_pry_tarea_seq
 
 -- object: public.pry_tarea | type: TABLE --
 -- DROP TABLE IF EXISTS public.pry_tarea CASCADE;
-CREATE TABLE public.pry_tarea(
+CREATE TABLE public.pry_tarea (
 	id_pry_tarea integer NOT NULL DEFAULT nextval('public.pry_tarea_id_pry_tarea_seq'::regclass),
 	nombre character varying(100) NOT NULL,
 	fecha_inicio date NOT NULL,
@@ -297,7 +297,7 @@ CREATE TABLE public.pry_tarea(
 
 -- object: public.seg_perfil | type: TABLE --
 -- DROP TABLE IF EXISTS public.seg_perfil CASCADE;
-CREATE TABLE public.seg_perfil(
+CREATE TABLE public.seg_perfil (
 	id_seg_perfil serial NOT NULL,
 	nombre_perfil character varying(50) NOT NULL,
 	ruta_acceso character varying(100) NOT NULL,
@@ -318,23 +318,24 @@ CREATE SEQUENCE public.inv_material_id_inv_material_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_material_id_inv_material_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_material_id_inv_material_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_material | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_material CASCADE;
-CREATE TABLE public.inv_material(
+CREATE TABLE public.inv_material (
 	mat_id integer NOT NULL DEFAULT nextval('public.inv_material_id_inv_material_seq'::regclass),
 	mat_nombre character varying(50),
-	mat_precio numeric(7,2),
-	mat_estado boolean,
+	mat_precio_venta numeric(7,2),
 	mat_existencia numeric(6),
+	mat_unidad_medida character varying(10),
+	mat_estado boolean,
 	tip_id integer,
 	CONSTRAINT inv_material_pk PRIMARY KEY (mat_id)
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_material OWNER TO postgres;
+-- ALTER TABLE public.inv_material OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_tipo_id_inv_tipo_seq | type: SEQUENCE --
@@ -348,12 +349,12 @@ CREATE SEQUENCE public.inv_tipo_id_inv_tipo_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_tipo_id_inv_tipo_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_tipo_id_inv_tipo_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_tipo | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_tipo CASCADE;
-CREATE TABLE public.inv_tipo(
+CREATE TABLE public.inv_tipo (
 	tip_id integer NOT NULL DEFAULT nextval('public.inv_tipo_id_inv_tipo_seq'::regclass),
 	tip_nombre character varying(25),
 	tip_estado boolean,
@@ -361,7 +362,7 @@ CREATE TABLE public.inv_tipo(
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_tipo OWNER TO postgres;
+-- ALTER TABLE public.inv_tipo OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_proveedor_id_inv_proveedor_seq | type: SEQUENCE --
@@ -375,7 +376,7 @@ CREATE SEQUENCE public.inv_proveedor_id_inv_proveedor_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_proveedor_id_inv_proveedor_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_proveedor_id_inv_proveedor_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_vehiculo_id_inv_vehiculo_seq | type: SEQUENCE --
@@ -389,12 +390,12 @@ CREATE SEQUENCE public.inv_vehiculo_id_inv_vehiculo_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_vehiculo_id_inv_vehiculo_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_vehiculo_id_inv_vehiculo_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_proveedor | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_proveedor CASCADE;
-CREATE TABLE public.inv_proveedor(
+CREATE TABLE public.inv_proveedor (
 	pro_id integer NOT NULL DEFAULT nextval('public.inv_proveedor_id_inv_proveedor_seq'::regclass),
 	pro_nombre character varying(50),
 	pro_telefono character varying(10),
@@ -404,12 +405,12 @@ CREATE TABLE public.inv_proveedor(
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_proveedor OWNER TO postgres;
+-- ALTER TABLE public.inv_proveedor OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_vehiculos | type: TABLE --
 -- DROP TABLE IF EXISTS public.rec_vehiculos CASCADE;
-CREATE TABLE public.rec_vehiculos(
+CREATE TABLE public.rec_vehiculos (
 	veh_id integer NOT NULL DEFAULT nextval('public.inv_vehiculo_id_inv_vehiculo_seq'::regclass),
 	veh_placa character varying(20),
 	veh_marca character varying(20),
@@ -425,7 +426,7 @@ CREATE TABLE public.rec_vehiculos(
 
 );
 -- ddl-end --
-ALTER TABLE public.rec_vehiculos OWNER TO postgres;
+-- ALTER TABLE public.rec_vehiculos OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_salida_id_inv_salida_seq | type: SEQUENCE --
@@ -439,12 +440,12 @@ CREATE SEQUENCE public.inv_salida_id_inv_salida_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_salida_id_inv_salida_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_salida_id_inv_salida_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_salida | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_salida CASCADE;
-CREATE TABLE public.inv_salida(
+CREATE TABLE public.inv_salida (
 	sal_id integer NOT NULL DEFAULT nextval('public.inv_salida_id_inv_salida_seq'::regclass),
 	sal_fecha date,
 	veh_id_rec_vehiculos integer,
@@ -453,7 +454,7 @@ CREATE TABLE public.inv_salida(
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_salida OWNER TO postgres;
+-- ALTER TABLE public.inv_salida OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_ingreso_id_inv_ingreso_seq | type: SEQUENCE --
@@ -467,12 +468,12 @@ CREATE SEQUENCE public.inv_ingreso_id_inv_ingreso_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_ingreso_id_inv_ingreso_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_ingreso_id_inv_ingreso_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_ingreso | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_ingreso CASCADE;
-CREATE TABLE public.inv_ingreso(
+CREATE TABLE public.inv_ingreso (
 	ing_id integer NOT NULL DEFAULT nextval('public.inv_ingreso_id_inv_ingreso_seq'::regclass),
 	ing_fecha date,
 	pro_id integer,
@@ -480,7 +481,7 @@ CREATE TABLE public.inv_ingreso(
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_ingreso OWNER TO postgres;
+-- ALTER TABLE public.inv_ingreso OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_matsal_id_inv_matsal_seq | type: SEQUENCE --
@@ -494,12 +495,12 @@ CREATE SEQUENCE public.inv_matsal_id_inv_matsal_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_matsal_id_inv_matsal_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_matsal_id_inv_matsal_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_material_salida | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_material_salida CASCADE;
-CREATE TABLE public.inv_material_salida(
+CREATE TABLE public.inv_material_salida (
 	mat_sal_id integer NOT NULL DEFAULT nextval('public.inv_matsal_id_inv_matsal_seq'::regclass),
 	mat_id integer,
 	sal_id integer,
@@ -510,7 +511,7 @@ CREATE TABLE public.inv_material_salida(
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_material_salida OWNER TO postgres;
+-- ALTER TABLE public.inv_material_salida OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_mating_id_inv_mating_seq | type: SEQUENCE --
@@ -524,28 +525,42 @@ CREATE SEQUENCE public.inv_mating_id_inv_mating_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.inv_mating_id_inv_mating_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.inv_mating_id_inv_mating_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.inv_material_ingreso | type: TABLE --
 -- DROP TABLE IF EXISTS public.inv_material_ingreso CASCADE;
-CREATE TABLE public.inv_material_ingreso(
+CREATE TABLE public.inv_material_ingreso (
 	mat_ent_id integer NOT NULL DEFAULT nextval('public.inv_mating_id_inv_mating_seq'::regclass),
 	mat_id integer,
 	ing_id integer,
 	mat_ing_cantidad numeric(6),
-	mat_ing_precio numeric(7,2),
+	mat_ing_precio_compra numeric(7,2),
 	"mat_ing-estado" boolean,
 	CONSTRAINT inv_mat_ent_pk PRIMARY KEY (mat_ent_id)
 
 );
 -- ddl-end --
-ALTER TABLE public.inv_material_ingreso OWNER TO postgres;
+-- ALTER TABLE public.inv_material_ingreso OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.rec_vehiculo_id_rec_vehiculo_seq | type: SEQUENCE --
+-- DROP SEQUENCE IF EXISTS public.rec_vehiculo_id_rec_vehiculo_seq CASCADE;
+CREATE SEQUENCE public.rec_vehiculo_id_rec_vehiculo_seq
+	INCREMENT BY 1
+	MINVALUE 0
+	MAXVALUE 2147483647
+	START WITH 1
+	CACHE 1
+	NO CYCLE
+	OWNED BY NONE;
+-- ddl-end --
+-- ALTER SEQUENCE public.rec_vehiculo_id_rec_vehiculo_seq OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_vehiculo_extras | type: TABLE --
 -- DROP TABLE IF EXISTS public.rec_vehiculo_extras CASCADE;
-CREATE TABLE public.rec_vehiculo_extras(
+CREATE TABLE public.rec_vehiculo_extras (
 	veh_ext_id integer NOT NULL DEFAULT nextval('public.rec_vehiculo_id_rec_vehiculo_seq'::regclass),
 	veh_ext_encendor boolean,
 	veh_ext_matricula_documento boolean,
@@ -567,45 +582,13 @@ CREATE TABLE public.rec_vehiculo_extras(
 	veh_ext_num_retrovisores int2,
 	veh_ext_usb boolean,
 	veh_ext_adicionales character varying(200),
-	veh_id_rec_vehiculos integer,
 	veh_ext_estado boolean,
+	veh_id_rec_vehiculos integer,
 	CONSTRAINT rec_vehiculo_extras_pk PRIMARY KEY (veh_ext_id)
 
 );
 -- ddl-end --
-ALTER TABLE public.rec_vehiculo_extras OWNER TO postgres;
--- ddl-end --
-
--- object: public.rec_vehiculo_id_rec_vehiculo_seq | type: SEQUENCE --
--- DROP SEQUENCE IF EXISTS public.rec_vehiculo_id_rec_vehiculo_seq CASCADE;
-CREATE SEQUENCE public.rec_vehiculo_id_rec_vehiculo_seq
-	INCREMENT BY 1
-	MINVALUE 0
-	MAXVALUE 2147483647
-	START WITH 1
-	CACHE 1
-	NO CYCLE
-	OWNED BY NONE;
--- ddl-end --
-ALTER SEQUENCE public.rec_vehiculo_id_rec_vehiculo_seq OWNER TO postgres;
--- ddl-end --
-
--- object: public.rec_cliente | type: TABLE --
--- DROP TABLE IF EXISTS public.rec_cliente CASCADE;
-CREATE TABLE public.rec_cliente(
-	cli_id integer NOT NULL DEFAULT nextval('public.rec_cliente_id_rec_cliente_seq'::regclass),
-	cli_nombre_apellido character varying(600),
-	cli_cedula character varying(10),
-	cli_celular character varying(10),
-	cli_direccion character varying(50),
-	cli_correo character varying(30),
-	cli_telefono character varying(10),
-	cli_estado boolean,
-	CONSTRAINT rec_cliente_pk PRIMARY KEY (cli_id)
-
-);
--- ddl-end --
-ALTER TABLE public.rec_cliente OWNER TO postgres;
+-- ALTER TABLE public.rec_vehiculo_extras OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_cliente_id_rec_cliente_seq | type: SEQUENCE --
@@ -619,26 +602,25 @@ CREATE SEQUENCE public.rec_cliente_id_rec_cliente_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.rec_cliente_id_rec_cliente_seq OWNER TO postgres;
+-- ALTER SEQUENCE public.rec_cliente_id_rec_cliente_seq OWNER TO postgres;
 -- ddl-end --
 
--- object: public.rec_recepcion_detalle | type: TABLE --
--- DROP TABLE IF EXISTS public.rec_recepcion_detalle CASCADE;
-CREATE TABLE public.rec_recepcion_detalle(
-	rec_det_id integer NOT NULL DEFAULT nextval('public.rec_recepcion_detalle_id_recepcion_detalle'::regclass),
-	rec_det_valor numeric(7,2),
-	rec_ser_id_rec_servicio integer,
-	rec_cab_id_rec_recepcion_cabecera integer,
-	"rec-det_horas_empleadas" int2,
-	rec_det_concluido boolean,
-	rec_det_servicio_extra boolean,
-	id_thm_empleado_thm_empleado integer,
-	rec_det_estado boolean,
-	CONSTRAINT rec_recepcion_detalle_pk PRIMARY KEY (rec_det_id)
+-- object: public.rec_cliente | type: TABLE --
+-- DROP TABLE IF EXISTS public.rec_cliente CASCADE;
+CREATE TABLE public.rec_cliente (
+	cli_id integer NOT NULL DEFAULT nextval('public.rec_cliente_id_rec_cliente_seq'::regclass),
+	cli_nombre_apellido character varying(600),
+	cli_cedula character varying(10),
+	cli_celular character varying(10),
+	cli_direccion character varying(50),
+	cli_correo character varying(30),
+	cli_telefono character varying(10),
+	cli_estado boolean,
+	CONSTRAINT rec_cliente_pk PRIMARY KEY (cli_id)
 
 );
 -- ddl-end --
-ALTER TABLE public.rec_recepcion_detalle OWNER TO postgres;
+-- ALTER TABLE public.rec_cliente OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_recepcion_detalle_id_recepcion_detalle | type: SEQUENCE --
@@ -652,21 +634,26 @@ CREATE SEQUENCE public.rec_recepcion_detalle_id_recepcion_detalle
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.rec_recepcion_detalle_id_recepcion_detalle OWNER TO postgres;
+-- ALTER SEQUENCE public.rec_recepcion_detalle_id_recepcion_detalle OWNER TO postgres;
 -- ddl-end --
 
--- object: public.rec_servicio | type: TABLE --
--- DROP TABLE IF EXISTS public.rec_servicio CASCADE;
-CREATE TABLE public.rec_servicio(
-	rec_ser_id integer NOT NULL DEFAULT nextval('public.rec_servicio_id_rec_servicio'::regclass),
-	rec_ser_nombre character varying,
-	rec_ser_precio numeric(7,2),
-	rec_ser_estado boolean,
-	CONSTRAINT rec_servicio_pk PRIMARY KEY (rec_ser_id)
+-- object: public.rec_recepcion_detalle | type: TABLE --
+-- DROP TABLE IF EXISTS public.rec_recepcion_detalle CASCADE;
+CREATE TABLE public.rec_recepcion_detalle (
+	rec_det_id integer NOT NULL DEFAULT nextval('public.rec_recepcion_detalle_id_recepcion_detalle'::regclass),
+	rec_det_valor numeric(7,2),
+	rec_ser_id_rec_servicio integer,
+	"rec-det_horas_empleadas" int2,
+	rec_det_concluido boolean,
+	rec_det_servicio_extra boolean,
+	rec_det_estado boolean,
+	rec_cab_id_rec_recepcion_cabecera integer,
+	id_thm_empleado_thm_empleado integer,
+	CONSTRAINT rec_recepcion_detalle_pk PRIMARY KEY (rec_det_id)
 
 );
 -- ddl-end --
-ALTER TABLE public.rec_servicio OWNER TO postgres;
+-- ALTER TABLE public.rec_recepcion_detalle OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_servicio_id_rec_servicio | type: SEQUENCE --
@@ -680,7 +667,21 @@ CREATE SEQUENCE public.rec_servicio_id_rec_servicio
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.rec_servicio_id_rec_servicio OWNER TO postgres;
+-- ALTER SEQUENCE public.rec_servicio_id_rec_servicio OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.rec_servicio | type: TABLE --
+-- DROP TABLE IF EXISTS public.rec_servicio CASCADE;
+CREATE TABLE public.rec_servicio (
+	rec_ser_id integer NOT NULL DEFAULT nextval('public.rec_servicio_id_rec_servicio'::regclass),
+	rec_ser_nombre character varying,
+	rec_ser_precio numeric(7,2),
+	rec_ser_estado boolean,
+	CONSTRAINT rec_servicio_pk PRIMARY KEY (rec_ser_id)
+
+);
+-- ddl-end --
+-- ALTER TABLE public.rec_servicio OWNER TO postgres;
 -- ddl-end --
 
 -- object: rec_servicio_fk | type: CONSTRAINT --
@@ -688,28 +689,6 @@ ALTER SEQUENCE public.rec_servicio_id_rec_servicio OWNER TO postgres;
 ALTER TABLE public.rec_recepcion_detalle ADD CONSTRAINT rec_servicio_fk FOREIGN KEY (rec_ser_id_rec_servicio)
 REFERENCES public.rec_servicio (rec_ser_id) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
--- ddl-end --
-
--- object: public.rec_recepcion_cabecera | type: TABLE --
--- DROP TABLE IF EXISTS public.rec_recepcion_cabecera CASCADE;
-CREATE TABLE public.rec_recepcion_cabecera(
-	rec_cab_id integer NOT NULL DEFAULT nextval('public.rec_recepcion_cabecera_id_recepcion_cabecera'::regclass),
-	rec_cab_fecha_recepcion date,
-	rec_cab_fecha_entrega date,
-	rec_cab_hora time,
-	rec_cab_observacion character varying(200),
-	rec_cab_total numeric(7,2),
-	rec_cab_abono numeric(7,2),
-	rec_cab_saldo numeric(7,2),
-	veh_id_rec_vehiculos integer,
-	cli_id_rec_cliente integer,
-	id_seg_usuario_seg_usuario integer,
-	rec_cab_estado boolean,
-	CONSTRAINT rec_recepcion_cabecera_pk PRIMARY KEY (rec_cab_id)
-
-);
--- ddl-end --
-ALTER TABLE public.rec_recepcion_cabecera OWNER TO postgres;
 -- ddl-end --
 
 -- object: public.rec_recepcion_cabecera_id_recepcion_cabecera | type: SEQUENCE --
@@ -723,7 +702,29 @@ CREATE SEQUENCE public.rec_recepcion_cabecera_id_recepcion_cabecera
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.rec_recepcion_cabecera_id_recepcion_cabecera OWNER TO postgres;
+-- ALTER SEQUENCE public.rec_recepcion_cabecera_id_recepcion_cabecera OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.rec_recepcion_cabecera | type: TABLE --
+-- DROP TABLE IF EXISTS public.rec_recepcion_cabecera CASCADE;
+CREATE TABLE public.rec_recepcion_cabecera (
+	rec_cab_id integer NOT NULL DEFAULT nextval('public.rec_recepcion_cabecera_id_recepcion_cabecera'::regclass),
+	rec_cab_fecha_recepcion date,
+	rec_cab_fecha_entrega date,
+	rec_cab_hora time,
+	rec_cab_observacion character varying(200),
+	rec_cab_total numeric(7,2),
+	rec_cab_abono numeric(7,2),
+	rec_cab_saldo numeric(7,2),
+	veh_id_rec_vehiculos integer,
+	rec_cab_estado boolean,
+	cli_id_rec_cliente integer,
+	id_seg_usuario_seg_usuario integer,
+	CONSTRAINT rec_recepcion_cabecera_pk PRIMARY KEY (rec_cab_id)
+
+);
+-- ddl-end --
+-- ALTER TABLE public.rec_recepcion_cabecera OWNER TO postgres;
 -- ddl-end --
 
 -- object: rec_vehiculos_fk | type: CONSTRAINT --
@@ -787,20 +788,6 @@ REFERENCES public.thm_empleado (id_thm_empleado) MATCH FULL
 ON DELETE SET NULL ON UPDATE CASCADE;
 -- ddl-end --
 
--- object: public.pro_nota_venta | type: TABLE --
--- DROP TABLE IF EXISTS public.pro_nota_venta CASCADE;
-CREATE TABLE public.pro_nota_venta(
-	pro_not_id integer NOT NULL DEFAULT nextval('public.pro_not_id_pro_not'::regclass),
-	rec_cab_id_rec_recepcion_cabecera integer,
-	pro_not_total numeric(7,2),
-	pro_not_fecha date,
-	CONSTRAINT pro_nota_venta_pk PRIMARY KEY (pro_not_id)
-
-);
--- ddl-end --
-ALTER TABLE public.pro_nota_venta OWNER TO postgres;
--- ddl-end --
-
 -- object: public.pro_not_id_pro_not | type: SEQUENCE --
 -- DROP SEQUENCE IF EXISTS public.pro_not_id_pro_not CASCADE;
 CREATE SEQUENCE public.pro_not_id_pro_not
@@ -812,7 +799,21 @@ CREATE SEQUENCE public.pro_not_id_pro_not
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.pro_not_id_pro_not OWNER TO postgres;
+-- ALTER SEQUENCE public.pro_not_id_pro_not OWNER TO postgres;
+-- ddl-end --
+
+-- object: public.pro_nota_venta | type: TABLE --
+-- DROP TABLE IF EXISTS public.pro_nota_venta CASCADE;
+CREATE TABLE public.pro_nota_venta (
+	pro_not_id integer NOT NULL DEFAULT nextval('public.pro_not_id_pro_not'::regclass),
+	rec_cab_id_rec_recepcion_cabecera integer,
+	pro_not_total numeric(7,2),
+	pro_not_fecha date,
+	CONSTRAINT pro_nota_venta_pk PRIMARY KEY (pro_not_id)
+
+);
+-- ddl-end --
+-- ALTER TABLE public.pro_nota_venta OWNER TO postgres;
 -- ddl-end --
 
 -- object: rec_recepcion_cabecera_fk | type: CONSTRAINT --
