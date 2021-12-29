@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="mmarketdemoDS" transaction-type="JTA">
-		<jta-data-source>java:/mmarketdemoDS</jta-data-source>
+	<persistence-unit name="reparaAuto" transaction-type="JTA">
+		<jta-data-source>java:/reparaAuto</jta-data-source>
 		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
 		<class>minimarketdemo.model.core.entities.AudBitacora</class>
+		<class>minimarketdemo.model.core.entities.InvIngreso</class>
+		<class>minimarketdemo.model.core.entities.InvMaterial</class>
+		<class>minimarketdemo.model.core.entities.InvMaterialIngreso</class>
+		<class>minimarketdemo.model.core.entities.InvMaterialSalida</class>
+		<class>minimarketdemo.model.core.entities.InvProveedor</class>
+		<class>minimarketdemo.model.core.entities.InvSalida</class>
+		<class>minimarketdemo.model.core.entities.InvTipo</class>
+		<class>minimarketdemo.model.core.entities.ProNotaVenta</class>
+		<class>minimarketdemo.model.core.entities.PryProyecto</class>
+		<class>minimarketdemo.model.core.entities.PryTarea</class>
+		<class>minimarketdemo.model.core.entities.RecCliente</class>
+		<class>minimarketdemo.model.core.entities.RecRecepcionCabecera</class>
+		<class>minimarketdemo.model.core.entities.RecRecepcionDetalle</class>
+		<class>minimarketdemo.model.core.entities.RecServicio</class>
+		<class>minimarketdemo.model.core.entities.RecVehiculoExtra</class>
+		<class>minimarketdemo.model.core.entities.RecVehiculo</class>
 		<class>minimarketdemo.model.core.entities.SegAsignacion</class>
 		<class>minimarketdemo.model.core.entities.SegModulo</class>
 		<class>minimarketdemo.model.core.entities.SegPerfil</class>

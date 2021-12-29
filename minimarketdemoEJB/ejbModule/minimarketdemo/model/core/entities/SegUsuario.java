@@ -38,6 +38,14 @@ public class SegUsuario implements Serializable {
 	@Column(nullable=false, length=50)
 	private String nombres;
 
+	//bi-directional many-to-one association to PryTarea
+	@OneToMany(mappedBy="segUsuario")
+	private List<PryTarea> pryTareas;
+
+	//bi-directional many-to-one association to RecRecepcionCabecera
+	@OneToMany(mappedBy="segUsuario")
+	private List<RecRecepcionCabecera> recRecepcionCabeceras;
+
 	//bi-directional many-to-one association to SegAsignacion
 	@OneToMany(mappedBy="segUsuario")
 	private List<SegAsignacion> segAsignacions;
@@ -103,6 +111,50 @@ public class SegUsuario implements Serializable {
 
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
+	}
+
+	public List<PryTarea> getPryTareas() {
+		return this.pryTareas;
+	}
+
+	public void setPryTareas(List<PryTarea> pryTareas) {
+		this.pryTareas = pryTareas;
+	}
+
+	public PryTarea addPryTarea(PryTarea pryTarea) {
+		getPryTareas().add(pryTarea);
+		pryTarea.setSegUsuario(this);
+
+		return pryTarea;
+	}
+
+	public PryTarea removePryTarea(PryTarea pryTarea) {
+		getPryTareas().remove(pryTarea);
+		pryTarea.setSegUsuario(null);
+
+		return pryTarea;
+	}
+
+	public List<RecRecepcionCabecera> getRecRecepcionCabeceras() {
+		return this.recRecepcionCabeceras;
+	}
+
+	public void setRecRecepcionCabeceras(List<RecRecepcionCabecera> recRecepcionCabeceras) {
+		this.recRecepcionCabeceras = recRecepcionCabeceras;
+	}
+
+	public RecRecepcionCabecera addRecRecepcionCabecera(RecRecepcionCabecera recRecepcionCabecera) {
+		getRecRecepcionCabeceras().add(recRecepcionCabecera);
+		recRecepcionCabecera.setSegUsuario(this);
+
+		return recRecepcionCabecera;
+	}
+
+	public RecRecepcionCabecera removeRecRecepcionCabecera(RecRecepcionCabecera recRecepcionCabecera) {
+		getRecRecepcionCabeceras().remove(recRecepcionCabecera);
+		recRecepcionCabecera.setSegUsuario(null);
+
+		return recRecepcionCabecera;
 	}
 
 	public List<SegAsignacion> getSegAsignacions() {

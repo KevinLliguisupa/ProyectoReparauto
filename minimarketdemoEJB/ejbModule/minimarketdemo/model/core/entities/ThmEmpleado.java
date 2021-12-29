@@ -30,6 +30,14 @@ public class ThmEmpleado implements Serializable {
 	@Column(name="horas_trabajadas", nullable=false)
 	private Integer horasTrabajadas;
 
+	//bi-directional many-to-one association to InvSalida
+	@OneToMany(mappedBy="thmEmpleado")
+	private List<InvSalida> invSalidas;
+
+	//bi-directional many-to-one association to RecRecepcionDetalle
+	@OneToMany(mappedBy="thmEmpleado")
+	private List<RecRecepcionDetalle> recRecepcionDetalles;
+
 	//bi-directional many-to-one association to SegUsuario
 	@ManyToOne
 	@JoinColumn(name="id_seg_usuario", nullable=false)
@@ -77,6 +85,50 @@ public class ThmEmpleado implements Serializable {
 
 	public void setHorasTrabajadas(Integer horasTrabajadas) {
 		this.horasTrabajadas = horasTrabajadas;
+	}
+
+	public List<InvSalida> getInvSalidas() {
+		return this.invSalidas;
+	}
+
+	public void setInvSalidas(List<InvSalida> invSalidas) {
+		this.invSalidas = invSalidas;
+	}
+
+	public InvSalida addInvSalida(InvSalida invSalida) {
+		getInvSalidas().add(invSalida);
+		invSalida.setThmEmpleado(this);
+
+		return invSalida;
+	}
+
+	public InvSalida removeInvSalida(InvSalida invSalida) {
+		getInvSalidas().remove(invSalida);
+		invSalida.setThmEmpleado(null);
+
+		return invSalida;
+	}
+
+	public List<RecRecepcionDetalle> getRecRecepcionDetalles() {
+		return this.recRecepcionDetalles;
+	}
+
+	public void setRecRecepcionDetalles(List<RecRecepcionDetalle> recRecepcionDetalles) {
+		this.recRecepcionDetalles = recRecepcionDetalles;
+	}
+
+	public RecRecepcionDetalle addRecRecepcionDetalle(RecRecepcionDetalle recRecepcionDetalle) {
+		getRecRecepcionDetalles().add(recRecepcionDetalle);
+		recRecepcionDetalle.setThmEmpleado(this);
+
+		return recRecepcionDetalle;
+	}
+
+	public RecRecepcionDetalle removeRecRecepcionDetalle(RecRecepcionDetalle recRecepcionDetalle) {
+		getRecRecepcionDetalles().remove(recRecepcionDetalle);
+		recRecepcionDetalle.setThmEmpleado(null);
+
+		return recRecepcionDetalle;
 	}
 
 	public SegUsuario getSegUsuario() {
