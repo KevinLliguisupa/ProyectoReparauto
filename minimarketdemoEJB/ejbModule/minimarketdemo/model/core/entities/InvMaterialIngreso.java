@@ -23,11 +23,11 @@ public class InvMaterialIngreso implements Serializable {
 	@Column(name="mat_ing_cantidad", precision=6)
 	private BigDecimal matIngCantidad;
 
+	@Column(name="mat_ing_estado")
+	private Boolean matIngEstado;
+
 	@Column(name="mat_ing_precio_compra", precision=7, scale=2)
 	private BigDecimal matIngPrecioCompra;
-
-	@Column(name="\"mat_ing-estado\"")
-	private Boolean matIng_estado;
 
 	//bi-directional many-to-one association to InvIngreso
 	@ManyToOne
@@ -58,20 +58,20 @@ public class InvMaterialIngreso implements Serializable {
 		this.matIngCantidad = matIngCantidad;
 	}
 
+	public Boolean getMatIngEstado() {
+		return this.matIngEstado;
+	}
+
+	public void setMatIngEstado(Boolean matIngEstado) {
+		this.matIngEstado = matIngEstado;
+	}
+
 	public BigDecimal getMatIngPrecioCompra() {
 		return this.matIngPrecioCompra;
 	}
 
 	public void setMatIngPrecioCompra(BigDecimal matIngPrecioCompra) {
 		this.matIngPrecioCompra = matIngPrecioCompra;
-	}
-
-	public Boolean getMatIng_estado() {
-		return this.matIng_estado;
-	}
-
-	public void setMatIng_estado(Boolean matIng_estado) {
-		this.matIng_estado = matIng_estado;
 	}
 
 	public InvIngreso getInvIngreso() {
