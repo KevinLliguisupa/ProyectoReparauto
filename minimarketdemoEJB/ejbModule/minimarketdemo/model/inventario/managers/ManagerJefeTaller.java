@@ -306,7 +306,7 @@ public class ManagerJefeTaller {
 		}
 	}
 
-<<<<<<< HEAD
+
 	public List<InvMaterialIngreso> findMaterialIngreso(int id) throws Exception {
 		String consulta = "ing_id=" + id;
 		return mDao.findWhere(InvMaterialIngreso.class, consulta, "mat_ing_cantidad DESC");
@@ -411,7 +411,7 @@ public class ManagerJefeTaller {
 		return valorTotal;
 	}
 
-=======
+
 	// Material
 	public void updatematerial(InvMaterial material) throws Exception {
 		if (material == null)
@@ -422,5 +422,4 @@ public class ManagerJefeTaller {
 			throw new Exception("No se pudo actualizar el dato: " + e.getMessage());
 		}
 	}
->>>>>>> 936aa1c6318b2ed9039c3cbbec209d1a8be9840a
 }
