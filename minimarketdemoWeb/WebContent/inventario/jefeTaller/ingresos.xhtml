@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Registro de ingresos</title>
+</h:head>
+
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Productos" icon="pi pi-briefcase" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de inventario"></p:staticMessage>
+	</h:form>
+
+	<div class="card">
+		<h:form id="form1">
+
+			<p:panel>
+				<p:panelGrid columns="4">
+					<h:outputText value="Material:" />
+
+					<p:selectOneMenu filterMatchMode="contains" filter="true"
+						value="#{beanJefeTaller.idMaterial}">
+						<f:selectItem itemLabel="Seleccione el material..."
+							noSelectionOption="true" />
+						<f:selectItems value="#{beanJefeTaller.listaMateriales}"
+							var="material" itemLabel="#{material.matNombre}"
+							itemValue="#{material.matId}"></f:selectItems>
+					</p:selectOneMenu>
+
+					<h:outputText value="Fecha inicio:" />
+					<p:datePicker value="#{beanJefeTaller.fechaInicio}" showTime="true" />
+
+					<h:outputText value="Proveedor:" />
+					<p:selectOneMenu filterMatchMode="contains" filter="true"
+						value="#{beanJefeTaller.idProveedor}">
+						<f:selectItem itemLabel="Seleccione el proveedor..."
+							noSelectionOption="true" />
+						<f:selectItems value="#{beanJefeTaller.listaProveedor}"
+							var="proveedor" itemLabel="#{proveedor.proNombre}"
+							itemValue="#{proveedor.proId}"></f:selectItems>
+					</p:selectOneMenu>
+
+					<h:outputText value="Fecha fin:" />
+					<p:datePicker value="#{beanJefeTaller.fechaFin}" showTime="true" />
+					<p:commandButton value="Consultar"
+						action="#{beanJefeTaller.actionListenerConsultarIngresos()}"
+						update="@form,:form2" icon="pi pi-search"></p:commandButton>
+					<p:commandButton value="Limpiar"
+						action="#{beanJefeTaller.actionListenerLimpiar()}"
+						update="@form,:form2,form1" icon="pi pi-undo"></p:commandButton>
+				</p:panelGrid>
+			</p:panel>
+
+		</h:form>
+	</div>
+	<br />
+	<div></div>
+
+	<div class="card">
+		<h:form id="form2">
+			<p:dataTable var="ingreso" value="#{beanJefeTaller.listaIngresos}"
+				rowKey="#{ingreso.ingId}" paginator="true" rows="5">
+				<f:facet name="header">
+                Registro de entradas de material
+            </f:facet>
+
+				<p:column style="width:2rem">
+					<p:rowToggler />
+					<h:outputText value="Info" />
+				</p:column>
+
+				<p:column headerText="Nro Compra">
+					<h:outputText value="#{ingreso.ingId}" />
+				</p:column>
+
+				<p:column headerText="Fecha">
+					<h:outputText value="#{ingreso.ingFecha}" />
+				</p:column>
+
+				<p:column headerText="Proveedor">
+					<h:outputText value="#{ingreso.invProveedor.proNombre}" />
+				</p:column>
+
+				<p:column headerText="Costo total">
+					<h:outputText
+						value="#{beanJefeTaller.actioncalcularValorTotalIngreso(ingreso.ingId)}">
+						<f:convertNumber type="currency" currencySymbol="$" />
+					</h:outputText>
+				</p:column>
+
+				<p:rowExpansion>
+					<p:dataTable var="registro"
+						value="#{beanJefeTaller.actionSeleccionarIngreso(ingreso.ingId)}"
+						rowKey="#{registro.matEntId}">
+
+						<p:column headerText="Id material">
+							<h:outputText value="#{registro.invMaterial.matId}" />
+						</p:column>
+
+						<p:column headerText="Nombre material">
+							<h:outputText value="#{registro.invMaterial.matNombre}" />
+						</p:column>
+
+						<p:column headerText="Cantidad">
+							<h:outputText value="#{registro.matIngCantidad}" />
+						</p:column>
+
+						<p:column headerText="Precio de compra">
+							<h:outputText value="#{registro.matIngPrecioCompra}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Total x material">
+							<h:outputText value="#{registro.totalxMaterial}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+	</div>
+
+
+</body>
+</html>

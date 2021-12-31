@@ -1,7 +1,11 @@
 package minimarketdemo.controller.inventario;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,6 +13,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -23,7 +28,7 @@ import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
 @Named
 @SessionScoped
 public class BeanJefeTaller implements Serializable {
-	//private static final long serialVersionUID = 1L;
+	// private static final long serialVersionUID = 1L;
 	@EJB
 	private ManagerJefeTaller mJefeTaller;
 
@@ -59,6 +64,9 @@ public class BeanJefeTaller implements Serializable {
 	// nuevo
 	private List<InvMaterial> listaMatAux;
 
+	private Date fechaInicio;
+	private Date fechaFin;
+	
 	public List<InvMaterialIngreso> getDetalleIngreso() {
 		return detalleIngreso;
 	}
@@ -80,12 +88,23 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	@PostConstruct
-	public void inicializar() {
+	public void inicializar() throws ParseException {
 		listaIngresos = mJefeTaller.findAllIngresos();
 		listaProveedor = mJefeTaller.findAllProveedor();
 		listaVehiculos = mJefeTaller.findAllVehiculos();
 		listaEmpleados = mJefeTaller.findAllEmpleados();
 		listaSalidas = mJefeTaller.findAllSalidas();
+		listaMateriales = mJefeTaller.findAllMaterial();
+		idMaterial = 0;
+		idProveedor = 0;
+		id_vehiculos = 0;
+		// Formato de la fecha
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+		// obtener la fecha de ayer:
+		fechaInicio = sdf.parse("2000-01-01");
+		// obtener la fecha de hoy:
+		fechaFin = new Date();
 
 	}
 
@@ -319,7 +338,7 @@ public class BeanJefeTaller implements Serializable {
 		material.setInvTipo(tipo);
 		mJefeTaller.updateMaterial(material);
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		
+
 	}
 
 	public void actionRetirarMaterial() throws Exception {
@@ -410,4 +429,78 @@ public class BeanJefeTaller implements Serializable {
 	public void actionClasificarMateriales() throws Exception {
 		listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
 	}
+
+	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
+		return mJefeTaller.findMaterialIngreso(idIngreso);
+	}
+
+	public BigDecimal actioncalcularValorTotalIngreso(int idIngreso) throws Exception {
+		BigDecimal valorTotal = mJefeTaller.calcularValorTotalIngreso(idIngreso);
+		return valorTotal;
+	}
+
+	public void actionListenerConsultarIngresos() throws Exception {
+		List<InvIngreso> respuesta = new ArrayList<InvIngreso>();
+		List<InvIngreso> listaConsulta = new ArrayList<InvIngreso>();
+		List<InvIngreso> ingresosxFecha;
+
+		if (idProveedor != 0 && idMaterial != 0) {
+			listaConsulta = mJefeTaller.findIngresosByMaterialProveedor(idMaterial, idProveedor);
+		} else {
+			if (idMaterial != 0)
+				listaConsulta = mJefeTaller.findIngresosByMaterial(idMaterial);
+			if (idProveedor != 0)
+				listaConsulta = mJefeTaller.findIngresosByProveedor(idProveedor);
+		}
+		ingresosxFecha = mJefeTaller.findIngresoByFecha(fechaInicio, fechaFin);
+		if (listaConsulta.size() != 0) {
+			for (InvIngreso consultas : listaConsulta) {
+				for (InvIngreso fechas : ingresosxFecha) {
+					if (consultas.getIngId() == fechas.getIngId()) {
+						respuesta.add(consultas);
+					}
+				}
+			}
+		} else {
+			respuesta = ingresosxFecha;
+		}
+
+		listaIngresos = respuesta;
+		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaIngresos.size());
+	}
+
+	public void actionListenerConsultarSalidas() throws Exception {
+		List<InvSalida> respuesta = new ArrayList<InvSalida>();
+		List<InvSalida> listaConsulta = new ArrayList<InvSalida>();
+		List<InvSalida> salidasxFecha;
+
+		if (id_vehiculos != 0 && idMaterial != 0) {
+			listaConsulta = mJefeTaller.findSalidasByMaterialVehiculo(idMaterial, id_vehiculos);
+		} else {
+			if (idMaterial != 0)
+				listaConsulta = mJefeTaller.findSalidasByMaterial(idMaterial);
+			if (id_vehiculos != 0)
+				listaConsulta = mJefeTaller.findSalidasByVehiculo(id_vehiculos);
+		}
+		salidasxFecha = mJefeTaller.findSalidaByFecha(fechaInicio, fechaFin);
+		if (listaConsulta.size() != 0) {
+			for (InvSalida consultas : listaConsulta) {
+				for (InvSalida fechas : salidasxFecha) {
+					if (consultas.getSalId() == fechas.getSalId()) {
+						respuesta.add(consultas);
+					}
+				}
+			}
+		} else {
+			respuesta = salidasxFecha;
+		}
+
+		listaSalidas = respuesta;
+		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaSalidas.size());
+	}
+
+	public List<InvMaterialSalida> actionSeleccionarSalida(int idSalida) throws Exception {
+		return mJefeTaller.findMaterialSalida(idSalida);
+	}
+
 }

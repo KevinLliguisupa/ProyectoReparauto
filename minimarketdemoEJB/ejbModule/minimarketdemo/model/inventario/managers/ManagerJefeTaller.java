@@ -1,6 +1,8 @@
 package minimarketdemo.model.inventario.managers;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -80,7 +82,6 @@ public class ManagerJefeTaller {
 	// modificado
 	public void retirarMaterial(List<InvMaterial> lista, InvSalida cabeceraSalida) throws Exception {
 
-		
 		for (InvMaterial m : lista) {
 			InvMaterialSalida detalleSalida = new InvMaterialSalida();
 			detalleSalida.setInvSalida(cabeceraSalida);
@@ -303,6 +304,110 @@ public class ManagerJefeTaller {
 			int indice = lista.indexOf(findMaterialByNameSeleccion(lista, material));
 			lista.get(indice).setMatExistencia(lista.get(indice).getMatExistencia().add(new BigDecimal(cantidad)));
 		}
+	}
+
+	public List<InvMaterialIngreso> findMaterialIngreso(int id) throws Exception {
+		String consulta = "ing_id=" + id;
+		return mDao.findWhere(InvMaterialIngreso.class, consulta, "mat_ing_cantidad DESC");
+	}
+
+	public List<InvMaterialSalida> findMaterialSalida(int id) throws Exception {
+		String consulta = "sal_id=" + id;
+		return mDao.findWhere(InvMaterialSalida.class, consulta, "mat_sal_cantidad DESC");
+	}
+
+	public List<InvIngreso> findIngresosByProveedor(int proId) throws Exception {
+		String consulta = "pro_id=" + proId;
+		return mDao.findWhere(InvIngreso.class, consulta, "ing_fecha DESC");
+	}
+
+	public List<InvSalida> findSalidasByVehiculo(int vehId) throws Exception {
+		String consulta = "veh_id_rec_vehiculos=" + vehId;
+		return mDao.findWhere(InvSalida.class, consulta, "sal_fecha DESC");
+	}
+
+	public List<InvIngreso> findIngresosByMaterial(int matId) throws Exception {
+		String consulta = "mat_id=" + matId;
+		List<InvMaterialIngreso> listaMatIng = mDao.findWhere(InvMaterialIngreso.class, consulta, "ing_id DESC");
+		List<InvIngreso> listaIngresos = new ArrayList<InvIngreso>();
+		for (InvMaterialIngreso matIng : listaMatIng) {
+			listaIngresos.add(matIng.getInvIngreso());
+		}
+
+		return listaIngresos;
+	}
+
+	public List<InvIngreso> findIngresosByMaterialProveedor(int matId, int proId) throws Exception {
+		String consulta = "mat_id=" + matId;
+		List<InvMaterialIngreso> listaMatIng = mDao.findWhere(InvMaterialIngreso.class, consulta, "ing_id DESC");
+		List<InvIngreso> listaIngresos = new ArrayList<InvIngreso>();
+		for (InvMaterialIngreso matIng : listaMatIng) {
+			if (matIng.getInvIngreso().getInvProveedor().getProId() == proId)
+				listaIngresos.add(matIng.getInvIngreso());
+		}
+
+		return listaIngresos;
+	}
+
+	public List<InvIngreso> findIngresoByFecha(Date fechaInicio, Date fechaFin) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Timestamp finicio = new Timestamp(fechaInicio.getTime());
+		Timestamp fFin = new Timestamp(fechaFin.getTime());
+		String consulta = "ing_fecha between '" + finicio + "' and '" + fFin + "'";
+		return mDao.findWhere(InvIngreso.class, consulta, "ing_fecha DESC");
+	}
+
+	public List<InvSalida> findSalidaByFecha(Date fechaInicio, Date fechaFin) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		Timestamp finicio = new Timestamp(fechaInicio.getTime());
+		Timestamp fFin = new Timestamp(fechaFin.getTime());
+		String consulta = "sal_fecha between '" + finicio + "' and '" + fFin + "'";
+		return mDao.findWhere(InvSalida.class, consulta, "sal_fecha DESC");
+	}
+
+	public List<InvSalida> findSalidasByMaterial(int matId) throws Exception {
+		String consulta = "mat_id=" + matId;
+		List<InvMaterialSalida> listaMatSal = mDao.findWhere(InvMaterialSalida.class, consulta, "sal_id DESC");
+		List<InvSalida> listaSalidas = new ArrayList<InvSalida>();
+		for (InvMaterialSalida matSal : listaMatSal) {
+			listaSalidas.add(matSal.getInvSalida());
+		}
+
+		return listaSalidas;
+	}
+
+	public BigDecimal calcularValorTotalIngreso(int id) throws Exception {
+		BigDecimal valorTotal = new BigDecimal(0);
+		String consulta = "ing_id=" + id;
+		List<InvMaterialIngreso> listaregistros = mDao.findWhere(InvMaterialIngreso.class, consulta, null);
+		for (InvMaterialIngreso registro : listaregistros) {
+			valorTotal = valorTotal.add(registro.getTotalxMaterial());
+		}
+
+		return valorTotal;
+	}
+
+	public List<InvSalida> findSalidasByMaterialVehiculo(int matId, int vehid) throws Exception {
+		String consulta = "mat_id=" + matId;
+		List<InvMaterialSalida> listaMatSal = mDao.findWhere(InvMaterialSalida.class, consulta, "sal_id DESC");
+		List<InvSalida> listaSalidas = new ArrayList<InvSalida>();
+		for (InvMaterialSalida matSal : listaMatSal) {
+			if (matSal.getInvSalida().getRecVehiculo().getVehId() == vehid)
+				listaSalidas.add(matSal.getInvSalida());
+		}
+
+		return listaSalidas;
+	}
+
+	public BigDecimal calcularValorTotalSalida(int id) throws Exception {
+		BigDecimal valorTotal = new BigDecimal(0);
+		String consulta = "sal_id=" + id;
+		List<InvMaterialSalida> listaregistros = mDao.findWhere(InvMaterialSalida.class, consulta, null);
+		for (InvMaterialSalida registro : listaregistros) {
+			valorTotal = valorTotal.add(registro.getTotalxMaterial());
+		}
+
+		return valorTotal;
 	}
 
 }
