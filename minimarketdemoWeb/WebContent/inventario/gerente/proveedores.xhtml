@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Proveedores</title>
+</h:head>
+<body>
+	<div>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<h:form id="form1">
+			<p:panelGrid columns="2" value="Añadir proveedor">
+                        <h:outputText value="Nombre del proveedor:"/>
+                        <h:inputText value="#{beanGerente.nuevoProveedor.proNombre}"/>
+                        <h:outputText value="Correo del proveedor:"/>
+                        <h:inputText value="#{beanGerente.nuevoProveedor.proCorreo}"/>
+                        <h:outputText value="Teléfono del proveedor:"/>
+                        <h:inputText value="#{beanGerente.nuevoProveedor.proTelefono}"/>
+                        <p:commandButton value="Añadir Proveedor" actionListener="#{beanGerente.actionCreateProveedor()}" update="@form,:form2" icon="pi pi-save"/>
+                    </p:panelGrid>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="Proveedores actuales:" toggleable="true" collapsed="false" style="width:75%; margin: 0 auto ">
+                <p:dataTable class="table table-bordered table-striped" value="#{beanGerente.actionfindAllproveedores()}" var="prov"
+                             paginator="true" rows="10">
+                    <p:column headerText="ID del proveedor" filterBy="#{prov.proId}" filterMatchMode="contains">
+                        <h:outputText value="#{prov.proId}"/> 
+                    </p:column>
+                    <p:column headerText="Nombre del proveedor" filterBy="#{prov.proNombre}" filterMatchMode="contains">
+                        <h:outputText value="#{prov.proNombre}"/> 
+                    </p:column>
+                    <p:column headerText="Teléfono del proveedor" filterBy="#{prov.proTelefono}" filterMatchMode="contains">
+                        <h:outputText value="#{prov.proTelefono}"/> 
+                    </p:column>
+                    <p:column headerText="Correo del proveedor" filterBy="#{prov.proCorreo}" filterMatchMode="contains">
+                        <h:outputText value="#{prov.proCorreo}"/> 
+                    </p:column>
+                    <p:column headerText="Estado del proveedor">
+                        <h:outputText value="#{prov.proEstado}"/> 
+                    </p:column>
+                    <p:column headerText="Editar proveedor">
+                    <p:commandButton id="cmdEdicion" icon="pi pi-pencil" actionListener="#{beanGerente.actionfindProveedorByID(prov)}"/>
+                    	<p:overlayPanel for="cmdEdicion" dynamic="true" showCloseIcon="true">
+                            <p:panel header="Editar Proveedor" style="width:225%; margin: 0 auto ">
+                                <p:panelGrid columns="2" style = "margin: 0 auto">
+                                    <h:outputText value="Nombre: "/>
+                                    <h:inputText value="#{beanGerente.proveedor.proNombre}" />
+                                    <h:outputText value="Correo: "/>
+                                    <h:inputText value="#{beanGerente.proveedor.proCorreo}" />
+                                    <h:outputText value="Telefono: "/>
+                                    <h:inputText value="#{beanGerente.proveedor.proTelefono}" />
+                                    <h:outputText value="Estado: "/>
+                                    <p:selectBooleanCheckbox value="#{beanGerente.proveedor.proEstado}" itemLabel="Estado"/>
+                                </p:panelGrid>
+                                <p:commandButton value="Guardar cambios" actionListener="#{beanGerente.actionUpdateProveedor()}" update="@form,:form2" icon="pi pi-save"/>
+                            </p:panel>
+                        </p:overlayPanel>
+                    </p:column>
+                </p:dataTable>
+            </p:panel>
+		</h:form>
+	</div>
+</body>
+</html>

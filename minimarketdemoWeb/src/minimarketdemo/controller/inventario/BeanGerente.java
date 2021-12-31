@@ -22,7 +22,6 @@ import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
-import minimarketdemo.model.core.utils.ModelUtil;
 import minimarketdemo.model.inventario.managers.ManagerGerente;
 
 @Named
@@ -43,6 +42,9 @@ public class BeanGerente implements Serializable {
 	private int id_vehiculos;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private List<InvProveedor> listaProveedores;
+	private InvProveedor proveedor;
+	private InvProveedor nuevoProveedor;
 
 	public BeanGerente() {
 
@@ -56,9 +58,9 @@ public class BeanGerente implements Serializable {
 		listaEmpleados = mGerente.findAllEmpleados();
 		listaProveedor = mGerente.findAllProveedor();
 		listaVehiculos = mGerente.findAllVehiculos();
-		idMaterial=0;
-		idProveedor=0;
-		id_vehiculos=0;
+		idMaterial = 0;
+		idProveedor = 0;
+		id_vehiculos = 0;
 		// Formato de la fecha
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -66,12 +68,15 @@ public class BeanGerente implements Serializable {
 		fechaInicio = sdf.parse("2000-01-01");
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
+		listaProveedores = new ArrayList<InvProveedor>();
+		proveedor = new InvProveedor();
+		nuevoProveedor = new InvProveedor();
 	}
 
 	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
 		return mGerente.findMaterialIngreso(idIngreso);
 	}
-	
+
 	public BigDecimal actioncalcularValorTotalIngreso(int idIngreso) throws Exception {
 		BigDecimal valorTotal = mGerente.calcularValorTotalIngreso(idIngreso);
 		return valorTotal;
@@ -91,7 +96,7 @@ public class BeanGerente implements Serializable {
 				listaConsulta = mGerente.findIngresosByProveedor(idProveedor);
 		}
 		ingresosxFecha = mGerente.findIngresoByFecha(fechaInicio, fechaFin);
-		if(listaConsulta.size()!=0) {
+		if (listaConsulta.size() != 0) {
 			for (InvIngreso consultas : listaConsulta) {
 				for (InvIngreso fechas : ingresosxFecha) {
 					if (consultas.getIngId() == fechas.getIngId()) {
@@ -99,16 +104,14 @@ public class BeanGerente implements Serializable {
 					}
 				}
 			}
-		}else {
+		} else {
 			respuesta = ingresosxFecha;
 		}
-
 
 		listaIngresos = respuesta;
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaIngresos.size());
 	}
-	
-	
+
 	public void actionListenerConsultarSalidas() throws Exception {
 		List<InvSalida> respuesta = new ArrayList<InvSalida>();
 		List<InvSalida> listaConsulta = new ArrayList<InvSalida>();
@@ -123,7 +126,7 @@ public class BeanGerente implements Serializable {
 				listaConsulta = mGerente.findSalidasByVehiculo(id_vehiculos);
 		}
 		salidasxFecha = mGerente.findSalidaByFecha(fechaInicio, fechaFin);
-		if(listaConsulta.size()!=0) {
+		if (listaConsulta.size() != 0) {
 			for (InvSalida consultas : listaConsulta) {
 				for (InvSalida fechas : salidasxFecha) {
 					if (consultas.getSalId() == fechas.getSalId()) {
@@ -131,32 +134,29 @@ public class BeanGerente implements Serializable {
 					}
 				}
 			}
-		}else {
+		} else {
 			respuesta = salidasxFecha;
 		}
-
 
 		listaSalidas = respuesta;
 		JSFUtil.crearMensajeINFO("Registros encontrados: " + listaSalidas.size());
 	}
-	
-	
+
 	public List<InvMaterialSalida> actionSeleccionarSalida(int idSalida) throws Exception {
 		return mGerente.findMaterialSalida(idSalida);
 	}
-	
-	
+
 	public BigDecimal actioncalcularValorTotalSalida(int idSalida) throws Exception {
 		BigDecimal valorTotal = mGerente.calcularValorTotalSalida(idSalida);
 		return valorTotal;
 	}
-	
+
 	public void actionListenerLimpiar() throws ParseException {
 		inicializar();
 	}
 
-	//Getters and Setters
-	
+	// Getters and Setters
+
 	public List<InvIngreso> getListaIngresos() {
 		return listaIngresos;
 	}
@@ -253,4 +253,45 @@ public class BeanGerente implements Serializable {
 		this.fechaFin = fechaFin;
 	}
 
+	public List<InvProveedor> getListaProveedores() {
+		return listaProveedores;
+	}
+
+	public void setListaProveedores(List<InvProveedor> listaProveedores) {
+		this.listaProveedores = listaProveedores;
+	}
+
+	public InvProveedor getProveedor() {
+		return proveedor;
+	}
+
+	public void setProveedor(InvProveedor proveedor) {
+		this.proveedor = proveedor;
+	}
+
+	public InvProveedor getNuevoProveedor() {
+		return nuevoProveedor;
+	}
+
+	public void setNuevoProveedor(InvProveedor nuevoProveedor) {
+		this.nuevoProveedor = nuevoProveedor;
+	}
+
+	// Proveedores
+	public InvProveedor actionfindProveedorByID(InvProveedor Prov) throws Exception {
+		proveedor = mGerente.findIdProveedores(Prov.getProId());
+		return proveedor;
+	}
+
+	public List<InvProveedor> actionfindAllproveedores() {
+		return mGerente.findAllProveedores();
+	}
+
+	public void actionCreateProveedor() throws Exception {
+		mGerente.createProveedores(nuevoProveedor);
+	}
+
+	public void actionUpdateProveedor() throws Exception {
+		mGerente.updateProveedores(proveedor);
+	}
 }

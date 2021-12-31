@@ -5,15 +5,12 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.Query;
 
-import minimarketdemo.model.core.entities.AudBitacora;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -50,7 +47,7 @@ public class ManagerGerente {
 		String consulta = "ing_id=" + id;
 		return mDao.findWhere(InvMaterialIngreso.class, consulta, "mat_ing_cantidad DESC");
 	}
-	
+
 	public List<InvMaterialSalida> findMaterialSalida(int id) throws Exception {
 		String consulta = "sal_id=" + id;
 		return mDao.findWhere(InvMaterialSalida.class, consulta, "mat_sal_cantidad DESC");
@@ -65,7 +62,7 @@ public class ManagerGerente {
 		String consulta = "veh_id_rec_vehiculos=" + vehId;
 		return mDao.findWhere(InvSalida.class, consulta, "sal_fecha DESC");
 	}
-	
+
 	public List<InvIngreso> findIngresosByMaterial(int matId) throws Exception {
 		String consulta = "mat_id=" + matId;
 		List<InvMaterialIngreso> listaMatIng = mDao.findWhere(InvMaterialIngreso.class, consulta, "ing_id DESC");
@@ -96,7 +93,7 @@ public class ManagerGerente {
 		String consulta = "ing_fecha between '" + finicio + "' and '" + fFin + "'";
 		return mDao.findWhere(InvIngreso.class, consulta, "ing_fecha DESC");
 	}
-	
+
 	public List<InvSalida> findSalidaByFecha(Date fechaInicio, Date fechaFin) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Timestamp finicio = new Timestamp(fechaInicio.getTime());
@@ -104,7 +101,7 @@ public class ManagerGerente {
 		String consulta = "sal_fecha between '" + finicio + "' and '" + fFin + "'";
 		return mDao.findWhere(InvSalida.class, consulta, "sal_fecha DESC");
 	}
-	
+
 	public List<InvSalida> findSalidasByMaterial(int matId) throws Exception {
 		String consulta = "mat_id=" + matId;
 		List<InvMaterialSalida> listaMatSal = mDao.findWhere(InvMaterialSalida.class, consulta, "sal_id DESC");
@@ -127,8 +124,6 @@ public class ManagerGerente {
 		return valorTotal;
 	}
 
-	
-
 	public List<InvSalida> findSalidasByMaterialVehiculo(int matId, int vehid) throws Exception {
 		String consulta = "mat_id=" + matId;
 		List<InvMaterialSalida> listaMatSal = mDao.findWhere(InvMaterialSalida.class, consulta, "sal_id DESC");
@@ -144,12 +139,50 @@ public class ManagerGerente {
 	public BigDecimal calcularValorTotalSalida(int id) throws Exception {
 		BigDecimal valorTotal = new BigDecimal(0);
 		String consulta = "sal_id=" + id;
-		List<InvMaterialSalida> listaregistros =mDao.findWhere(InvMaterialSalida.class, consulta,null);
+		List<InvMaterialSalida> listaregistros = mDao.findWhere(InvMaterialSalida.class, consulta, null);
 		for (InvMaterialSalida registro : listaregistros) {
-			valorTotal=valorTotal.add(registro.getTotalxMaterial());
+			valorTotal = valorTotal.add(registro.getTotalxMaterial());
 		}
-		
+
 		return valorTotal;
+	}
+
+	// Metodo CrudProveedores
+	public List<InvProveedor> findAllProveedores() {
+		return mDao.findAll(InvProveedor.class);
+	}
+
+	public InvProveedor findIdProveedores(int id) throws Exception {
+		return (InvProveedor) mDao.findById(InvProveedor.class, id);
+	}
+
+	public void createProveedores(InvProveedor Proveedor) throws Exception {
+		InvProveedor NewProv = new InvProveedor();
+		NewProv.setProCorreo(Proveedor.getProCorreo());
+		NewProv.setProEstado(true);
+		NewProv.setProId(Proveedor.getProId());
+		NewProv.setProNombre(Proveedor.getProNombre());
+		NewProv.setProTelefono(Proveedor.getProTelefono());
+		mDao.insertar(NewProv);
+	}
+
+	public void deleteProveedores(InvProveedor Proveedor) throws Exception {
+		Proveedor.setProEstado(false);
+		mDao.actualizar(Proveedor);
+	}
+
+	public void CreateProveedores(InvProveedor Proveedor) throws Exception {
+		InvProveedor NewProv = new InvProveedor();
+		NewProv.setProCorreo(Proveedor.getProCorreo());
+		NewProv.setProNombre(Proveedor.getProNombre());
+		NewProv.setProEstado(true);
+		NewProv.setProTelefono(Proveedor.getProTelefono());
+		NewProv.setProId(findAllProveedores().size() + 1);
+		mDao.insertar(Proveedor);
+	}
+
+	public void updateProveedores(InvProveedor Proveedor) throws Exception {
+		mDao.actualizar(Proveedor);
 	}
 
 	public List<InvMaterial> findAllMaterial() {

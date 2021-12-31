@@ -66,7 +66,7 @@ public class BeanJefeTaller implements Serializable {
 
 	private Date fechaInicio;
 	private Date fechaFin;
-	
+
 	public List<InvMaterialIngreso> getDetalleIngreso() {
 		return detalleIngreso;
 	}
@@ -105,6 +105,9 @@ public class BeanJefeTaller implements Serializable {
 		fechaInicio = sdf.parse("2000-01-01");
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
+		listaMateriales = new ArrayList<InvMaterial>();
+		material = new InvMaterial();
+		material.setMatId(1);
 
 	}
 
@@ -117,7 +120,7 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	public List<InvMaterial> getListaMateriales() {
-		return listaMateriales;
+		return mJefeTaller.findAllMaterial();
 	}
 
 	public void setListaMateriales(List<InvMaterial> listaMateriales) {
@@ -503,4 +506,15 @@ public class BeanJefeTaller implements Serializable {
 		return mJefeTaller.findMaterialSalida(idSalida);
 	}
 
+	// MAterial Update
+	public InvMaterial actionfindMaterialByID() throws Exception {
+		if (mJefeTaller.findMaterialId(material.getMatId()) != null) {
+			material = mJefeTaller.findMaterialId(material.getMatId());
+		}
+		return material;
+	}
+
+	public void actionUpdateMaterialExtra() throws Exception {
+		mJefeTaller.updatematerial(material);
+	}
 }

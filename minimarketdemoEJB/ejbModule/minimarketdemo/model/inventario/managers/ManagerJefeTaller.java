@@ -10,8 +10,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
@@ -306,7 +304,6 @@ public class ManagerJefeTaller {
 		}
 	}
 
-
 	public List<InvMaterialIngreso> findMaterialIngreso(int id) throws Exception {
 		String consulta = "ing_id=" + id;
 		return mDao.findWhere(InvMaterialIngreso.class, consulta, "mat_ing_cantidad DESC");
@@ -410,7 +407,6 @@ public class ManagerJefeTaller {
 
 		return valorTotal;
 	}
-
 
 	// Material
 	public void updatematerial(InvMaterial material) throws Exception {
