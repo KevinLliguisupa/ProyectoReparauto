@@ -8,8 +8,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
@@ -80,7 +78,6 @@ public class ManagerJefeTaller {
 	// modificado
 	public void retirarMaterial(List<InvMaterial> lista, InvSalida cabeceraSalida) throws Exception {
 
-		
 		for (InvMaterial m : lista) {
 			InvMaterialSalida detalleSalida = new InvMaterialSalida();
 			detalleSalida.setInvSalida(cabeceraSalida);
@@ -305,4 +302,14 @@ public class ManagerJefeTaller {
 		}
 	}
 
+	// Material
+	public void updatematerial(InvMaterial material) throws Exception {
+		if (material == null)
+			throw new Exception("No se puede actualizar un dato null");
+		try {
+			mDao.actualizar(material);
+		} catch (Exception e) {
+			throw new Exception("No se pudo actualizar el dato: " + e.getMessage());
+		}
+	}
 }
