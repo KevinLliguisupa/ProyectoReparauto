@@ -132,6 +132,7 @@ public class ManagerJefeTaller {
 	}
 
 	public InvTipo findTipoMaterialById(int id) throws Exception {
+		mDao.findById(InvProveedor.class, id);
 		return (InvTipo) mDao.findById(InvTipo.class, id);
 	}
 
@@ -417,5 +418,19 @@ public class ManagerJefeTaller {
 		} catch (Exception e) {
 			throw new Exception("No se pudo actualizar el dato: " + e.getMessage());
 		}
+	}
+
+	public void añadirMaterialExistente(InvMaterial material, int cantidad) throws Exception {
+		calcularSock(material, BigDecimal.valueOf(cantidad), true);
+		updatematerial(material);
+	}
+
+	// Tipo Material
+	public void CreateTipoMaterialExtra(InvTipo TipoMat) throws Exception {
+		InvTipo NewTipoMat = new InvTipo();
+		NewTipoMat.setTipEstado(true);
+		NewTipoMat.setTipId(TipoMat.getTipId());
+		NewTipoMat.setTipNombre(TipoMat.getTipNombre());
+		mDao.insertar(NewTipoMat);
 	}
 }

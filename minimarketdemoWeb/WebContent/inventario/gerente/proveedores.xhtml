@@ -55,7 +55,7 @@
                                     <h:outputText value="Telefono: "/>
                                     <h:inputText value="#{beanGerente.proveedor.proTelefono}" />
                                     <h:outputText value="Estado: "/>
-                                    <p:selectBooleanCheckbox value="#{beanGerente.proveedor.proEstado}" itemLabel="Estado"/>
+                                    <p:inputText value="#{beanGerente.proveedor.proEstado}"/>
                                 </p:panelGrid>
                                 <p:commandButton value="Guardar cambios" actionListener="#{beanGerente.actionUpdateProveedor()}" update="@form,:form2" icon="pi pi-save"/>
                             </p:panel>

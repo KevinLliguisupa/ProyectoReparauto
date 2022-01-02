@@ -278,8 +278,11 @@ public class BeanGerente implements Serializable {
 	}
 
 	// Proveedores
-	public InvProveedor actionfindProveedorByID(InvProveedor Prov) throws Exception {
-		proveedor = mGerente.findIdProveedores(Prov.getProId());
+	public InvProveedor actionfindProveedorByID(InvProveedor ProvID) throws Exception {
+		if (mGerente.findIdProveedores(ProvID.getProId()) != null) {
+			proveedor = mGerente.findIdProveedores(ProvID.getProId());
+		}
+
 		return proveedor;
 	}
 

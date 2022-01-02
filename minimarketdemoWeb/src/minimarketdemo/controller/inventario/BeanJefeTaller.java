@@ -52,6 +52,8 @@ public class BeanJefeTaller implements Serializable {
 	private int cantidadRetirar;
 	private List<InvIngreso> listaIngresos;
 	private List<InvSalida> listaSalidas;
+	private int cantidadIngresar;
+	private int IDMaterialTemporal;
 
 	// nuevo
 	private InvIngreso ingreso;
@@ -108,7 +110,8 @@ public class BeanJefeTaller implements Serializable {
 		listaMateriales = new ArrayList<InvMaterial>();
 		material = new InvMaterial();
 		material.setMatId(1);
-
+		tipo = new InvTipo();
+		nuevoTipo = new InvTipo();
 	}
 
 	public List<InvSalida> getListaSalidas() {
@@ -353,18 +356,6 @@ public class BeanJefeTaller implements Serializable {
 		cantidadRetirar = 0;
 	}
 
-	public void actionCreateTipoMaterial() {
-
-	}
-
-	public void actionDeleteTipoMaterial() {
-
-	}
-
-	public void actionUpdateTipoMaterial() {
-
-	}
-
 	// Nuevo verificado
 	public void actionIngresarCabeceraIngreso() throws Exception {
 		proveedor = mJefeTaller.findIdProveedor(idProveedor);
@@ -506,10 +497,10 @@ public class BeanJefeTaller implements Serializable {
 		return mJefeTaller.findMaterialSalida(idSalida);
 	}
 
-	// MAterial Update
+	// Material Update
 	public InvMaterial actionfindMaterialByID() throws Exception {
-		if (mJefeTaller.findMaterialId(material.getMatId()) != null) {
-			material = mJefeTaller.findMaterialId(material.getMatId());
+		if (mJefeTaller.findMaterialId(this.IDMaterialTemporal) != null) {
+			material = mJefeTaller.findMaterialId(this.IDMaterialTemporal);
 		}
 		return material;
 	}
@@ -517,4 +508,48 @@ public class BeanJefeTaller implements Serializable {
 	public void actionUpdateMaterialExtra() throws Exception {
 		mJefeTaller.updatematerial(material);
 	}
+
+	public void actionAñadirMaterialExistente() throws Exception {
+		mJefeTaller.añadirMaterialExistente(material, cantidadIngresar);
+		cantidadIngresar = 0;
+	}
+
+	// Tipo Material Crud
+
+	public InvTipo getTtipoMaterialByID(InvTipo TipoMat) throws Exception {
+		this.tipo = mJefeTaller.findTipoMaterialById(TipoMat.getTipId());
+		mJefeTaller.updateTipoMaterial(tipo);
+		return tipo;
+	}
+
+	public List<InvTipo> actionfindAllTipoMaterial() {
+		return mJefeTaller.findAllTipoMaterial();
+	}
+
+	public void actionCreateTipoMaterial() throws Exception {
+		mJefeTaller.CreateTipoMaterialExtra(this.nuevoTipo);
+	}
+
+	public void actionUpdateTipoMaterial() throws Exception {
+		mJefeTaller.updateTipoMaterial(tipo);
+	}
+
+	// Getter y setter para la cantidad a ingresar
+
+	public int getCantidadIngresar() {
+		return cantidadIngresar;
+	}
+
+	public void setCantidadIngresar(int cantidadIngresar) {
+		this.cantidadIngresar = cantidadIngresar;
+	}
+
+	public int getIDMaterialTemporal() {
+		return IDMaterialTemporal;
+	}
+
+	public void setIDMaterialTemporal(int iDMaterialTemporal) {
+		IDMaterialTemporal = iDMaterialTemporal;
+	}
+
 }
