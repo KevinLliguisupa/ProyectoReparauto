@@ -570,4 +570,9 @@ public class BeanJefeTaller implements Serializable {
 		IDMaterialTemporal = iDMaterialTemporal;
 	}
 
+	
+	// nuevo wilson
+	public void actioCargarMateriales() {
+		listaMateriales= mJefeTaller.findAllMaterial();
+	}
 }
