@@ -122,8 +122,26 @@ public class BeanJefeTaller implements Serializable {
 		this.listaSalidas = listaSalidas;
 	}
 
+	
+
+	public Date getFechaInicio() {
+		return fechaInicio;
+	}
+
+	public void setFechaInicio(Date fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	public Date getFechaFin() {
+		return fechaFin;
+	}
+
+	public void setFechaFin(Date fechaFin) {
+		this.fechaFin = fechaFin;
+	}
+
 	public List<InvMaterial> getListaMateriales() {
-		return mJefeTaller.findAllMaterial();
+		return listaMateriales;
 	}
 
 	public void setListaMateriales(List<InvMaterial> listaMateriales) {
