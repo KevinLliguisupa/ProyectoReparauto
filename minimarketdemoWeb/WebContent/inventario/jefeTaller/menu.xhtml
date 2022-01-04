@@ -14,11 +14,15 @@
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
 			<p:menuitem value="Administrar Compras" icon="pi pi-users"
-				 action="maestroIngreso"/>
-			<p:menuitem value="Egreso de Materiales" icon="pi pi-angle-double-up" 
-			action="maestroRetiro"/>
-			
-			
+				action="maestroIngreso" />
+			<p:menuitem value="Actualizar Stock" icon="pi pi-users"
+				action="ingresarmaterialexistente" />
+			<p:menuitem value="Egreso de Materiales" icon="pi pi-angle-double-up"
+				action="maestroRetiro" />
+			<p:menuitem value="Administrar Categorias" icon="pi pi-angle-double-up"
+				action="tipomateriales" />
+
+
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">

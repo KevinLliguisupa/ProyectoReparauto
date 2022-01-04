@@ -9,42 +9,67 @@
 	<title>Ingresar Material Existente</title>
 </h:head>
 <body>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
+	</h:form>
+
 	<div>
 		<p:messages>
 			<p:autoUpdate />
 		</p:messages>
 		<h:form id="form1">
 			<p:panelGrid columns="2">
-                        <h:outputText value="ID Material:"/>
-                        <h:inputText value="#{beanJefeTaller.IDMaterialTemporal}"/>
-                        <h:outputText value="Nombre del material:"/>
-                        <h:outputText value="#{beanJefeTaller.material.matNombre}"/>
-                        <h:outputText value="Unidad de medida del material:"/>
-                        <h:outputText value="#{beanJefeTaller.material.matUnidadMedida}"/>
-                        <h:outputText value="Cantidad a añadir:"/>
-                        <h:inputText value="#{beanJefeTaller.cantidadIngresar}"/>
-                        <p:commandButton value="Buscar Material" actionListener="#{beanJefeTaller.actionfindMaterialByID()}" update="@form,:form2" icon="pi pi-save"/>
-                        <p:commandButton value="IngresarMaterial" actionListener="#{beanJefeTaller.actionAñadirMaterialExistente()}" update="@form,:form2" icon="pi pi-save"/>
-                    </p:panelGrid>
+				<h:outputText value="ID Material:" />
+				<h:inputText value="#{beanJefeTaller.IDMaterialTemporal}" />
+				<h:outputText value="Nombre del material:" />
+				<h:outputText value="#{beanJefeTaller.material.matNombre}" />
+				<h:outputText value="Unidad de medida del material:" />
+				<h:outputText value="#{beanJefeTaller.material.matUnidadMedida}" />
+				<h:outputText value="Cantidad a añadir:" />
+				<h:inputText value="#{beanJefeTaller.cantidadIngresar}" />
+				<p:commandButton value="Buscar Material"
+					actionListener="#{beanJefeTaller.actionfindMaterialByID()}"
+					update="@form,:form2" icon="pi pi-save" />
+				<p:commandButton value="IngresarMaterial"
+					actionListener="#{beanJefeTaller.actionAñadirMaterialExistente()}"
+					update="@form,:form2" icon="pi pi-save" />
+			</p:panelGrid>
 		</h:form>
 		<h:form id="form2">
-			<p:panel header="Materiales actuales:" toggleable="true" collapsed="false" style="width:75%; margin: 0 auto ">
-                <p:dataTable class="table table-bordered table-striped" value="#{beanJefeTaller.listaMateriales}" var="mat"
-                             paginator="true" rows="10">
-                    <p:column headerText="ID de material" filterBy="#{mat.matId}" filterMatchMode="contains">
-                        <h:outputText value="#{mat.matId}"/> 
-                    </p:column>
-                    <p:column headerText="Nombre del material" filterBy="#{mat.matNombre}" filterMatchMode="contains">
-                        <h:outputText value="#{mat.matNombre}"/> 
-                    </p:column>
-                    <p:column headerText="Unidad de medida del material" filterBy="#{mat.matUnidadMedida}" filterMatchMode="contains">
-                        <h:outputText value="#{mat.matUnidadMedida}"/> 
-                    </p:column>
-                    <p:column headerText="Existencias del material">
-                        <h:outputText value="#{mat.matExistencia}"/> 
-                    </p:column>
-                </p:dataTable>
-            </p:panel>
+			<p:panel header="Materiales actuales:" toggleable="true"
+				collapsed="false" style="width:75%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanJefeTaller.listaMateriales}" var="mat"
+					paginator="true" rows="10">
+					<p:column headerText="ID de material" filterBy="#{mat.matId}"
+						filterMatchMode="contains">
+						<h:outputText value="#{mat.matId}" />
+					</p:column>
+					<p:column headerText="Nombre del material"
+						filterBy="#{mat.matNombre}" filterMatchMode="contains">
+						<h:outputText value="#{mat.matNombre}" />
+					</p:column>
+					<p:column headerText="Unidad de medida del material"
+						filterBy="#{mat.matUnidadMedida}" filterMatchMode="contains">
+						<h:outputText value="#{mat.matUnidadMedida}" />
+					</p:column>
+					<p:column headerText="Existencias del material">
+						<h:outputText value="#{mat.matExistencia}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 		</h:form>
 	</div>
 </body>
