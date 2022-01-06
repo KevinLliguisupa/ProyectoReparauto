@@ -572,7 +572,10 @@ public class BeanJefeTaller implements Serializable {
 
 	
 	// nuevo wilson
-	public void actioCargarMateriales() {
+	public String actioCargaVistaActualizarStock() {
 		listaMateriales= mJefeTaller.findAllMaterial();
+		return "ingresarmaterialexistente?faces-redirect=true";
 	}
+	
+
 }
