@@ -330,6 +330,7 @@ CREATE TABLE public.inv_material (
 	mat_existencia numeric(6),
 	mat_unidad_medida character varying(10),
 	mat_estado boolean,
+	mat_imagen character varying,
 	tip_id integer,
 	CONSTRAINT inv_material_pk PRIMARY KEY (mat_id)
 
