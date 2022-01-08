@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Vehiculos</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Nuevo Vehiculo" icon="pi pi-user-plus"
+				action="ingresarVehiculo" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<h:form>
+			<p:dataTable value="#{beanRecJefeTaller.listaRecVehiculos}" var="p"
+				paginator="true" rows="10">
+				
+				
+				<p:column headerText="OPCIONES">
+					<p:commandButton icon="pi pi-pencil" title="editar" value="Editar"
+						action="#{beanRecJefeTaller.actionCargarDetallesVehiculo(p.vehId)}" />
+					<p:commandButton icon="pi pi-times-circle" title="eliminar" value="Eliminar"
+						styleClass="ui-button-danger" update="@form"
+						actionListener="#{beanRecJefeTaller.actionEliminarVehiculo(p.vehId)}">
+						<p:confirm header="Confirmación"
+							message="Desea borrar este usuario?" icon="pi pi-info-circle" />
+					</p:commandButton>
+				</p:column>
+				
+				
+				<p:column headerText="ID" style="width:50px">
+					<h:outputText value="#{p.vehId}" />
+				</p:column>
+				<p:column headerText="Placa" filterBy="#{p.vehPlaca}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehPlaca}" />
+				</p:column>
+				<p:column headerText="Marca" filterBy="#{p.vehMarca}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehMarca}" />
+				</p:column>
+				<p:column headerText="Color" filterBy="#{p.vehColor}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehColor}" />
+				</p:column>
+
+				<p:column headerText="Anio" filterBy="#{p.vehAnio}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehAnio}" />
+				</p:column>
+
+				<p:column headerText="Chasis" filterBy="#{p.vehNumeroChasis}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehNumeroChasis}" />
+				</p:column>
+				<p:column headerText="Motor" filterBy="#{p.vehMotor}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehMotor}" />
+				</p:column>
+				<p:column headerText="Clave" filterBy="#{p.vehClave}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehClave}" />
+				</p:column>
+				<p:column headerText="Kilometraje" filterBy="#{p.vehKilometraje}"
+					filterMatchMode="contains">
+					<h:outputText value="#{p.vehKilometraje}" />
+				</p:column>
+				<p:column headerText="N.Combustible"
+					filterBy="#{p.vehNivelCombustible}" filterMatchMode="contains">
+					<h:outputText value="#{p.vehNivelCombustible}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</p:panel>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>
