@@ -103,7 +103,7 @@ public class BeanJefeTaller implements Serializable {
 		// Formato de la fecha
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		// obtener la fecha de ayer:
+		// obtener la fecha de inicio:
 		fechaInicio = sdf.parse("2000-01-01");
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
@@ -112,6 +112,9 @@ public class BeanJefeTaller implements Serializable {
 		material.setMatId(1);
 		tipo = new InvTipo();
 		nuevoTipo = new InvTipo();
+		for (InvMaterial m: listaMateriales) {
+			System.out.println("elemento"+m.getMatNombre());
+		}
 	}
 
 	public List<InvSalida> getListaSalidas() {

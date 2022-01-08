@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Adminisracion Materiales</title>
+</h:head>
+
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de inventario"></p:staticMessage>
+	</h:form>
+
+
+<div class="product card">
+    <h:form id="form">
+        <p:dataGrid var="material" value="#{beanGerente.listaMateriales}" columns="3" layout="grid" rows="12" paginator="true" id="cars"
+                    paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                    rowsPerPageTemplate="6,12,16">
+
+            <f:facet name="header">
+                Materiales existentes
+            </f:facet>
+
+            <div class="product-grid-item card" style="margin-bottom: 0">
+                <div class="product-grid-item-top">
+                    <div>
+                        <i class="pi pi-tag product-category-icon"/>
+                        <span class="product-category">#{material.invTipo.tipNombre}</span>
+                    </div>
+                    <span class="product-badge status-#{material.stock.toLowerCase()}">#{material.stock}</span>
+                </div>
+                <div class="product-grid-item-content">
+                    <p:graphicImage value="#{material.matImagen}" height="200"/>
+                    <div class="product-name">#{material.matNombre}</div>
+                    <div class="product-description">Cantidad Actual: #{material.matExistencia}</div>
+                </div>
+                <div class="product-grid-item-bottom">
+                    <h:outputText value="#{material.matPrecioVenta}" styleClass="product-price">
+                        <f:convertNumber currencySymbol="$" type="currency"/>
+                    </h:outputText>
+                    <p:commandButton oncomplete="PF('productDialog').show()"
+                                     value="Add To Cart"
+                                     icon="pi pi-shopping-cart">
+
+                    </p:commandButton>
+                </div>
+            </div>
+
+        </p:dataGrid>
+
+     
+    </h:form>
+</div>
+
+
+
+</body>
+</html>
