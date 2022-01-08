@@ -27,6 +27,9 @@ public class InvMaterial implements Serializable {
 	@Column(name="mat_existencia", precision=6)
 	private BigDecimal matExistencia;
 
+	@Column(name="mat_imagen", length=2147483647)
+	private String matImagen;
+
 	@Column(name="mat_nombre", length=50)
 	private String matNombre;
 
@@ -74,6 +77,14 @@ public class InvMaterial implements Serializable {
 
 	public void setMatExistencia(BigDecimal matExistencia) {
 		this.matExistencia = matExistencia;
+	}
+
+	public String getMatImagen() {
+		return this.matImagen;
+	}
+
+	public void setMatImagen(String matImagen) {
+		this.matImagen = matImagen;
 	}
 
 	public String getMatNombre() {

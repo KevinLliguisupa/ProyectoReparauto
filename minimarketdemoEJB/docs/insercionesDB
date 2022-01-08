@@ -1,0 +1,142 @@
+--Asignaciones de perfiles a modulos
+
+INSERT INTO seg_asignacion(id_seg_usuario, id_seg_perfil) VALUES(2,3);
+INSERT INTO seg_asignacion(id_seg_usuario, id_seg_perfil) VALUES(3,4);
+INSERT INTO seg_asignacion(id_seg_usuario, id_seg_perfil) VALUES(1,3);
+INSERT INTO seg_asignacion(id_seg_usuario, id_seg_perfil) VALUES(1,4);
+
+--Creacion de tipos
+INSERT INTO inv_tipo (tip_nombre, tip_estado) VALUES('Pinturas', true);
+INSERT INTO inv_tipo (tip_nombre, tip_estado) VALUES('Lijas', true);
+INSERT INTO inv_tipo (tip_nombre, tip_estado) VALUES('Tornillos', true);
+INSERT INTO inv_tipo (tip_nombre, tip_estado) VALUES('Pegamentos', true);
+
+--Creacion de materiales
+INSERT INTO inv_material (mat_nombre, mat_precio_venta, mat_existencia, mat_unidad_medida, mat_estado, mat_imagen, tip_id)
+	VALUES(
+		'Pintura Poliuretano (MC)',
+		28.50,
+		0,
+		'gal',
+		true,
+		'https://www.anypsa.com.pe/aplication/webroot/imgs/catalogo/181103052847z4_7500.png',
+		1
+	);
+	
+INSERT INTO inv_material (mat_nombre, mat_precio_venta, mat_existencia, mat_unidad_medida, mat_estado, mat_imagen, tip_id)
+	VALUES(
+		'Lija pliego FANDELI #80',
+		0.46,
+		0,
+		'plgs',
+		true,
+		'https://tlapalero-16ac7.kxcdn.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/f/a/fan262_1.jpg',
+		2
+	);
+
+INSERT INTO inv_material (mat_nombre, mat_precio_venta, mat_existencia, mat_unidad_medida, mat_estado, mat_imagen, tip_id)
+	VALUES(
+		'Caja tonillos #11',
+		1.85,
+		0,
+		'cajs',
+		true,
+		'https://www.aubertsa.com/22385-large_default/caja-tllo-din-7981-chapa-c-anc-galv-4-2x25.jpg',
+		3
+	);
+	
+INSERT INTO inv_material (mat_nombre, mat_precio_venta, mat_existencia, mat_unidad_medida, mat_estado, mat_imagen, tip_id)
+	VALUES(
+		'Brujita',
+		0.75,
+		0,
+		'uni',
+		true,
+		'https://images.implementos.cl/img/1000/LOCACC0017-1.jpg',
+		4
+	);
+
+INSERT INTO inv_material (mat_nombre, mat_precio_venta, mat_existencia, mat_unidad_medida, mat_estado, mat_imagen, tip_id)
+	VALUES(
+		'Pega tanque negro',
+		6.15,
+		0,
+		'cajs',
+		true,
+		'https://m.media-amazon.com/images/I/61fCBpx3FAL._SL1098_.jpg',
+		4
+	);
+
+--Creacion de proveedores
+INSERT INTO inv_proveedor (pro_nombre, pro_telefono, pro_correo, pro_estado)
+	VALUES('Almacen el perno', '022110615', 'ventas@aperno.com',true);
+INSERT INTO inv_proveedor (pro_nombre, pro_telefono, pro_correo, pro_estado)
+	VALUES('Mega PS', '062564841', 'ventas@megaps.com',true);
+INSERT INTO inv_proveedor (pro_nombre, pro_telefono, pro_correo, pro_estado)
+	VALUES('Oxicomercial', '064868571', 'servicio@oxcomer.com', true);
+
+--Creacion de ingresos
+INSERT INTO inv_ingreso (ing_fecha, pro_id) VALUES ('2021-12-06', 1);
+INSERT INTO inv_ingreso (ing_fecha, pro_id) VALUES ('2021-12-12', 2);
+INSERT INTO inv_ingreso (ing_fecha, pro_id) VALUES ('2021-12-15', 3);
+
+--Creacion de material_ingreso (Detalle ingresos)
+INSERT INTO inv_material_ingreso (mat_id, ing_id, mat_ing_cantidad, mat_ing_precio_compra, mat_ing_estado) 
+	VALUES (3, 1, 5, 1.50, true);
+INSERT INTO inv_material_ingreso (mat_id, ing_id, mat_ing_cantidad, mat_ing_precio_compra, mat_ing_estado) 
+	VALUES (1, 2, 6, 28.00, true);
+INSERT INTO inv_material_ingreso (mat_id, ing_id, mat_ing_cantidad, mat_ing_precio_compra, mat_ing_estado) 
+	VALUES (2, 2, 12, 0.35, true);
+INSERT INTO inv_material_ingreso (mat_id, ing_id, mat_ing_cantidad, mat_ing_precio_compra, mat_ing_estado) 
+	VALUES (5, 3, 15, 0.70, true);
+INSERT INTO inv_material_ingreso (mat_id, ing_id, mat_ing_cantidad, mat_ing_precio_compra, mat_ing_estado) 
+	VALUES (4, 3, 15, 6.00, true);
+
+--Actualizaciion de stock de materiales x ingresos
+UPDATE inv_material	SET mat_existencia=5 WHERE mat_id=3;
+UPDATE inv_material	SET mat_existencia=6 WHERE mat_id=1;
+UPDATE inv_material	SET mat_existencia=12 WHERE mat_id=2;
+UPDATE inv_material	SET mat_existencia=15 WHERE mat_id=5;
+UPDATE inv_material	SET mat_existencia=15 WHERE mat_id=4;
+
+--Creacion de vehiculos
+INSERT INTO rec_vehiculos(veh_placa,veh_marca,veh_color,veh_anio,veh_clave,veh_estado)
+	VALUES('PKU-911','Toyota','Roja','2015','5564',true);
+INSERT INTO rec_vehiculos(veh_placa,veh_marca,veh_color,veh_anio,veh_clave,veh_estado)
+	VALUES('GTH-781','BMW','Gris','2018','8456',true);
+INSERT INTO rec_vehiculos(veh_placa,veh_marca,veh_color,veh_anio,veh_clave,veh_estado)
+	VALUES('PTH-548','Chevrolet','Rojo','2016','6978',true);
+INSERT INTO rec_vehiculos(veh_placa,veh_marca,veh_color,veh_anio,veh_clave,veh_estado)
+	VALUES('TOT-862','Hyundai','Blanco','2019','7894',true);
+
+--Creacion de cargo
+INSERT INTO thm_cargo(nombre_cargo, remuneracion_mensual) VALUES('Mecanico',510);
+
+--Creacion de empleado
+INSERT INTO thm_empleado(id_thm_cargo, id_seg_usuario,horas_trabajadas, horas_extra, cuota_prestamo) VALUES(1,3,1,1,1.00);
+
+--Creacion de salidas
+INSERT INTO inv_salida (sal_fecha, veh_id_rec_vehiculos, id_thm_empleado_thm_empleado) VALUES ('2021-12-06', 1,1);
+INSERT INTO inv_salida (sal_fecha, veh_id_rec_vehiculos, id_thm_empleado_thm_empleado) VALUES ('2021-12-12', 2,1);
+INSERT INTO inv_salida (sal_fecha, veh_id_rec_vehiculos, id_thm_empleado_thm_empleado) VALUES ('2021-12-15', 3,1);
+
+--Creacion de material_salida (Detalle salidas)
+INSERT INTO inv_material_salida (mat_id, sal_id, mat_sal_cantidad, mat_sal_precio, mat_sal_estado) 
+	VALUES (3, 1, 2, 1.85, true);
+INSERT INTO inv_material_salida (mat_id, sal_id, mat_sal_cantidad, mat_sal_precio, mat_sal_estado) 
+	VALUES (1, 2, 1, 28.50, true);
+INSERT INTO inv_material_salida (mat_id, sal_id, mat_sal_cantidad, mat_sal_precio, mat_sal_estado) 
+	VALUES (2, 2, 3, 0.46, true);
+INSERT INTO inv_material_salida (mat_id, sal_id, mat_sal_cantidad, mat_sal_precio, mat_sal_estado) 
+	VALUES (5, 3, 2, 0.75, true);
+INSERT INTO inv_material_salida (mat_id, sal_id, mat_sal_cantidad, mat_sal_precio, mat_sal_estado) 
+	VALUES (4, 3, 1, 6.15, true);
+
+--Actualizaciion de stock de materiales x salidas
+UPDATE inv_material	SET mat_existencia=3 WHERE mat_id=3;
+UPDATE inv_material	SET mat_existencia=5 WHERE mat_id=1;
+UPDATE inv_material	SET mat_existencia=9 WHERE mat_id=2;
+UPDATE inv_material	SET mat_existencia=13 WHERE mat_id=5;
+UPDATE inv_material	SET mat_existencia=14 WHERE mat_id=4;
+
+

@@ -15,33 +15,33 @@ import javax.persistence.Table;
 
 /**
  * The persistent class for the inv_proveedor database table.
- *
+ * 
  */
 @Entity
-@Table(name = "inv_proveedor")
-@NamedQuery(name = "InvProveedor.findAll", query = "SELECT i FROM InvProveedor i")
+@Table(name="inv_proveedor")
+@NamedQuery(name="InvProveedor.findAll", query="SELECT i FROM InvProveedor i")
 public class InvProveedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pro_id", unique = true, nullable = false)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="pro_id", unique=true, nullable=false)
 	private Integer proId;
 
-	@Column(name = "pro_correo", length = 30)
+	@Column(name="pro_correo", length=30)
 	private String proCorreo;
 
-	@Column(name = "pro_estado")
+	@Column(name="pro_estado")
 	private Boolean proEstado;
 
-	@Column(name = "pro_nombre", length = 50)
+	@Column(name="pro_nombre", length=50)
 	private String proNombre;
 
-	@Column(name = "pro_telefono", length = 10)
+	@Column(name="pro_telefono", length=10)
 	private String proTelefono;
 
-	// bi-directional many-to-one association to InvIngreso
-	@OneToMany(mappedBy = "invProveedor")
+	//bi-directional many-to-one association to InvIngreso
+	@OneToMany(mappedBy="invProveedor")
 	private List<InvIngreso> invIngresos;
 
 	public InvProveedor() {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
-	<persistence-unit name="reparaAuto" transaction-type="JTA">
-		<jta-data-source>java:/reparaAuto</jta-data-source>
+	<persistence-unit name="reparautoDS" transaction-type="JTA">
+		<jta-data-source>java:/reparautoDS</jta-data-source>
 		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
 		<class>minimarketdemo.model.core.entities.AudBitacora</class>
 		<class>minimarketdemo.model.core.entities.InvIngreso</class>

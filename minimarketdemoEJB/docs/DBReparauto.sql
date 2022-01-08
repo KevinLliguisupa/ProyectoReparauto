@@ -537,7 +537,7 @@ CREATE TABLE public.inv_material_ingreso (
 	ing_id integer,
 	mat_ing_cantidad numeric(6),
 	mat_ing_precio_compra numeric(7,2),
-	"mat_ing-estado" boolean,
+	mat_ing_estado boolean,
 	CONSTRAINT inv_mat_ent_pk PRIMARY KEY (mat_ent_id)
 
 );
