@@ -36,16 +36,24 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvMaterial> findAllMaterial() {
-		List<InvMaterial> lista = mDao.findAll(InvMaterial.class);
-		List<InvMaterial> listaNueva = new ArrayList<InvMaterial>();
-		for (InvMaterial mat : lista) {
-			if (mat.getMatEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(InvMaterial.class, "mat_estado=true", null);
 	}
 
+	public void createMaterial(InvMaterial material, InvTipo selectTipo) throws Exception {
+		InvMaterial newMaterial = new InvMaterial();
+		
+		newMaterial.setMatEstado(true);
+		newMaterial.setMatExistencia(new BigDecimal(0));
+
+		newMaterial.setMatNombre(material.getMatNombre());
+		newMaterial.setMatPrecioVenta(material.getMatPrecioVenta());
+		newMaterial.setMatUnidadMedida(material.getMatUnidadMedida());
+		newMaterial.setMatImagen(material.getMatImagen());
+		newMaterial.setInvTipo(selectTipo);
+		
+		mDao.insertar(newMaterial);
+	}
+	
 	public void deleteMaterial(InvMaterial material) throws Exception {
 		material.setMatEstado(false);
 		mDao.actualizar(material);
@@ -121,14 +129,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvTipo> findAllTipoMaterial() {
-		List<InvTipo> lista = mDao.findAll(InvTipo.class);
-		List<InvTipo> listaNueva = new ArrayList<InvTipo>();
-		for (InvTipo mat : lista) {
-			if (mat.getTipEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(InvTipo.class, "tip_estado=true", null);
 	}
 
 	public InvTipo findTipoMaterialById(int id) throws Exception {

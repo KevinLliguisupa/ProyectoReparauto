@@ -163,9 +163,9 @@ public class InvMaterial implements Serializable {
 		return invMaterialSalida;
 	}
 	public String getStock() {
-		if (this.matExistencia.equals(0))
-			return "outofstock";
+		if (this.matExistencia.compareTo(matExistencia.ZERO)==0)
+			return "SIN STOCK";
 		else
-			return "instock";
+			return "EN STOCK";
 	}
 }

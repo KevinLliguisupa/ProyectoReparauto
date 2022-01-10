@@ -96,25 +96,23 @@ public class BeanJefeTaller implements Serializable {
 		listaVehiculos = mJefeTaller.findAllVehiculos();
 		listaEmpleados = mJefeTaller.findAllEmpleados();
 		listaSalidas = mJefeTaller.findAllSalidas();
-		listaMateriales = mJefeTaller.findAllMaterial();
+		listaMateriales =  mJefeTaller.findAllMaterial();
+		listaTipo= mJefeTaller.findAllTipoMaterial();
 		idMaterial = 0;
 		idProveedor = 0;
 		id_vehiculos = 0;
 		// Formato de la fecha
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
 		// obtener la fecha de inicio:
 		fechaInicio = sdf.parse("2000-01-01");
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
-		listaMateriales = new ArrayList<InvMaterial>();
 		material = new InvMaterial();
+		nuevoMaterial=new InvMaterial();
 		material.setMatId(1);
 		tipo = new InvTipo();
 		nuevoTipo = new InvTipo();
-		for (InvMaterial m: listaMateriales) {
-			System.out.println("elemento"+m.getMatNombre());
-		}
+
 	}
 
 	public List<InvSalida> getListaSalidas() {
@@ -314,6 +312,20 @@ public class BeanJefeTaller implements Serializable {
 	public void actionDeleteMaterial(InvMaterial material) throws Exception {
 		mJefeTaller.deleteMaterial(material);
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+	}
+	
+	public void actionCreateMaterial(){
+		try {
+			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			idTipo=0;
+			mJefeTaller.createMaterial(this.nuevoMaterial,selectTipo);
+			nuevoMaterial=new InvMaterial();
+			listaMateriales=mJefeTaller.findAllMaterial();
+			JSFUtil.crearMensajeINFO("Material Creado");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	// nuevo verificado
@@ -549,6 +561,7 @@ public class BeanJefeTaller implements Serializable {
 
 	public void actionCreateTipoMaterial() throws Exception {
 		mJefeTaller.CreateTipoMaterialExtra(this.nuevoTipo);
+		listaTipo=mJefeTaller.findAllTipoMaterial();
 	}
 
 	public void actionUpdateTipoMaterial() throws Exception {
