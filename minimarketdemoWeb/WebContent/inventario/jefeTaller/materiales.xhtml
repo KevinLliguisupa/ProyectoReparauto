@@ -52,8 +52,6 @@
 				required="true" requiredMessage="Ingrese el link de la imagen" />
 
 			<h:outputText value="Tipo:" />
-
-
 			<p:selectOneMenu filterMatchMode="contains" filter="true"
 				value="#{beanJefeTaller.idTipo}">
 				<f:selectItem itemLabel="Seleccione tipo..."
@@ -62,12 +60,9 @@
 					itemLabel="#{tipo.tipNombre}" itemValue="#{tipo.tipId}"></f:selectItems>
 			</p:selectOneMenu>
 
-
 			<p:commandButton value="Añadir Material"
 				actionListener="#{beanJefeTaller.actionCreateMaterial()}"
 				update="@form,:form2" icon="pi pi-save" />
-
-
 		</p:panelGrid>
 	</h:form>
 
@@ -88,60 +83,88 @@
 					<p:panel header="" style="text-align:center">
 						<h:panelGrid columns="1" style="width:100%">
 							<div style="text-align: left;">
-
 								<i class="pi pi-tag product-category-icon" /> <span
 									class="product-category">#{material.invTipo.tipNombre}</span>
-
 							</div>
 
 							<div style="text-align: right">
-
-								<span style="font-weight:bold">#{material.stock}</span>
-
+								<span style="font-weight: bold">#{material.stock}</span>
 							</div>
 
 							<p:graphicImage value="#{material.matImagen}" height="200" />
+							<h:outputText value="#{material.matNombre}"
+								style="font-weight:bold; font-size:20px" />
 
-							<h:outputText value="#{material.matNombre}" style="font-weight:bold; font-size:20px"/>
-							<div class="product-description" style="font-size:17px" >Disp:
+							<div class="product-description" style="font-size: 17px">Disp:
 								#{material.matExistencia} #{material.matUnidadMedida}</div>
 
-
-
-
-							<div style="text-align: left ">
-
-								<span style="font-weight:bold; font-size:25px" >$#{material.matPrecioVenta}</span>
-
+							<div style="text-align: left">
+								<span style="font-weight: bold; font-size: 25px">$#{material.matPrecioVenta}</span>
 							</div>
 
 							<p:commandButton icon="pi pi-times-circle" title="Eliminar"
 								styleClass="ui-button-danger" update="@form"
-								actionListener="#{beanSegUsuarios.actionListenerEliminarUsuario(usuario.idSegUsuario)}">
+								actionListener="#{beanJefeTaller.actionListenerDeleteMaterial(material)}">
 								<p:confirm header="Confirmación"
-									message="Desea borrar este usuario?" icon="pi pi-info-circle" />
+									message="Desea borrar este Material?" icon="pi pi-info-circle" />
 
-
-								<p:commandButton type="button" title="Editar"
-									icon="pi pi-pencil">
-
-								</p:commandButton>
+								<p:commandButton icon="pi pi-pencil" title="Editar"
+									actionListener="#{beanJefeTaller.actionListenerCargarMaterial(material)}"
+									oncomplete="PF('dialogoEdicion').show()" update=":formEdicion" />
 
 							</p:commandButton>
 
 						</h:panelGrid>
+
 					</p:panel>
 				</p:dataViewGridItem>
-
-
-
 			</p:dataGrid>
-
-
 		</h:form>
 	</div>
-
-
+	
+<p:dialog header="Edición" widgetVar="dialogoEdicion" width="550">
+		<h:form id="formEdicion">
+			<p:panelGrid columns="2" layout="grid">
+			
+				<h:outputText value="Nombre:" />
+				<p:inputText value="#{beanJefeTaller.material.matNombre}"
+					required="true" requiredMessage="Ingrese el nombre del material" />
+					
+				<h:outputText value="Precio Venta:" />
+				<p:inputText value="#{beanJefeTaller.material.matPrecioVenta}" />
+				
+				<h:outputText value="Unidad Medida:" />
+			<p:inputText value="#{beanJefeTaller.material.matUnidadMedida}"
+				required="true" requiredMessage="Ingrese la unidad de medida" />
+				
+				<h:outputText value="Link Imagen:" />
+			<p:inputText value="#{beanJefeTaller.material.matImagen}"
+				required="true" requiredMessage="Ingrese el link de la imagen" />
+				
+				<h:outputText value="Tipo:" />
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanJefeTaller.idTipo}">
+				<f:selectItem itemLabel="#{beanJefeTaller.material.invTipo.tipNombre}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanJefeTaller.listaTipo}" var="tipo"
+					itemLabel="#{tipo.tipNombre}" itemValue="#{tipo.tipId}"></f:selectItems>
+			</p:selectOneMenu>
+				
+				<p:commandButton value="Guardar" icon="pi pi-save"
+					update="@form,:form2"
+					actionListener="#{beanJefeTaller.actionListenerGuardarEdicionMaterial()}" oncomplete="PF('dialogoEdicion').hide()"></p:commandButton>
+			</p:panelGrid>
+			
+		</h:form>
+	</p:dialog>
+	
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 
 </body>
 </html>

@@ -22,6 +22,7 @@ import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
 
@@ -309,9 +310,17 @@ public class BeanJefeTaller implements Serializable {
 		this.cantidadRetirar = cantidadRetirar;
 	}
 
-	public void actionDeleteMaterial(InvMaterial material) throws Exception {
-		mJefeTaller.deleteMaterial(material);
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+	public void actionListenerDeleteMaterial(InvMaterial material) throws Exception {
+		try {
+			mJefeTaller.deleteMaterial(material);
+			listaMateriales =  mJefeTaller.findAllMaterial();
+			JSFUtil.crearMensajeINFO("Material eliminado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+		
+
 	}
 	
 	public void actionCreateMaterial(){
@@ -332,6 +341,20 @@ public class BeanJefeTaller implements Serializable {
 	public void actionDeleteSeleccionMaterial(InvMaterial material) throws Exception {
 		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
 	}
+	
+	public void actionListenerGuardarEdicionMaterial() {
+		try {
+			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			idTipo=0;
+			material.setInvTipo(selectTipo);
+			mJefeTaller.updatematerial(material);
+			JSFUtil.crearMensajeINFO("Material editado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
 
 	// modificado verificado
 	public void actionIngresarMaterial() throws Exception {
@@ -351,6 +374,10 @@ public class BeanJefeTaller implements Serializable {
 
 	}
 
+	public void actionListenerCargarMaterial(InvMaterial selectMaterial) {
+		material=selectMaterial;
+	}
+	
 	// nuevo
 	public void actionSeleccinarMaterialRetirar() throws Exception {
 		material = mJefeTaller.findMaterialId(idMaterial);
@@ -593,5 +620,4 @@ public class BeanJefeTaller implements Serializable {
 		return "ingresarmaterialexistente?faces-redirect=true";
 	}
 	
-
 }

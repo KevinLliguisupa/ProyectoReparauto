@@ -36,7 +36,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvMaterial> findAllMaterial() {
-		return  mDao.findWhere(InvMaterial.class, "mat_estado=true", null);
+		return  mDao.findWhere(InvMaterial.class, "mat_estado=true", "mat_nombre ASC");
 	}
 
 	public void createMaterial(InvMaterial material, InvTipo selectTipo) throws Exception {
@@ -44,7 +44,6 @@ public class ManagerJefeTaller {
 		
 		newMaterial.setMatEstado(true);
 		newMaterial.setMatExistencia(new BigDecimal(0));
-
 		newMaterial.setMatNombre(material.getMatNombre());
 		newMaterial.setMatPrecioVenta(material.getMatPrecioVenta());
 		newMaterial.setMatUnidadMedida(material.getMatUnidadMedida());
@@ -59,6 +58,7 @@ public class ManagerJefeTaller {
 		mDao.actualizar(material);
 
 	}
+	
 
 	// nuevo verificado
 	public void ingresarCabeceraIngreso(InvProveedor proveedor) throws Exception {
