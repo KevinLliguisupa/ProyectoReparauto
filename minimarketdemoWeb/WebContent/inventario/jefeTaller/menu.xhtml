@@ -13,6 +13,8 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+			<p:menuitem value="Administrar Materiales" icon="pi pi-book"
+				action="materiales" />
 			<p:menuitem value="Administrar Compras" icon="pi pi-users"
 				action="maestroIngreso" />
 			<p:menuitem value="Actualizar Stock" icon="pi pi-users"
@@ -21,7 +23,7 @@
 				action="maestroRetiro" />
 			<p:menuitem value="Administrar Categorias" icon="pi pi-angle-double-up"
 				action="tipomateriales" />
-
+				
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"

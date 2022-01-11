@@ -59,6 +59,7 @@
 						actionListener="#{beanSegUsuarios.actionListenerActivarDesactivarUsuario(usuario.idSegUsuario)}" />
 					<p:commandButton icon="pi pi-pencil" title="editar"
 						action="#{beanSegUsuarios.actionSeleccionarEdicionUsuario(usuario)}" />
+						
 					<p:commandButton icon="pi pi-times-circle" title="eliminar"
 						styleClass="ui-button-danger" update="@form"
 						actionListener="#{beanSegUsuarios.actionListenerEliminarUsuario(usuario.idSegUsuario)}">

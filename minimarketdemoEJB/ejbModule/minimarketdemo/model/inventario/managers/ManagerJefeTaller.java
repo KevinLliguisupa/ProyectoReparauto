@@ -36,21 +36,29 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvMaterial> findAllMaterial() {
-		List<InvMaterial> lista = mDao.findAll(InvMaterial.class);
-		List<InvMaterial> listaNueva = new ArrayList<InvMaterial>();
-		for (InvMaterial mat : lista) {
-			if (mat.getMatEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(InvMaterial.class, "mat_estado=true", "mat_nombre ASC");
 	}
 
+	public void createMaterial(InvMaterial material, InvTipo selectTipo) throws Exception {
+		InvMaterial newMaterial = new InvMaterial();
+		
+		newMaterial.setMatEstado(true);
+		newMaterial.setMatExistencia(new BigDecimal(0));
+		newMaterial.setMatNombre(material.getMatNombre());
+		newMaterial.setMatPrecioVenta(material.getMatPrecioVenta());
+		newMaterial.setMatUnidadMedida(material.getMatUnidadMedida());
+		newMaterial.setMatImagen(material.getMatImagen());
+		newMaterial.setInvTipo(selectTipo);
+		
+		mDao.insertar(newMaterial);
+	}
+	
 	public void deleteMaterial(InvMaterial material) throws Exception {
 		material.setMatEstado(false);
 		mDao.actualizar(material);
 
 	}
+	
 
 	// nuevo verificado
 	public void ingresarCabeceraIngreso(InvProveedor proveedor) throws Exception {
@@ -60,21 +68,40 @@ public class ManagerJefeTaller {
 		mDao.insertar(cabIngreso);
 	}
 
-	// modificado verificado
+//	 modificado verificado
+//	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
+//
+//		for (InvMaterial material : listaMaterial) {
+//			mDao.insertar(material);
+//			material = (InvMaterial) mDao.findAll(InvMaterial.class).get((mDao.findAll(InvMaterial.class).size() - 1));
+//			InvMaterialIngreso detalleIngreso = new InvMaterialIngreso();
+//			detalleIngreso.setMatIngCantidad(material.getMatExistencia());
+//			detalleIngreso.setMatIngPrecioCompra(material.getMatPrecioVenta());
+//			detalleIngreso.setMatIngEstado(true);
+//			detalleIngreso.setInvIngreso(cabeceraIngreso);
+//			detalleIngreso.setInvMaterial(material);
+//			mDao.insertar(detalleIngreso);
+//		}
+	
+	
 	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
-
-		for (InvMaterial material : listaMaterial) {
-			mDao.insertar(material);
-			material = (InvMaterial) mDao.findAll(InvMaterial.class).get((mDao.findAll(InvMaterial.class).size() - 1));
+		
+		for (InvMaterial m : listaMaterial) {
+			int idmateirla=m.getMatId();
+			System.out.println("material id"+idmateirla);
 			InvMaterialIngreso detalleIngreso = new InvMaterialIngreso();
-			detalleIngreso.setMatIngCantidad(material.getMatExistencia());
-			detalleIngreso.setMatIngPrecioCompra(material.getMatPrecioVenta());
-			detalleIngreso.setMatIngEstado(true);
 			detalleIngreso.setInvIngreso(cabeceraIngreso);
-			detalleIngreso.setInvMaterial(material);
+			detalleIngreso.setMatIngEstado(true);
+			detalleIngreso.setMatIngCantidad(m.getMatExistencia());
+			//Hay que cambiar precio venta por compra
+			detalleIngreso.setMatIngPrecioCompra(m.getMatPrecioVenta());
+			detalleIngreso.setInvMaterial(m);
+			//InvMaterial materialAux = this.findMaterialId(m.getMatId());
+			//this.calcularSock(materialAux, m.getMatExistencia(), true);
+			//mDao.actualizar(materialAux);
 			mDao.insertar(detalleIngreso);
 		}
-
+		
 	}
 
 	// modificado
@@ -121,14 +148,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvTipo> findAllTipoMaterial() {
-		List<InvTipo> lista = mDao.findAll(InvTipo.class);
-		List<InvTipo> listaNueva = new ArrayList<InvTipo>();
-		for (InvTipo mat : lista) {
-			if (mat.getTipEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(InvTipo.class, "tip_estado=true", null);
 	}
 
 	public InvTipo findTipoMaterialById(int id) throws Exception {
@@ -232,16 +252,35 @@ public class ManagerJefeTaller {
 	}
 
 	// nuevo verificado
-	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material) {
-		lista.add(new InvMaterial());
-		lista.get(lista.size() - 1).setMatNombre(material.getMatNombre());
-		lista.get(lista.size() - 1).setMatPrecioVenta(material.getMatPrecioVenta());
-		lista.get(lista.size() - 1).setMatEstado(true);
-		lista.get(lista.size() - 1).setMatExistencia(material.getMatExistencia());
-		lista.get(lista.size() - 1).setMatUnidadMedida(material.getMatUnidadMedida());
-		lista.get(lista.size() - 1).setInvTipo(material.getInvTipo());
+//	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material) {
+//		lista.add(new InvMaterial());
+//		lista.get(lista.size() - 1).setMatNombre(material.getMatNombre());
+//		lista.get(lista.size() - 1).setMatPrecioVenta(material.getMatPrecioVenta());
+//		lista.get(lista.size() - 1).setMatEstado(true);
+//		lista.get(lista.size() - 1).setMatExistencia(material.getMatExistencia());
+//		lista.get(lista.size() - 1).setMatUnidadMedida(material.getMatUnidadMedida());
+//		lista.get(lista.size() - 1).setInvTipo(material.getInvTipo());
+//	}
+	
+	
+	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material, int cantidad) {
+		material.setMatExistencia(new BigDecimal(cantidad));
+		lista.add(material);
 	}
 
+//	public void agregarMaterialRetirar(List<InvMaterial> lista, InvMaterial material, int cantidad) {
+//
+//		if (findMaterialByNameSeleccion(lista, material).getMatNombre() == null || lista.size() == 0) {
+//			material.setMatExistencia(new BigDecimal(cantidad));
+//			lista.add(material);
+//
+//		} else {
+//			int indice = lista.indexOf(findMaterialByNameSeleccion(lista, material));
+//			lista.get(indice).setMatExistencia(lista.get(indice).getMatExistencia().add(new BigDecimal(cantidad)));
+//		}
+//	}
+//	
+	
 	// nuevo verificado
 	public void eliminarSeleccionMaterial(List<InvMaterial> lista, InvMaterial material) {
 		int i = 0;

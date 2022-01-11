@@ -22,6 +22,7 @@ import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.SegModulo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
 
@@ -97,21 +98,22 @@ public class BeanJefeTaller implements Serializable {
 		listaEmpleados = mJefeTaller.findAllEmpleados();
 		listaSalidas = mJefeTaller.findAllSalidas();
 		listaMateriales = mJefeTaller.findAllMaterial();
+		listaTipo = mJefeTaller.findAllTipoMaterial();
 		idMaterial = 0;
 		idProveedor = 0;
 		id_vehiculos = 0;
 		// Formato de la fecha
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-		// obtener la fecha de ayer:
+		// obtener la fecha de inicio:
 		fechaInicio = sdf.parse("2000-01-01");
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
-		listaMateriales = new ArrayList<InvMaterial>();
 		material = new InvMaterial();
+		nuevoMaterial = new InvMaterial();
 		material.setMatId(1);
 		tipo = new InvTipo();
 		nuevoTipo = new InvTipo();
+
 	}
 
 	public List<InvSalida> getListaSalidas() {
@@ -121,8 +123,6 @@ public class BeanJefeTaller implements Serializable {
 	public void setListaSalidas(List<InvSalida> listaSalidas) {
 		this.listaSalidas = listaSalidas;
 	}
-
-	
 
 	public Date getFechaInicio() {
 		return fechaInicio;
@@ -308,9 +308,30 @@ public class BeanJefeTaller implements Serializable {
 		this.cantidadRetirar = cantidadRetirar;
 	}
 
-	public void actionDeleteMaterial(InvMaterial material) throws Exception {
-		mJefeTaller.deleteMaterial(material);
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+	public void actionListenerDeleteMaterial(InvMaterial material) throws Exception {
+		try {
+			mJefeTaller.deleteMaterial(material);
+			listaMateriales = mJefeTaller.findAllMaterial();
+			JSFUtil.crearMensajeINFO("Material eliminado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+
+	}
+
+	public void actionCreateMaterial() {
+		try {
+			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			idTipo = 0;
+			mJefeTaller.createMaterial(this.nuevoMaterial, selectTipo);
+			nuevoMaterial = new InvMaterial();
+			listaMateriales = mJefeTaller.findAllMaterial();
+			JSFUtil.crearMensajeINFO("Material Creado");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	// nuevo verificado
@@ -318,27 +339,57 @@ public class BeanJefeTaller implements Serializable {
 		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
 	}
 
-	// modificado verificado
-	public void actionIngresarMaterial() throws Exception {
-		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		nuevoMaterial = new InvMaterial();
-		listaMateriales = new ArrayList<InvMaterial>();
+	public void actionListenerGuardarEdicionMaterial() {
+		try {
+			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			idTipo = 0;
+			material.setInvTipo(selectTipo);
+			mJefeTaller.updatematerial(material);
+			JSFUtil.crearMensajeINFO("Material editado.");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
 
 	}
 
-	// nuevo verificado
-	public void actionSeleccinarMaterial() throws Exception {
-		tipo = mJefeTaller.findTipoMaterialById(idTipo);
-		nuevoMaterial.setInvTipo(tipo);
-		mJefeTaller.agregarMaterialSeleccion(listaMateriales, nuevoMaterial);
-		nuevoMaterial = new InvMaterial();
+	// modificado verificado
+	public void actionIngresarMaterial() throws Exception {
+		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
+		listaMateriales = new ArrayList<InvMaterial>();
+		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+		listaMatAux = mJefeTaller.findAllMaterial();
+		material = new InvMaterial();
+		cantidadIngresar=0;
 
+	}
+	
+	// nuevo verificado
+//	public void actionSeleccinarMaterial() throws Exception {
+//		tipo = mJefeTaller.findTipoMaterialById(idTipo);
+//		nuevoMaterial.setInvTipo(tipo);
+//		mJefeTaller.agregarMaterialSeleccion(listaMateriales, nuevoMaterial);
+//		nuevoMaterial = new InvMaterial();
+//
+//	}
+
+	public void actionSeleccionarMaterial() throws Exception {
+		material = mJefeTaller.findMaterialId(idMaterial);
+		idMaterial=0;
+		mJefeTaller.agregarMaterialSeleccion(listaMateriales, material,cantidadIngresar);
+
+	}
+
+
+	
+	public void actionListenerCargarMaterial(InvMaterial selectMaterial) {
+		material = selectMaterial;
 	}
 
 	// nuevo
 	public void actionSeleccinarMaterialRetirar() throws Exception {
 		material = mJefeTaller.findMaterialId(idMaterial);
+		idMaterial=0;
 		mJefeTaller.agregarMaterialRetirar(listaMateriales, material, cantidadRetirar);
 
 	}
@@ -527,7 +578,7 @@ public class BeanJefeTaller implements Serializable {
 		mJefeTaller.updatematerial(material);
 	}
 
-	public void actionAñadirMaterialExistente() throws Exception {
+	public void actionAgregarMaterialExistente() throws Exception {
 		mJefeTaller.añadirMaterialExistente(material, cantidadIngresar);
 		cantidadIngresar = 0;
 	}
@@ -546,6 +597,7 @@ public class BeanJefeTaller implements Serializable {
 
 	public void actionCreateTipoMaterial() throws Exception {
 		mJefeTaller.CreateTipoMaterialExtra(this.nuevoTipo);
+		listaTipo = mJefeTaller.findAllTipoMaterial();
 	}
 
 	public void actionUpdateTipoMaterial() throws Exception {
@@ -570,12 +622,10 @@ public class BeanJefeTaller implements Serializable {
 		IDMaterialTemporal = iDMaterialTemporal;
 	}
 
-	
 	// nuevo wilson
 	public String actioCargaVistaActualizarStock() {
-		listaMateriales= mJefeTaller.findAllMaterial();
+		listaMateriales = mJefeTaller.findAllMaterial();
 		return "ingresarmaterialexistente?faces-redirect=true";
 	}
-	
 
 }

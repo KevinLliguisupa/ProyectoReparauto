@@ -30,30 +30,49 @@
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
 
+
 	<h:form>
-		<p:panelGrid columns="2">
-			<h:outputText value="Nombre" />
-			<p:inputText value="#{beanJefeTaller.nuevoMaterial.matNombre}" />
-			<h:outputText value="Precio" />
-			<p:inputText value="#{beanJefeTaller.nuevoMaterial.matPrecioVenta}" />
-			<h:outputText value="Cantidad" />
-			<p:inputText value="#{beanJefeTaller.nuevoMaterial.matExistencia}" />
-			<h:outputText value="Unidad de Medida" />
-			<p:inputText value="#{beanJefeTaller.nuevoMaterial.matUnidadMedida}" />
-			<h:outputText value="Tipo" />
+		<p:panelGrid columns="3">
+
+
+			<h:outputText value="Categoria" />
 			<p:selectOneMenu value="#{beanJefeTaller.idTipo}">
-				
 				<f:selectItems value="#{beanJefeTaller.listaTipo}" var="u"
 					itemLabel="#{u.tipNombre}" itemValue="#{u.tipId}"></f:selectItems>
 			</p:selectOneMenu>
 
+			<p:commandButton value="Clasificar" icon="pi pi-save"
+				actionListener="#{beanJefeTaller.actionClasificarMateriales()}"
+				update="@form:,mat1"></p:commandButton>
 		</p:panelGrid>
+
+	</h:form>
+
+	<h:form id="mat1">
+		<p:panelGrid columns="2">
+
+
+			<h:outputText value="Material" />
+			<p:selectOneMenu value="#{beanJefeTaller.idMaterial}">
+				<f:selectItems value="#{beanJefeTaller.listaMatAux}" var="u"
+					itemLabel="#{u.matNombre} Unidades: #{u.matExistencia}"
+					itemValue="#{u.matId}"></f:selectItems>
+			</p:selectOneMenu>
+			<h:outputText value="Cantidad" />
+			<p:spinner value="#{beanJefeTaller.cantidadIngresar}" min="1"
+				max="100" />
+
+		</p:panelGrid>
+
 		<p:commandButton value="Seleccionar" icon="pi pi-save"
-			actionListener="#{beanJefeTaller.actionSeleccinarMaterial()}"
+			actionListener="#{beanJefeTaller.actionSeleccionarMaterial()}"
 			update="@form:,formDatos1"></p:commandButton>
+			
 		<p:commandButton value="Guardar" icon="pi pi-save"
 			actionListener="#{beanJefeTaller.actionIngresarMaterial()}"
-			update="@form:,formDatos,formDatos1"></p:commandButton>
+			update="@form:,formDatos,formDatos1">
+			</p:commandButton>
+
 	</h:form>
 
 
@@ -73,9 +92,10 @@
 					actionListener="#{beanJefeTaller.actionDatosActualizar(p)}" />
 
 
-				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true" style="width:40%">
+				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
+					style="width:40%">
 					<p:panel header="Actualizar Material">
-						<p:panelGrid columns="2" >
+						<p:panelGrid columns="2">
 							<h:outputText value="Id" />
 							<h:outputText value="#{beanJefeTaller.material.matId}" />
 
@@ -85,7 +105,7 @@
 							<p:inputText value="#{beanJefeTaller.material.matNombre}" />
 							<h:outputText value="Precio" />
 							<p:inputText value="#{beanJefeTaller.material.matPrecioVenta}" />
-							<h:outputText value="Cantidad" />
+							<h:outputText value="Cantidad Actual" />
 							<p:inputText value="#{beanJefeTaller.material.matExistencia}" />
 							<h:outputText value="Unidad de Medida" />
 							<p:inputText value="#{beanJefeTaller.material.matUnidadMedida}" />
