@@ -88,7 +88,6 @@ public class ManagerJefeTaller {
 		
 		for (InvMaterial m : listaMaterial) {
 			int idmateirla=m.getMatId();
-			System.out.println("material id"+idmateirla);
 			InvMaterialIngreso detalleIngreso = new InvMaterialIngreso();
 			detalleIngreso.setInvIngreso(cabeceraIngreso);
 			detalleIngreso.setMatIngEstado(true);
@@ -96,9 +95,9 @@ public class ManagerJefeTaller {
 			//Hay que cambiar precio venta por compra
 			detalleIngreso.setMatIngPrecioCompra(m.getMatPrecioVenta());
 			detalleIngreso.setInvMaterial(m);
-			//InvMaterial materialAux = this.findMaterialId(m.getMatId());
-			//this.calcularSock(materialAux, m.getMatExistencia(), true);
-			//mDao.actualizar(materialAux);
+			InvMaterial materialAux = this.findMaterialId(m.getMatId());
+			this.calcularSock(materialAux, m.getMatExistencia(), true);
+			mDao.actualizar(materialAux);
 			mDao.insertar(detalleIngreso);
 		}
 		
