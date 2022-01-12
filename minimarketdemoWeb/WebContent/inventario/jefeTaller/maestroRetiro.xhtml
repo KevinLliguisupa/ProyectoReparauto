@@ -30,27 +30,28 @@
 	<h:form>
 		<p:panelGrid columns="2">
 			<h:outputText value="Empleado" />
-			<p:selectOneMenu value="#{beanJefeTaller.id_empleados}">
-				
-				<f:selectItems value="#{beanJefeTaller.listaEmpleados}" var="u"
-					itemLabel="#{u.segUsuario.nombres} #{u.segUsuario.apellidos}" itemValue="#{u.idThmEmpleado}"></f:selectItems>
+			<p:selectOneMenu value="#{beanInvEgresos.id_empleados}">
+
+				<f:selectItems value="#{beanInvEgresos.listaEmpleados}" var="u"
+					itemLabel="#{u.segUsuario.nombres} #{u.segUsuario.apellidos}"
+					itemValue="#{u.idThmEmpleado}"></f:selectItems>
 			</p:selectOneMenu>
 			<h:outputText value="Vehiculo" />
-			<p:selectOneMenu value="#{beanJefeTaller.id_vehiculos}">
-				
-				<f:selectItems value="#{beanJefeTaller.listaVehiculos}" var="u"
+			<p:selectOneMenu value="#{beanInvEgresos.id_vehiculos}">
+
+				<f:selectItems value="#{beanInvEgresos.listaVehiculos}" var="u"
 					itemLabel="#{u.vehPlaca}" itemValue="#{u.vehId}"></f:selectItems>
 			</p:selectOneMenu>
 
 		</p:panelGrid>
-		<p:commandButton value="Guardar" icon="pi pi-save"
-			actionListener="#{beanJefeTaller.actionIngresarCabeceraRetiro()}"
-			update="@form:,formDatos"></p:commandButton>
+		<p:commandButton value="Guardar"
+			actionListener="#{beanInvEgresos.actionListenerIngresarCabeceraRetiro()}"
+			update="@form:,formDatos" icon="pi pi-save"></p:commandButton>
 	</h:form>
 
 	<h:form id="formDatos">
 
-		<p:dataTable value="#{beanJefeTaller.listaSalidas}" var="p">
+		<p:dataTable value="#{beanInvEgresos.listaSalidas}" var="p">
 			<p:column headerText="Id">
 				<h:outputText value="#{p.salId}" />
 			</p:column>
@@ -68,7 +69,7 @@
 
 				<p:commandButton icon="pi pi-pencil" title="Retirar Materiales"
 					value="Retirar Materiales"
-					 action="#{beanJefeTaller.actionCargarDetallesRetiro(p.salId)}"/>
+					action="#{beanInvEgresos.actionCargarDetallesRetiro(p.salId)}" />
 			</p:column>
 		</p:dataTable>
 	</h:form>

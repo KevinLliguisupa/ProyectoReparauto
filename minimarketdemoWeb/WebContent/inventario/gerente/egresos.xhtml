@@ -19,7 +19,7 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
-			
+			<p:menuitem value="Productos" icon="pi pi-briefcase" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -40,34 +40,34 @@
 					<h:outputText value="Material:" />
 
 					<p:selectOneMenu filterMatchMode="contains" filter="true"
-						value="#{beanGerente.idMaterial}">
+						value="#{beanInvEgresos.idMaterial}">
 						<f:selectItem itemLabel="Seleccione el material..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanGerente.listaMateriales}"
+						<f:selectItems value="#{beanInvEgresos.listaMateriales}"
 							var="material" itemLabel="#{material.matNombre}"
 							itemValue="#{material.matId}"></f:selectItems>
 					</p:selectOneMenu>
 
 					<h:outputText value="Fecha inicio:" />
-					<p:datePicker value="#{beanGerente.fechaInicio}" showTime="true" />
+					<p:datePicker value="#{beanInvEgresos.fechaInicio}" showTime="true" />
 
 					<h:outputText value="Vehículo:" />
 					<p:selectOneMenu filterMatchMode="contains" filter="true"
-						value="#{beanGerente.id_vehiculos}">
+						value="#{beanInvEgresos.id_vehiculos}">
 						<f:selectItem itemLabel="Seleccione el vehiculo..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanGerente.listaVehiculos}"
+						<f:selectItems value="#{beanInvEgresos.listaVehiculos}"
 							var="vehiculo" itemLabel="#{vehiculo.vehPlaca}"
 							itemValue="#{vehiculo.vehId}"></f:selectItems>
 					</p:selectOneMenu>
 
 					<h:outputText value="Fecha fin:" />
-					<p:datePicker value="#{beanGerente.fechaFin}" showTime="true" />
+					<p:datePicker value="#{beanInvEgresos.fechaFin}" showTime="true" />
 					<p:commandButton value="Consultar"
-						action="#{beanGerente.actionListenerConsultarSalidas()}"
+						action="#{beanInvEgresos.actionConsultarSalidas()}"
 						update="@form,:form2" icon="pi pi-search"></p:commandButton>
 					<p:commandButton value="Limpiar"
-						action="#{beanGerente.actionListenerLimpiar()}"
+						action="#{beanInvEgresos.actionLimpiar()}"
 						update="@form,:form2,form1" icon="pi pi-undo"></p:commandButton>
 				</p:panelGrid>
 			</p:panel>
@@ -79,7 +79,7 @@
 
 	<div class="card">
 		<h:form id="form2">
-			<p:dataTable var="salida" value="#{beanGerente.listaSalidas}"
+			<p:dataTable var="salida" value="#{beanInvEgresos.listaSalidas}"
 				rowKey="#{salida.salId}" paginator="true" rows="5">
 				<f:facet name="header">
                 Registro de salidas de material
@@ -104,14 +104,14 @@
 
 				<p:column headerText="Monto total">
 					<h:outputText
-						value="#{beanGerente.actioncalcularValorTotalSalida(salida.salId)}">
+						value="#{beanInvEgresos.actioncalcularValorTotalSalida(salida.salId)}">
 						<f:convertNumber type="currency" currencySymbol="$" />
 					</h:outputText>
 				</p:column>
 
 				<p:rowExpansion>
 					<p:dataTable var="registro"
-						value="#{beanGerente.actionSeleccionarSalida(salida.salId)}"
+						value="#{beanInvEgresos.actionSeleccionarSalida(salida.salId)}"
 						rowKey="#{registro.matSalId}">
 
 						<p:column headerText="Id material">

@@ -416,14 +416,14 @@ public class BeanJefeTaller implements Serializable {
 
 	}
 
-	public void actionRetirarMaterial() throws Exception {
-		mJefeTaller.retirarMaterial(listaMateriales, salida);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadRetirar = 0;
-	}
+//	public void actionRetirarMaterial() throws Exception {
+//		mJefeTaller.retirarMaterial(listaMateriales, salida);
+//		listaMateriales = new ArrayList<InvMaterial>();
+//		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
+//		listaMatAux = mJefeTaller.findAllMaterial();
+//		material = new InvMaterial();
+//		cantidadRetirar = 0;
+//	}
 
 	// Nuevo verificado
 	public void actionIngresarCabeceraIngreso() throws Exception {
@@ -435,16 +435,16 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	// Nuevo
-	public void actionIngresarCabeceraRetiro() throws Exception {
-		empleados = mJefeTaller.findEmpleadosById(id_empleados);
-		vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
-		mJefeTaller.ingresarCabeceraRetiro(vehiculos, empleados);
-		id_empleados = 0;
-		id_vehiculos = 0;
-		empleados = new ThmEmpleado();
-		vehiculos = new RecVehiculo();
-		listaSalidas = mJefeTaller.findAllSalidas();
-	}
+//	public void actionIngresarCabeceraRetiro() throws Exception {
+//		empleados = mJefeTaller.findEmpleadosById(id_empleados);
+//		vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
+//		mJefeTaller.ingresarCabeceraRetiro(vehiculos, empleados);
+//		id_empleados = 0;
+//		id_vehiculos = 0;
+//		empleados = new ThmEmpleado();
+//		vehiculos = new RecVehiculo();
+//		listaSalidas = mJefeTaller.findAllSalidas();
+//	}
 
 	// Nuevo verificado
 	public String actionCargarDetalles(int id) throws Exception {

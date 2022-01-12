@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -21,6 +22,7 @@ import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
 /**
  * Session Bean implementation class ManagerJefeTaller
@@ -30,7 +32,10 @@ import minimarketdemo.model.core.managers.ManagerDAO;
 public class ManagerJefeTaller {
 	@EJB
 	private ManagerDAO mDao;
-
+	
+	@EJB
+	private ManagerAuditoria mAuditoria;
+	
 	public ManagerJefeTaller() {
 
 	}
@@ -66,23 +71,7 @@ public class ManagerJefeTaller {
 		cabIngreso.setIngFecha(new Date());
 		cabIngreso.setInvProveedor(proveedor);
 		mDao.insertar(cabIngreso);
-	}
-
-//	 modificado verificado
-//	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
-//
-//		for (InvMaterial material : listaMaterial) {
-//			mDao.insertar(material);
-//			material = (InvMaterial) mDao.findAll(InvMaterial.class).get((mDao.findAll(InvMaterial.class).size() - 1));
-//			InvMaterialIngreso detalleIngreso = new InvMaterialIngreso();
-//			detalleIngreso.setMatIngCantidad(material.getMatExistencia());
-//			detalleIngreso.setMatIngPrecioCompra(material.getMatPrecioVenta());
-//			detalleIngreso.setMatIngEstado(true);
-//			detalleIngreso.setInvIngreso(cabeceraIngreso);
-//			detalleIngreso.setInvMaterial(material);
-//			mDao.insertar(detalleIngreso);
-//		}
-	
+	}	
 	
 	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
 		
@@ -104,8 +93,7 @@ public class ManagerJefeTaller {
 	}
 
 	// modificado
-	public void retirarMaterial(List<InvMaterial> lista, InvSalida cabeceraSalida) throws Exception {
-
+	public void retirarMaterial(LoginDTO loginDTO, List<InvMaterial> lista, InvSalida cabeceraSalida) throws Exception {
 		for (InvMaterial m : lista) {
 			InvMaterialSalida detalleSalida = new InvMaterialSalida();
 			detalleSalida.setInvSalida(cabeceraSalida);
@@ -117,9 +105,12 @@ public class ManagerJefeTaller {
 			this.calcularSock(materialAux, m.getMatExistencia(), false);
 			mDao.actualizar(materialAux);
 			mDao.insertar(detalleSalida);
+			mAuditoria.mostrarLog(loginDTO, getClass(), "Retiro Material", "Retiro "+m.getMatExistencia()+" "+
+			m.getMatNombre()+" Usu. "+detalleSalida.getInvSalida().getThmEmpleado().getSegUsuario().getIdSegUsuario()+
+			" Veh. "+detalleSalida.getInvSalida().getRecVehiculo().getVehId());
 		}
 
-	}
+	}	
 
 	public void calcularSock(InvMaterial material, BigDecimal cantidad, boolean ingreso) {
 		if (ingreso) {
@@ -131,15 +122,6 @@ public class ManagerJefeTaller {
 
 	public void updateMaterial(InvMaterial material) throws Exception {
 		mDao.actualizar(material);
-	}
-
-	// nuevo
-	public void ingresarCabeceraRetiro(RecVehiculo vehiculo, ThmEmpleado empleado) throws Exception {
-		InvSalida cabSalida = new InvSalida();
-		cabSalida.setSalFecha(new Date());
-		cabSalida.setRecVehiculo(vehiculo);
-		cabSalida.setThmEmpleado(empleado);
-		mDao.insertar(cabSalida);
 	}
 
 	public InvMaterial findMaterialId(int id) throws Exception {
@@ -205,14 +187,15 @@ public class ManagerJefeTaller {
 	public ThmEmpleado findEmpleadosById(int id) throws Exception {
 		return (ThmEmpleado) mDao.findById(ThmEmpleado.class, id);
 	}
-
+	
 	public List<InvIngreso> findAllIngresos() {
-		return mDao.findAll(InvIngreso.class);
+		return mDao.findAll(InvIngreso.class, "ingFecha", false);
 	}
-
+	
 	public List<InvSalida> findAllSalidas() {
-		return mDao.findAll(InvSalida.class);
+		return mDao.findAll(InvSalida.class, "salFecha", false);
 	}
+	
 
 	// nuevo verificado
 	public InvIngreso findIngresoById(int id) throws Exception {
@@ -250,16 +233,7 @@ public class ManagerJefeTaller {
 		return listaRetiros;
 	}
 
-	// nuevo verificado
-//	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material) {
-//		lista.add(new InvMaterial());
-//		lista.get(lista.size() - 1).setMatNombre(material.getMatNombre());
-//		lista.get(lista.size() - 1).setMatPrecioVenta(material.getMatPrecioVenta());
-//		lista.get(lista.size() - 1).setMatEstado(true);
-//		lista.get(lista.size() - 1).setMatExistencia(material.getMatExistencia());
-//		lista.get(lista.size() - 1).setMatUnidadMedida(material.getMatUnidadMedida());
-//		lista.get(lista.size() - 1).setInvTipo(material.getInvTipo());
-//	}
+
 	
 	
 	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material, int cantidad) {
@@ -267,18 +241,7 @@ public class ManagerJefeTaller {
 		lista.add(material);
 	}
 
-//	public void agregarMaterialRetirar(List<InvMaterial> lista, InvMaterial material, int cantidad) {
-//
-//		if (findMaterialByNameSeleccion(lista, material).getMatNombre() == null || lista.size() == 0) {
-//			material.setMatExistencia(new BigDecimal(cantidad));
-//			lista.add(material);
-//
-//		} else {
-//			int indice = lista.indexOf(findMaterialByNameSeleccion(lista, material));
-//			lista.get(indice).setMatExistencia(lista.get(indice).getMatExistencia().add(new BigDecimal(cantidad)));
-//		}
-//	}
-//	
+
 	
 	// nuevo verificado
 	public void eliminarSeleccionMaterial(List<InvMaterial> lista, InvMaterial material) {
@@ -342,6 +305,17 @@ public class ManagerJefeTaller {
 			lista.get(indice).setMatExistencia(lista.get(indice).getMatExistencia().add(new BigDecimal(cantidad)));
 		}
 	}
+	
+	public void ingresarCabeceraRetiro(LoginDTO loginDTO, RecVehiculo vehiculo, ThmEmpleado empleado) throws Exception {
+		InvSalida cabSalida = new InvSalida();
+		cabSalida.setSalFecha(new Date());
+		cabSalida.setRecVehiculo(vehiculo);
+		cabSalida.setThmEmpleado(empleado);
+		mDao.insertar(cabSalida);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "Insertar Retiro", "Retiro de material Usu. "+
+		cabSalida.getThmEmpleado().getSegUsuario().getIdSegUsuario()+" "+" Veh. "+cabSalida.getRecVehiculo().getVehId());
+	}
+	
 
 	public List<InvMaterialIngreso> findMaterialIngreso(int id) throws Exception {
 		String consulta = "ing_id=" + id;
