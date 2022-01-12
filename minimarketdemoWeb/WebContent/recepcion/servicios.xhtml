@@ -40,73 +40,22 @@
 				</p:panelGrid>
 			</h:form>
 		</div>
-		
 		<h:form id="form2">
-			<p:panel header="Clientes actuales:" toggleable="true"
+			<p:panel header="Información de los servicios" toggleable="true"
 				collapsed="false" style="width:95%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanRecCliente.listaClientes}" var="cli"
 					paginator="true" rows="10">
-					<p:column headerText="Editar Cliente">
-						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
-							actionListener="#{beanRecCliente.actionfindClienteByID(cli)}" />
-						<p:overlayPanel for="cmdEdicion" dynamic="true"
-							showCloseIcon="true">
-							<p:panel header="Editar Cliente"
-								style="width:450px; margin: 0 auto ">
-								<p:panelGrid columns="2" style="margin: 0 auto">
-									<h:outputText value="Nombre del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliNombreApellido}" />
-									<h:outputText value="Cédula del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCedula}" />
-									<h:outputText value="Celular del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCelular}" />
-									<h:outputText value="Dirección del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliDireccion}" />
-									<h:outputText value="Correo del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
-									<h:outputText value="Correo del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
-								</p:panelGrid>
-								<p:commandButton value="Guardar cambios"
-									actionListener="#{beanRecCliente.actionActualizarCliente()}"
-									update="@form,:form2" icon="pi pi-save" />
-								<p:commandButton value="Eliminar Cliente"
-									actionListener="#{beanRecCliente.actionEliminarCliente(beanRecCliente.cliente)}"
-									update="@form,:form2"/>
-							</p:panel>
-						</p:overlayPanel>
+					<p:column headerText="Estado del servicio">
+						<h:outputText value="Estado" />
 					</p:column>
-					<p:column headerText="ID del cliente" filterBy="#{cli.cliId}"
-						filterMatchMode="contains">
-						<h:outputText value="#{cli.cliId}" />
+					<p:column headerText="Descripción del servicio">
+						<h:outputText value="Desc" />
 					</p:column>
-					<p:column headerText="Cédula"
-						filterBy="#{cli.cliCedula}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliCedula}" />
+					<p:column headerText="Precio del servicio">
+						<h:outputText value="Precio" />
 					</p:column>
-					<p:column headerText="Nombre"
-						filterBy="#{cli.cliNombreApellido}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliNombreApellido}" />
-					</p:column>
-					<p:column headerText="Celular"
-						filterBy="#{cli.cliCelular}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliCelular}" />
-					</p:column>
-					<p:column headerText="Dirección"
-						filterBy="#{cli.cliDireccion}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliDireccion}" />
-					</p:column>
-					<p:column headerText="Correo"
-						filterBy="#{cli.cliCorreo}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliCorreo}" />
-					</p:column>
-					<p:column headerText="Teléfono"
-						filterBy="#{cli.cliTelefono}" filterMatchMode="contains">
-						<h:outputText value="#{cli.cliTelefono}" />
-					</p:column>
-					<p:column headerText="Estado">
-						<h:outputText value="#{cli.cliEstado}" />
+					<p:column headerText="Servicio concluido">
+						<h:selectBooleanCheckbox value="true" />
 					</p:column>
 				</p:dataTable>
 			</p:panel>
