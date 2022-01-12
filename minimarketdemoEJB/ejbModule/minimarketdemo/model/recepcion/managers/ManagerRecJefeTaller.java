@@ -8,6 +8,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.InvMaterial;
+import minimarketdemo.model.core.entities.RecCliente;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
@@ -55,5 +57,32 @@ public class ManagerRecJefeTaller {
     	vehiculo.setVehEstado(false);
     	mDao.actualizar(vehiculo);
     	mAuditoria.mostrarLog(loginDto, getClass(), "eliminarVehiculo", "Eliminacion de Vehiculo loginDto"+vehiculo.getVehPlaca());
+    }
+    
+    //Crud Clientes
+    public List<RecCliente> findAllClientes(){
+    	return mDao.findWhere(RecCliente.class, "cli_estado=true", null);
+    }
+    public void ingresarCliente(RecCliente ClienteNuevo) throws Exception {
+    	RecCliente Tmp=new RecCliente();
+    	Tmp.setCliCedula(ClienteNuevo.getCliCedula());
+    	Tmp.setCliCelular(ClienteNuevo.getCliCelular());
+    	Tmp.setCliCorreo(ClienteNuevo.getCliCorreo());
+    	Tmp.setCliDireccion(ClienteNuevo.getCliDireccion());
+    	Tmp.setCliNombreApellido(ClienteNuevo.getCliNombreApellido());
+    	Tmp.setCliTelefono(ClienteNuevo.getCliTelefono());
+    	Tmp.setCliEstado(true);
+    	mDao.insertar(Tmp);
+    	ClienteNuevo=new RecCliente();
+    }
+    public void eliminarCliente(RecCliente ClienteEliminado) throws Exception {
+    	ClienteEliminado.setCliEstado(false);
+    	mDao.actualizar(ClienteEliminado);
+    }
+    public void actualizarCliente(RecCliente ClienteUpdate) throws Exception {
+    	mDao.actualizar(ClienteUpdate);
+    }
+    public RecCliente findClienteByID(RecCliente CliBusqueda) throws Exception {
+    	return (RecCliente) mDao.findById(RecCliente.class, CliBusqueda.getCliId());
     }
 }
