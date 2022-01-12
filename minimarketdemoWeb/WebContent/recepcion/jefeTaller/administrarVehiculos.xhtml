@@ -32,16 +32,16 @@
 	</h:form>
 	<p:panel>
 		<h:form>
-			<p:dataTable value="#{beanRecJefeTaller.listaRecVehiculos}" var="p"
+			<p:dataTable value="#{beanRecVehiculo.listaRecVehiculos}" var="p"
 				paginator="true" rows="10">
 				
 				
 				<p:column headerText="OPCIONES">
 					<p:commandButton icon="pi pi-pencil" title="editar" value="Editar"
-						action="#{beanRecJefeTaller.actionCargarDetallesVehiculo(p.vehId)}" />
+						action="#{beanRecVehiculo.actionCargarDetallesVehiculo(p.vehId)}" />
 					<p:commandButton icon="pi pi-times-circle" title="eliminar" value="Eliminar"
 						styleClass="ui-button-danger" update="@form"
-						actionListener="#{beanRecJefeTaller.actionEliminarVehiculo(p.vehId)}">
+						actionListener="#{beanRecVehiculo.actionEliminarVehiculo(p.vehId)}">
 						<p:confirm header="Confirmación"
 							message="Desea borrar este usuario?" icon="pi pi-info-circle" />
 					</p:commandButton>

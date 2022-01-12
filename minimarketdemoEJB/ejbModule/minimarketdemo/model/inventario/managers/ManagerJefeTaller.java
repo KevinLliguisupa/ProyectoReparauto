@@ -69,21 +69,7 @@ public class ManagerJefeTaller {
 	}
 
 //	 modificado verificado
-//	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
-//
-//		for (InvMaterial material : listaMaterial) {
-//			mDao.insertar(material);
-//			material = (InvMaterial) mDao.findAll(InvMaterial.class).get((mDao.findAll(InvMaterial.class).size() - 1));
-//			InvMaterialIngreso detalleIngreso = new InvMaterialIngreso();
-//			detalleIngreso.setMatIngCantidad(material.getMatExistencia());
-//			detalleIngreso.setMatIngPrecioCompra(material.getMatPrecioVenta());
-//			detalleIngreso.setMatIngEstado(true);
-//			detalleIngreso.setInvIngreso(cabeceraIngreso);
-//			detalleIngreso.setInvMaterial(material);
-//			mDao.insertar(detalleIngreso);
-//		}
-	
-	
+
 	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
 		
 		for (InvMaterial m : listaMaterial) {
@@ -156,6 +142,7 @@ public class ManagerJefeTaller {
 	}
 
 	public void createTipoMaterial(InvTipo tipoMaterial) throws Exception {
+		tipoMaterial.setTipEstado(true);
 		mDao.insertar(tipoMaterial);
 	}
 

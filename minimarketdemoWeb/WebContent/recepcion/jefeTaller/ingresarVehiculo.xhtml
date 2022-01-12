@@ -33,37 +33,37 @@
 	<h:form>
 		<p:panelGrid columns="2">
 			<h:outputText value="Placa" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehPlaca}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehPlaca}" />
 
 			<h:outputText value="Marca" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehMarca}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehMarca}" />
 
 			<h:outputText value="Color" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehColor}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehColor}" />
 
 			<h:outputText value="Año" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehAnio}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehAnio}" />
 
 			<h:outputText value="Clave" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehClave}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehClave}" />
 
 			<h:outputText value="Numero de chasis" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehNumeroChasis}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehNumeroChasis}" />
 
 			<h:outputText value="Motor" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehMotor}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehMotor}" />
 
 			<h:outputText value="Kilometraje" />
-			<p:inputText value="#{beanRecJefeTaller.vehiculo.vehKilometraje}" />
+			<p:inputText value="#{beanRecVehiculo.vehiculo.vehKilometraje}" />
 
 			<h:outputText value="Nivel de combustible" />
 			<p:inputText
-				value="#{beanRecJefeTaller.vehiculo.vehNivelCombustible}" />
+				value="#{beanRecVehiculo.vehiculo.vehNivelCombustible}" />
 
 
 		</p:panelGrid>
 		<p:commandButton value="Guardar" icon="pi pi-save"
-			action="#{beanRecJefeTaller.actionRegistrarVehiculo()}"
+			action="#{beanRecVehiculo.actionRegistrarVehiculo()}"
 			update="@form"></p:commandButton>
 	</h:form>
 

@@ -4,11 +4,18 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
 <h:head>
 	<title>Proveedores</title>
 </h:head>
 <body>
+
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
@@ -26,19 +33,16 @@
 	</h:form>
 
 	<div>
-		<p:messages>
-			<p:autoUpdate />
-		</p:messages>
 		<h:form id="form1">
 			<p:panelGrid columns="2" value="Añadir proveedor">
 				<h:outputText value="Nombre del proveedor:" />
-				<h:inputText value="#{beanGerente.nuevoProveedor.proNombre}" />
+				<p:inputText value="#{beanInvProveedor.proveedor.proNombre}" />
 				<h:outputText value="Correo del proveedor:" />
-				<h:inputText value="#{beanGerente.nuevoProveedor.proCorreo}" />
+				<p:inputText value="#{beanInvProveedor.proveedor.proCorreo}" />
 				<h:outputText value="Teléfono del proveedor:" />
-				<h:inputText value="#{beanGerente.nuevoProveedor.proTelefono}" />
+				<p:inputText value="#{beanInvProveedor.proveedor.proTelefono}" />
 				<p:commandButton value="Añadir Proveedor"
-					actionListener="#{beanGerente.actionCreateProveedor()}"
+					actionListener="#{beanInvProveedor.actionCreateProveedor()}"
 					update="@form,:form2" icon="pi pi-save" />
 			</p:panelGrid>
 		</h:form>
@@ -46,8 +50,50 @@
 			<p:panel header="Proveedores actuales:" toggleable="true"
 				collapsed="false" style="width:75%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanGerente.actionfindAllproveedores()}" var="prov"
+					value="#{beanInvProveedor.listaProveedores}" var="prov"
 					paginator="true" rows="10">
+
+
+
+					<p:column headerText="Opciones">
+
+
+
+
+						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
+							value="Editar"
+							actionListener="#{beanInvProveedor.actionfindProveedorByID(prov.proId)}" />
+						<p:overlayPanel for="cmdEdicion" dynamic="true"
+							showCloseIcon="true">
+							<p:panel header="Editar Proveedor"
+								style="width:225%; margin: 0 auto ">
+								<p:panelGrid columns="2" style="margin: 0 auto">
+									<h:outputText value="Nombre: " />
+									<h:inputText value="#{beanInvProveedor.proveedor.proNombre}" />
+									<h:outputText value="Correo: " />
+									<h:inputText value="#{beanInvProveedor.proveedor.proCorreo}" />
+									<h:outputText value="Telefono: " />
+									<h:inputText value="#{beanInvProveedor.proveedor.proTelefono}" />
+									<h:outputText value="Estado: " />
+									<p:inputText value="#{beanInvProveedor.proveedor.proEstado}" />
+								</p:panelGrid>
+								<p:commandButton value="Guardar cambios"
+									actionListener="#{beanInvProveedor.actionUpdateProveedor()}"
+									update="@form,:form2" icon="pi pi-save" />
+							</p:panel>
+						</p:overlayPanel>
+
+
+						<p:commandButton icon="pi pi-times-circle" title="eliminar"
+							value="Eliminar" styleClass="ui-button-danger" update="@form"
+							actionListener="#{beanInvProveedor.actionDeleteProveedor(prov)}">
+							<p:confirm header="Confirmación"
+								message="Desea borrar este proveedor?" icon="pi pi-info-circle" />
+						</p:commandButton>
+					</p:column>
+
+
+
 					<p:column headerText="ID del proveedor" filterBy="#{prov.proId}"
 						filterMatchMode="contains">
 						<h:outputText value="#{prov.proId}" />
@@ -64,32 +110,8 @@
 						filterBy="#{prov.proCorreo}" filterMatchMode="contains">
 						<h:outputText value="#{prov.proCorreo}" />
 					</p:column>
-					<p:column headerText="Estado del proveedor">
-						<h:outputText value="#{prov.proEstado}" />
-					</p:column>
-					<p:column headerText="Editar proveedor">
-						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
-							actionListener="#{beanGerente.actionfindProveedorByID(prov)}" />
-						<p:overlayPanel for="cmdEdicion" dynamic="true"
-							showCloseIcon="true">
-							<p:panel header="Editar Proveedor"
-								style="width:225%; margin: 0 auto ">
-								<p:panelGrid columns="2" style="margin: 0 auto">
-									<h:outputText value="Nombre: " />
-									<h:inputText value="#{beanGerente.proveedor.proNombre}" />
-									<h:outputText value="Correo: " />
-									<h:inputText value="#{beanGerente.proveedor.proCorreo}" />
-									<h:outputText value="Telefono: " />
-									<h:inputText value="#{beanGerente.proveedor.proTelefono}" />
-									<h:outputText value="Estado: " />
-									<p:inputText value="#{beanGerente.proveedor.proEstado}" />
-								</p:panelGrid>
-								<p:commandButton value="Guardar cambios"
-									actionListener="#{beanGerente.actionUpdateProveedor()}"
-									update="@form,:form2" icon="pi pi-save" />
-							</p:panel>
-						</p:overlayPanel>
-					</p:column>
+
+
 				</p:dataTable>
 			</p:panel>
 		</h:form>
