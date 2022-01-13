@@ -44,12 +44,12 @@ public class BeanInvIngresos implements Serializable {
 
 	private InvProveedor proveedor;
 	private InvMaterial material;
+	private InvMaterial nuevoMaterial;
 	private InvIngreso ingreso;
 	private BigDecimal precioCompra;
 	private InvTipo tipo;
 	private Date fechaInicio;
 	private Date fechaFin;
-	
 
 	@Inject
 	private BeanSegLogin beanSegLogin;
@@ -67,8 +67,9 @@ public class BeanInvIngresos implements Serializable {
 
 		idMaterial = 0;
 		idProveedor = 0;
-		precioCompra=new BigDecimal(0);
+		precioCompra = new BigDecimal(0);
 		material = new InvMaterial();
+		nuevoMaterial = new InvMaterial();
 		tipo = new InvTipo();
 		material.setMatId(1);
 
@@ -117,9 +118,14 @@ public class BeanInvIngresos implements Serializable {
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
 		listaTipo = mJefeTaller.findAllTipoMaterial();
 		material = new InvMaterial();
+		listaMatAux= mJefeTaller.findAllMaterial();
+		precioCompra= new BigDecimal(0);
+		cantidadIngresar=0;
+		idTipo=0;
 		listaMateriales = new ArrayList<InvMaterial>();
+		
 		return "detalleIngreso?faces-redirect=true";
-
+		
 	}
 
 	public BigDecimal actioncalcularValorTotalIngreso(int idIngreso) throws Exception {
@@ -138,29 +144,39 @@ public class BeanInvIngresos implements Serializable {
 	// Here are all the ACTIONLISTENER methods
 
 	public void actionListenerIngresarMaterial() throws Exception {
-		try {
-		mJefeTaller.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadIngresar = 0;
-		JSFUtil.crearMensajeINFO("Materiales ingresados correctamente");
-		} catch (Exception e) {
-			JSFUtil.crearMensajeERROR(e.getMessage());
-			e.printStackTrace();
+		if (listaMateriales.size() != 0) {
+			try {
+				mJefeTaller.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
+				listaMateriales = new ArrayList<InvMaterial>();
+				detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+				listaMatAux = mJefeTaller.findAllMaterial();
+				material = new InvMaterial();
+				cantidadIngresar = 0;
+				JSFUtil.crearMensajeINFO("Materiales ingresados correctamente");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione almenos un material");
+
 		}
 
 	}
 
 	public void actionListenerIngresarCabeceraIngreso() throws Exception {
 		if (idProveedor != 0) {
-			proveedor = mJefeTaller.findIdProveedor(idProveedor);
-			mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
-			idProveedor = 0;
-			proveedor = new InvProveedor();
-			listaIngresos = mJefeTaller.findAllIngresos();
-			JSFUtil.crearMensajeINFO("Ingreso creado correctamente.");
+			try {
+				proveedor = mJefeTaller.findIdProveedor(idProveedor);
+				mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
+				idProveedor = 0;
+				proveedor = new InvProveedor();
+				listaIngresos = mJefeTaller.findAllIngresos();
+				JSFUtil.crearMensajeINFO("Ingreso creado correctamente.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
 		} else {
 			JSFUtil.crearMensajeERROR("Seleccione un proveedor");
 		}
@@ -168,20 +184,48 @@ public class BeanInvIngresos implements Serializable {
 	}
 
 	public void actionListenerSeleccionarMaterial() throws Exception {
-		if(precioCompra.compareTo(precioCompra.ZERO)!=0 && idMaterial!=0) {
-			material = mJefeTaller.findMaterialId(idMaterial);
-			mJefeTaller.agregarMaterialSeleccion(listaMateriales, material, cantidadIngresar, precioCompra);
-			cantidadIngresar=0;
-			precioCompra=new BigDecimal(0);
-			idMaterial = 0;
-			listaMatAux=mJefeTaller.findAllMaterial();
-			JSFUtil.crearMensajeINFO("Material seleccionado.");
-		}else {
-			JSFUtil.crearMensajeERROR("Porfavor ingrese un precio de compra");
+		if (precioCompra.compareTo(precioCompra.ZERO) != 0 && idMaterial != 0) {
+			try {
+				material = mJefeTaller.findMaterialId(idMaterial);
+				mJefeTaller.agregarMaterialSeleccion(listaMateriales, material, cantidadIngresar, precioCompra);
+				cantidadIngresar = 0;
+				precioCompra = new BigDecimal(0);
+				idMaterial = 0;
+				listaMatAux = mJefeTaller.findAllMaterial();
+				JSFUtil.crearMensajeINFO("Material seleccionado.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Ingrese un precio de compra y un material");
 		}
 
 	}
+	
+	public void actionListenerCrearMaterial() {
+		try {
+			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			idTipo = 0;
+			mJefeTaller.createMaterial(this.nuevoMaterial, selectTipo);
+			nuevoMaterial = new InvMaterial();
+			listaMatAux=mJefeTaller.findAllMaterial();
+			JSFUtil.crearMensajeINFO("Material creado correctamente");
+		} catch (Exception e) {
+			JSFUtil.crearMensajeERROR(e.getMessage());
+			e.printStackTrace();
+		}
+	}
 
+	public void actionListenerClasificarMateriales() throws Exception {
+		if (idTipo != 0) {
+			listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
+			JSFUtil.crearMensajeINFO("Datos de la categoria cargados.");
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione una categoria.");
+		}
+	}
+	
 	public void actionListenerUpdateSeleccionMat() throws Exception {
 		tipo = mJefeTaller.findTipoMaterialById(idTipo);
 		material.setInvTipo(tipo);
@@ -190,15 +234,6 @@ public class BeanInvIngresos implements Serializable {
 	public void actionListenerDeleteDetalleIngreso(InvMaterialIngreso detalle) throws Exception {
 		mJefeTaller.deleteDetalleIngreso(detalle);
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-	}
-
-	public void actionListenerClasificarMateriales() throws Exception {
-		if(idTipo!=0) {
-			listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
-			JSFUtil.crearMensajeINFO("Datos de la categoria cargados.");
-		}else {
-			JSFUtil.crearMensajeERROR("Seleccione una categoria.");
-		}
 	}
 
 	public void actionListenerDeleteSeleccionMaterial(InvMaterial material) throws Exception {
@@ -346,6 +381,13 @@ public class BeanInvIngresos implements Serializable {
 	public void setPrecioCompra(BigDecimal precioCompra) {
 		this.precioCompra = precioCompra;
 	}
-	
+
+	public InvMaterial getNuevoMaterial() {
+		return nuevoMaterial;
+	}
+
+	public void setNuevoMaterial(InvMaterial nuevoMaterial) {
+		this.nuevoMaterial = nuevoMaterial;
+	}
 
 }

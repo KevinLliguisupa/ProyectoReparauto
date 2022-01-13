@@ -9,9 +9,12 @@
 		type="preRenderView"></f:event>
 </f:metadata>
 <h:head>
-
+	<title>Selección Materiales</title>
 </h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
 
 	<h:form>
 		<p:menubar>
@@ -29,13 +32,14 @@
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
 
-
 	<h:form>
 		<p:panelGrid columns="3">
 
-
 			<h:outputText value="Categoria" />
-			<p:selectOneMenu value="#{beanInvEgresos.idTipo}">
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvEgresos.idTipo}">
+				<f:selectItem itemLabel="Seleccione una categoria..."
+					noSelectionOption="true" />
 				<f:selectItems value="#{beanInvEgresos.listaTipo}" var="u"
 					itemLabel="#{u.tipNombre}" itemValue="#{u.tipId}"></f:selectItems>
 			</p:selectOneMenu>
@@ -51,34 +55,33 @@
 	<h:form id="mat1">
 		<p:panelGrid columns="2">
 
-
 			<h:outputText value="Material" />
-			<p:selectOneMenu value="#{beanInvEgresos.idMaterial}">
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvEgresos.idMaterial}">
+				<f:selectItem itemLabel="Seleccione un material..."
+					noSelectionOption="true" />
 				<f:selectItems value="#{beanInvEgresos.listaMatAux}" var="u"
 					itemLabel="#{u.matNombre} Unidades: #{u.matExistencia}"
 					itemValue="#{u.matId}"></f:selectItems>
 			</p:selectOneMenu>
+
 			<h:outputText value="Cantidad" />
 			<p:spinner value="#{beanInvEgresos.cantidadRetirar}" min="1"
 				max="100" />
 
+			<p:commandButton value="Elegir" icon="pi pi-save"
+				actionListener="#{beanInvEgresos.actionListenerSeleccinarMaterialRetirar()}"
+				update="@form:,formDatos1"></p:commandButton>
+
+
+			<p:commandButton value="Guardar" icon="pi pi-save"
+				actionListener="#{beanInvEgresos.actionListenerRetirarMaterial()}"
+				update="@form:,formDatos,formDatos1"></p:commandButton>
 		</p:panelGrid>
-
-		<p:commandButton value="Elegir" icon="pi pi-save"
-			actionListener="#{beanInvEgresos.actionListenerSeleccinarMaterialRetirar()}"
-			update="@form:,formDatos1"></p:commandButton>
-
-
-		<p:commandButton value="Guardar" icon="pi pi-save"
-			actionListener="#{beanInvEgresos.actionListenerRetirarMaterial()}"
-			update="@form:,formDatos,formDatos1"></p:commandButton>
 	</h:form>
-
-
 
 	<h:form id="formDatos1">
 		<p:dataTable value="#{beanInvEgresos.listaMateriales}" var="p">
-
 
 			<p:column headerText="Opciones">
 
@@ -91,8 +94,8 @@
 					value="Actualizar" icon="pi pi-pencil"
 					actionListener="#{beanInvEgresos.actionListenerDatosActualizar(p)}" />
 
-
-				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true" style="width:40%">
+				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
+					style="width:40%">
 					<p:panel header="Actualizar Material">
 						<p:panelGrid columns="2">
 
@@ -100,10 +103,7 @@
 							<h:outputText value="#{beanInvEgresos.material.matNombre}" />
 
 							<h:outputText value="Cantidad" />
-							<p:inputText value="#{beanInvEgresos.material.matExistencia}"/>
-
-
-
+							<p:inputText value="#{beanInvEgresos.material.matExistencia}" />
 
 						</p:panelGrid>
 
@@ -135,12 +135,7 @@
 		</p:dataTable>
 	</h:form>
 
-
-
-
 	<h:form id="formDatos">
-
-
 
 		<p:dataTable value="#{beanInvEgresos.detalleSalida}" var="p">
 			<p:column headerText="Opciones">

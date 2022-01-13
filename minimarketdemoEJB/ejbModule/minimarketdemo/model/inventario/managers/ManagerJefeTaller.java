@@ -162,14 +162,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<RecVehiculo> findAllVehiculos() {
-		List<RecVehiculo> lista = mDao.findAll(RecVehiculo.class);
-		List<RecVehiculo> listaNueva = new ArrayList<RecVehiculo>();
-		for (RecVehiculo mat : lista) {
-			if (mat.getVehEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(RecVehiculo.class, "veh_estado=true", "veh_placa ASC");
 	}
 
 	public RecVehiculo findVehiculosById(int id) throws Exception {
@@ -178,6 +171,8 @@ public class ManagerJefeTaller {
 
 	public List<ThmEmpleado> findAllEmpleados() {
 		return mDao.findAll(ThmEmpleado.class);
+
+		
 	}
 
 	public ThmEmpleado findEmpleadosById(int id) throws Exception {
@@ -189,7 +184,7 @@ public class ManagerJefeTaller {
 	}
 	
 	public List<InvSalida> findAllSalidas() {
-		return mDao.findAll(InvSalida.class, "salFecha", false);
+		return mDao.findAll(InvSalida.class, "salId", false);
 	}
 	
 

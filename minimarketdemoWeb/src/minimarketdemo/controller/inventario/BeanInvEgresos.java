@@ -140,47 +140,67 @@ public class BeanInvEgresos implements Serializable {
 	// Here are all the ACTIONLISTENER methods
 
 	public void actionListenerIngresarCabeceraRetiro() {
-		try {
-			empleados = mJefeTaller.findEmpleadosById(id_empleados);
-			vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
-			mJefeTaller.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
-			id_empleados = 0;
-			id_vehiculos = 0;
-			empleados = new ThmEmpleado();
-			vehiculos = new RecVehiculo();
-			listaSalidas = mJefeTaller.findAllSalidas();
-			JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
-		} catch (Exception e) {
-			JSFUtil.crearMensajeERROR(e.getMessage());
-			e.printStackTrace();
+		if (id_vehiculos != 0 && id_empleados != 0) {
+			try {
+				empleados = mJefeTaller.findEmpleadosById(id_empleados);
+				vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
+				mJefeTaller.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
+				id_empleados = 0;
+				id_vehiculos = 0;
+				empleados = new ThmEmpleado();
+				vehiculos = new RecVehiculo();
+				listaSalidas = mJefeTaller.findAllSalidas();
+				JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione un vehiculo y un empleado");
 		}
 	}
 
-	public void actionListenerClasificarMateriales() throws Exception {
+	public void actionListenerClasificarMateriales() {
 		listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
 	}
 
 	public void actionListenerSeleccinarMaterialRetirar() throws Exception {
-			material = mJefeTaller.findMaterialId(idMaterial);
-			idMaterial = 0;
-			mJefeTaller.agregarMaterialRetirar(listaMateriales, material, cantidadRetirar);
-			JSFUtil.crearMensajeINFO("Materiales egresados correctamente.");
-	}
-
-	public void actionListenerRetirarMaterial(){
-		try {
-		mJefeTaller.retirarMaterial(beanSegLogin.getLoginDTO(),listaMateriales, salida);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadRetirar = 0;
-		} catch (Exception e) {
-			JSFUtil.crearMensajeERROR(e.getMessage());
-			e.printStackTrace();
+		if (idMaterial != 0) {
+			try {
+				material = mJefeTaller.findMaterialId(idMaterial);
+				mJefeTaller.agregarMaterialRetirar(listaMateriales, material, cantidadRetirar);
+				cantidadRetirar=0;
+				idMaterial = 0;
+				JSFUtil.crearMensajeINFO("Material seleccionado.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione un material.");
 		}
 	}
-	
+
+	public void actionListenerRetirarMaterial() {
+		if (listaMateriales.size() != 0) {
+			try {
+				mJefeTaller.retirarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, salida);
+				listaMateriales = new ArrayList<InvMaterial>();
+				detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
+				listaMatAux = mJefeTaller.findAllMaterial();
+				material = new InvMaterial();
+				cantidadRetirar = 0;
+				JSFUtil.crearMensajeINFO("Materiales retirados correctamente");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione almenos un material");
+
+		}
+	}
+
 	public void actionListenerDeleteSeleccionMaterial(InvMaterial material) throws Exception {
 		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
 	}
@@ -195,7 +215,7 @@ public class BeanInvEgresos implements Serializable {
 	}
 
 	// Getters and setters
-	
+
 	public List<InvSalida> getListaSalidas() {
 		return listaSalidas;
 	}

@@ -354,15 +354,15 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	// modificado verificado
-	public void actionIngresarMaterial() throws Exception {
-		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadIngresar=0;
-
-	}
+//	public void actionIngresarMaterial() throws Exception {
+//		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
+//		listaMateriales = new ArrayList<InvMaterial>();
+//		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+//		listaMatAux = mJefeTaller.findAllMaterial();
+//		material = new InvMaterial();
+//		cantidadIngresar=0;
+//
+//	}
 	
 	// nuevo verificado
 //	public void actionSeleccinarMaterial() throws Exception {
@@ -425,14 +425,14 @@ public class BeanJefeTaller implements Serializable {
 //		cantidadRetirar = 0;
 //	}
 
-	// Nuevo verificado
-	public void actionIngresarCabeceraIngreso() throws Exception {
-		proveedor = mJefeTaller.findIdProveedor(idProveedor);
-		mJefeTaller.ingresarCabeceraIngreso(proveedor);
-		idProveedor = 0;
-		proveedor = new InvProveedor();
-		listaIngresos = mJefeTaller.findAllIngresos();
-	}
+//	// Nuevo verificado
+//	public void actionIngresarCabeceraIngreso() throws Exception {
+//		proveedor = mJefeTaller.findIdProveedor(idProveedor);
+//		mJefeTaller.ingresarCabeceraIngreso(proveedor);
+//		idProveedor = 0;
+//		proveedor = new InvProveedor();
+//		listaIngresos = mJefeTaller.findAllIngresos();
+//	}
 
 	// Nuevo
 //	public void actionIngresarCabeceraRetiro() throws Exception {
