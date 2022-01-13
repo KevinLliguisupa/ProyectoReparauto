@@ -180,9 +180,7 @@ public class BeanInvEgresos implements Serializable {
 			e.printStackTrace();
 		}
 	}
-
-	// Getters and setters
-
+	
 	public void actionListenerDeleteSeleccionMaterial(InvMaterial material) throws Exception {
 		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
 	}
@@ -196,6 +194,8 @@ public class BeanInvEgresos implements Serializable {
 		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
 	}
 
+	// Getters and setters
+	
 	public List<InvSalida> getListaSalidas() {
 		return listaSalidas;
 	}

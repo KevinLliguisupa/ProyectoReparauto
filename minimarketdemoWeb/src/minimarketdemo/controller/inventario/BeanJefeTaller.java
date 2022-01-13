@@ -373,12 +373,12 @@ public class BeanJefeTaller implements Serializable {
 //
 //	}
 
-	public void actionSeleccionarMaterial() throws Exception {
-		material = mJefeTaller.findMaterialId(idMaterial);
-		idMaterial=0;
-		mJefeTaller.agregarMaterialSeleccion(listaMateriales, material,cantidadIngresar);
-
-	}
+//	public void actionSeleccionarMaterial() throws Exception {
+//		material = mJefeTaller.findMaterialId(idMaterial);
+//		idMaterial=0;
+//		mJefeTaller.agregarMaterialSeleccion(listaMateriales, material,cantidadIngresar);
+//
+//	}
 
 
 	

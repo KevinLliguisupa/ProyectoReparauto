@@ -66,14 +66,15 @@ public class ManagerJefeTaller {
 	
 
 	// nuevo verificado
-	public void ingresarCabeceraIngreso(InvProveedor proveedor) throws Exception {
+	public void ingresarCabeceraIngreso(LoginDTO loginDTO, InvProveedor proveedor) throws Exception {
 		InvIngreso cabIngreso = new InvIngreso();
 		cabIngreso.setIngFecha(new Date());
 		cabIngreso.setInvProveedor(proveedor);
 		mDao.insertar(cabIngreso);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarCabeceraIngreso", "Ingreso de material Usu."+loginDTO.getIdSegUsuario());
 	}	
 	
-	public void ingresarMaterial(List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
+	public void ingresarMaterial(LoginDTO loginDTO, List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
 		
 		for (InvMaterial m : listaMaterial) {
 			int idmateirla=m.getMatId();
@@ -81,13 +82,15 @@ public class ManagerJefeTaller {
 			detalleIngreso.setInvIngreso(cabeceraIngreso);
 			detalleIngreso.setMatIngEstado(true);
 			detalleIngreso.setMatIngCantidad(m.getMatExistencia());
-			//Hay que cambiar precio venta por compra
 			detalleIngreso.setMatIngPrecioCompra(m.getMatPrecioVenta());
 			detalleIngreso.setInvMaterial(m);
 			InvMaterial materialAux = this.findMaterialId(m.getMatId());
 			this.calcularSock(materialAux, m.getMatExistencia(), true);
 			mDao.actualizar(materialAux);
 			mDao.insertar(detalleIngreso);
+			mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarMaterial", "Ingreso "+detalleIngreso.getMatIngCantidad()+" "+
+			detalleIngreso.getInvMaterial().getMatNombre()+" P.Compr. "+detalleIngreso.getMatIngPrecioCompra()+" Usu. "+loginDTO.getIdSegUsuario());
+			
 		}
 		
 	}
@@ -129,7 +132,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvTipo> findAllTipoMaterial() {
-		return  mDao.findWhere(InvTipo.class, "tip_estado=true", null);
+		return  mDao.findWhere(InvTipo.class, "tip_estado=true", "tip_nombre");
 	}
 
 	public InvTipo findTipoMaterialById(int id) throws Exception {
@@ -155,14 +158,7 @@ public class ManagerJefeTaller {
 	}
 
 	public List<InvProveedor> findAllProveedor() {
-		List<InvProveedor> lista = mDao.findAll(InvProveedor.class);
-		List<InvProveedor> listaNueva = new ArrayList<InvProveedor>();
-		for (InvProveedor mat : lista) {
-			if (mat.getProEstado()) {
-				listaNueva.add(mat);
-			}
-		}
-		return listaNueva;
+		return  mDao.findWhere(InvProveedor.class, "pro_estado=true", "pro_nombre ASC");
 	}
 
 	public List<RecVehiculo> findAllVehiculos() {
@@ -189,7 +185,7 @@ public class ManagerJefeTaller {
 	}
 	
 	public List<InvIngreso> findAllIngresos() {
-		return mDao.findAll(InvIngreso.class, "ingFecha", false);
+		return mDao.findAll(InvIngreso.class, "ingId", false);
 	}
 	
 	public List<InvSalida> findAllSalidas() {
@@ -236,8 +232,9 @@ public class ManagerJefeTaller {
 
 	
 	
-	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material, int cantidad) {
+	public void agregarMaterialSeleccion(List<InvMaterial> lista, InvMaterial material, int cantidad, BigDecimal precioCompra) {
 		material.setMatExistencia(new BigDecimal(cantidad));
+		material.setMatPrecioVenta(precioCompra);
 		lista.add(material);
 	}
 
@@ -312,7 +309,7 @@ public class ManagerJefeTaller {
 		cabSalida.setRecVehiculo(vehiculo);
 		cabSalida.setThmEmpleado(empleado);
 		mDao.insertar(cabSalida);
-		mAuditoria.mostrarLog(loginDTO, getClass(), "Insertar Retiro", "Retiro de material Usu. "+
+		mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarCabeceraRetiro", "Retiro de material Usu. "+
 		cabSalida.getThmEmpleado().getSegUsuario().getIdSegUsuario()+" "+" Veh. "+cabSalida.getRecVehiculo().getVehId());
 	}
 	

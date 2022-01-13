@@ -8,9 +8,14 @@
 	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
 		type="preRenderView"></f:event>
 </f:metadata>
-<h:head></h:head>
+<h:head>
+	<title>Creación Ingresos</title>
+</h:head>
 <body>
-
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
@@ -30,20 +35,32 @@
 	<h:form>
 		<p:panelGrid columns="2">
 			<h:outputText value="Proveedor" />
-			<p:selectOneMenu value="#{beanJefeTaller.idProveedor}">
-				<f:selectItems value="#{beanJefeTaller.listaProveedor}" var="u"
+
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvIngresos.idProveedor}">
+				<f:selectItem itemLabel="Seleccione un proveedor..."
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanInvIngresos.listaProveedor}" var="u"
 					itemLabel="#{u.proNombre}" itemValue="#{u.proId}"></f:selectItems>
 			</p:selectOneMenu>
 
+			<p:commandButton value="Crear Ingreso" icon="pi pi-save"
+				actionListener="#{beanInvIngresos.actionListenerIngresarCabeceraIngreso()}"
+				update="@form:,formDatos"></p:commandButton>
+
 		</p:panelGrid>
-		<p:commandButton value="Guardar" icon="pi pi-save"
-			actionListener="#{beanJefeTaller.actionIngresarCabeceraIngreso()}"
-			update="@form:,formDatos"></p:commandButton>
+
 	</h:form>
 
 	<h:form id="formDatos">
 
-		<p:dataTable value="#{beanJefeTaller.listaIngresos}" var="p">
+		<p:dataTable value="#{beanInvIngresos.listaIngresos}" var="p"
+			paginator="true" rows="6">
+			<f:facet name="header">
+				<div style="text-align: center; font-size: 20px">Entradas de
+					material</div>
+
+			</f:facet>
 			<p:column headerText="Id">
 				<h:outputText value="#{p.ingId}" />
 			</p:column>
@@ -58,7 +75,7 @@
 
 				<p:commandButton icon="pi pi-pencil" title="Ingresar Materiales"
 					value="Ingresar Materiales"
-					action="#{beanJefeTaller.actionCargarDetalles(p.ingId)}" />
+					action="#{beanInvIngresos.actionCargarDetalles(p.ingId)}" />
 			</p:column>
 		</p:dataTable>
 	</h:form>

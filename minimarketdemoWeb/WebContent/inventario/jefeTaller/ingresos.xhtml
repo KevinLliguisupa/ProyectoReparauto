@@ -40,34 +40,35 @@
 					<h:outputText value="Material:" />
 
 					<p:selectOneMenu filterMatchMode="contains" filter="true"
-						value="#{beanJefeTaller.idMaterial}">
+						value="#{beanInvIngresos.idMaterial}">
 						<f:selectItem itemLabel="Seleccione el material..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanJefeTaller.listaMateriales}"
+						<f:selectItems value="#{beanInvIngresos.listaMateriales}"
 							var="material" itemLabel="#{material.matNombre}"
 							itemValue="#{material.matId}"></f:selectItems>
 					</p:selectOneMenu>
 
 					<h:outputText value="Fecha inicio:" />
-					<p:datePicker value="#{beanJefeTaller.fechaInicio}" showTime="true" />
+					<p:datePicker value="#{beanInvIngresos.fechaInicio}"
+						showTime="true" />
 
 					<h:outputText value="Proveedor:" />
 					<p:selectOneMenu filterMatchMode="contains" filter="true"
-						value="#{beanJefeTaller.idProveedor}">
+						value="#{beanInvIngresos.idProveedor}">
 						<f:selectItem itemLabel="Seleccione el proveedor..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanJefeTaller.listaProveedor}"
+						<f:selectItems value="#{beanInvIngresos.listaProveedor}"
 							var="proveedor" itemLabel="#{proveedor.proNombre}"
 							itemValue="#{proveedor.proId}"></f:selectItems>
 					</p:selectOneMenu>
 
 					<h:outputText value="Fecha fin:" />
-					<p:datePicker value="#{beanJefeTaller.fechaFin}" showTime="true" />
+					<p:datePicker value="#{beanInvIngresos.fechaFin}" showTime="true" />
 					<p:commandButton value="Consultar"
-						action="#{beanJefeTaller.actionListenerConsultarIngresos()}"
+						action="#{beanInvIngresos.actionConsultarIngresos()}"
 						update="@form,:form2" icon="pi pi-search"></p:commandButton>
 					<p:commandButton value="Limpiar"
-						action="#{beanJefeTaller.actionListenerLimpiar()}"
+						action="#{beanInvIngresos.actionLimpiar()}"
 						update="@form,:form2,form1" icon="pi pi-undo"></p:commandButton>
 				</p:panelGrid>
 			</p:panel>
@@ -79,7 +80,7 @@
 
 	<div class="card">
 		<h:form id="form2">
-			<p:dataTable var="ingreso" value="#{beanJefeTaller.listaIngresos}"
+			<p:dataTable var="ingreso" value="#{beanInvIngresos.listaIngresos}"
 				rowKey="#{ingreso.ingId}" paginator="true" rows="5">
 				<f:facet name="header">
                 Registro de entradas de material
@@ -104,14 +105,14 @@
 
 				<p:column headerText="Costo total">
 					<h:outputText
-						value="#{beanJefeTaller.actioncalcularValorTotalIngreso(ingreso.ingId)}">
+						value="#{beanInvIngresos.actioncalcularValorTotalIngreso(ingreso.ingId)}">
 						<f:convertNumber type="currency" currencySymbol="$" />
 					</h:outputText>
 				</p:column>
 
 				<p:rowExpansion>
 					<p:dataTable var="registro"
-						value="#{beanJefeTaller.actionSeleccionarIngreso(ingreso.ingId)}"
+						value="#{beanInvIngresos.actionSeleccionarIngreso(ingreso.ingId)}"
 						rowKey="#{registro.matEntId}">
 
 						<p:column headerText="Id material">
