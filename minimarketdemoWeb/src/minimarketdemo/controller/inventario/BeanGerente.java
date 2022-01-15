@@ -20,6 +20,7 @@ import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.InvMaterialSalida;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
+import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
@@ -352,5 +353,17 @@ public class BeanGerente implements Serializable {
 
 		public void actionUpdateServicio() throws Exception {
 			mGerente.updateServicios(servicio);
+		}
+		public void actionListenerDeleteServicio(RecServicio servicio) throws Exception {
+			try {
+				mGerente.deleteServicio(servicio);
+				listaServicios = mGerente.findAllServicios();
+				servicio = new RecServicio();
+				JSFUtil.crearMensajeINFO("Servicios eliminado correctamente.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+
 		}
 }

@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Servicios</title>
+	<title>Servicios perra</title>
 </h:head>
 <body>
 	<h:form>
@@ -58,6 +58,14 @@
 						filterBy="#{serv.recSerPrecio}" filterMatchMode="contains">
 						<h:outputText value="#{serv.recSerPrecio}" />
 					</p:column>
+					<p:column>
+											<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+							styleClass="ui-button-danger" update="@form,:form2"
+							actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+							<p:confirm header="Confirmación"
+								message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+						</p:commandButton>
+					</p:column>
 					<p:column headerText="Editar Servicio">
 						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
 							actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
@@ -76,10 +84,18 @@
 									update="@form,:form2" icon="pi pi-save" />
 							</p:panel>
 						</p:overlayPanel>
+
 					</p:column>
 				</p:dataTable>
 			</p:panel>
 		</h:form>
 	</div>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 </body>
 </html>
