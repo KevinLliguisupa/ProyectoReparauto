@@ -20,6 +20,7 @@ import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.InvMaterialSalida;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
+import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.inventario.managers.ManagerGerente;
@@ -45,6 +46,10 @@ public class BeanGerente implements Serializable {
 	private List<InvProveedor> listaProveedores;
 	private InvProveedor proveedor;
 	private InvProveedor nuevoProveedor;
+	private int idServicios;
+	private RecServicio servicio;
+	private RecServicio nuevoServicio;
+	private List<RecServicio> listaServicios;
 
 	public BeanGerente() {
 
@@ -58,6 +63,8 @@ public class BeanGerente implements Serializable {
 		listaEmpleados = mGerente.findAllEmpleados();
 		listaProveedor = mGerente.findAllProveedor();
 		listaVehiculos = mGerente.findAllVehiculos();
+		listaServicios = mGerente.findAllServicios();
+		idServicios = 0;
 		idMaterial = 0;
 		idProveedor = 0;
 		id_vehiculos = 0;
@@ -69,8 +76,11 @@ public class BeanGerente implements Serializable {
 		// obtener la fecha de hoy:
 		fechaFin = new Date();
 		listaProveedores = new ArrayList<InvProveedor>();
+		listaServicios = new ArrayList<RecServicio>();
 		proveedor = new InvProveedor();
+		servicio = new RecServicio();
 		nuevoProveedor = new InvProveedor();
+		nuevoServicio = new RecServicio();
 	}
 
 	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
@@ -156,6 +166,31 @@ public class BeanGerente implements Serializable {
 	}
 
 	// Getters and Setters
+	public int getIdServicios() {
+		return idServicios;
+	}
+
+	public void setIdServicios(int idServicios) {
+		this.idServicios = idServicios;
+	}
+	public List<RecServicio> getListaServicios() {
+		return listaServicios;
+	}
+	public void setListaServicios(List<RecServicio> listaServicios) {
+		this.listaServicios = listaServicios;
+	}
+	public RecServicio getServicio() {
+		return servicio;
+	}
+	public void setServicio(RecServicio servicio) {
+		this.servicio = servicio;
+	}
+	public RecServicio getnuevoServicio() {
+		return nuevoServicio;
+	}
+	public void setnuevoServicio(RecServicio nuevoServicio) {
+		this.nuevoServicio = nuevoServicio;
+	}
 
 	public List<InvIngreso> getListaIngresos() {
 		return listaIngresos;
@@ -297,4 +332,25 @@ public class BeanGerente implements Serializable {
 	public void actionUpdateProveedor() throws Exception {
 		mGerente.updateProveedores(proveedor);
 	}
+	//Servicios
+		public RecServicio actionfindServicioByID(RecServicio ServID) throws Exception {
+			if (mGerente.findIdServicios(ServID.getRecSerId()) != null) {
+				servicio = mGerente.findIdServicios(ServID.getRecSerId());
+			}
+
+			return servicio;
+		}
+		public List<RecServicio> actionfindAllServicios() {
+			return mGerente.findAllServicios();
+		}
+
+		public void actionCreateServicio() throws Exception {
+			mGerente.createServicios(nuevoServicio);
+			nuevoServicio= new RecServicio();
+			listaServicios = mGerente.findAllServicios();
+		}
+
+		public void actionUpdateServicio() throws Exception {
+			mGerente.updateServicios(servicio);
+		}
 }
