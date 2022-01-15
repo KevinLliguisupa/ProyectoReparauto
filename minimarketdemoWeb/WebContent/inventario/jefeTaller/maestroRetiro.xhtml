@@ -33,7 +33,7 @@
 			<p:selectOneMenu value="#{beanJefeTaller.id_empleados}">
 				
 				<f:selectItems value="#{beanJefeTaller.listaEmpleados}" var="u"
-					itemLabel="#{u.segUsuario.apellidos}" itemValue="#{u.idThmEmpleado}"></f:selectItems>
+					itemLabel="#{u.segUsuario.nombres} #{u.segUsuario.apellidos}" itemValue="#{u.idThmEmpleado}"></f:selectItems>
 			</p:selectOneMenu>
 			<h:outputText value="Vehiculo" />
 			<p:selectOneMenu value="#{beanJefeTaller.id_vehiculos}">

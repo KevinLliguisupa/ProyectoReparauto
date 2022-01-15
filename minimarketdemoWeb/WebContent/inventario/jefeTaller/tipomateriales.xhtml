@@ -4,11 +4,17 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
 <h:head>
-	<title>Tipo de Materiales</title>
+	<title>Tipo de materiales</title>
 </h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
@@ -26,41 +32,53 @@
 	</h:form>
 
 	<div>
-		<p:messages>
-			<p:autoUpdate />
-		</p:messages>
+		
 		<h:form id="form1">
 			<p:panelGrid columns="2" value="Añadir Tipo">
 				<h:outputText value="Nombre del nuevo tipo:" />
-				<h:inputText value="#{beanJefeTaller.nuevoTipo.tipNombre}" />
-				<p:commandButton value="AñadirTipo de material"
-					actionListener="#{beanJefeTaller.actionCreateTipoMaterial()}"
-					update="@form,:form2" icon="pi pi-save" />
+				<p:inputText value="#{beanInvTipoMaterial.tipo.tipNombre}" />
+				<p:commandButton value="Añadir"
+				update="@form:,form2" icon="pi pi-save"
+					actionListener="#{beanInvTipoMaterial.actionInsertarTipo()}"
+					 />
 			</p:panelGrid>
 		</h:form>
 		<h:form id="form2">
-			<p:panel header="TIpos de materiales actuales:" toggleable="true"
+			<p:panel header="Tipos de materiales actuales:" toggleable="true"
 				collapsed="false" style="width:75%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanJefeTaller.actionfindAllTipoMaterial()}" var="tipomat"
+					value="#{beanInvTipoMaterial.listaTipos}" var="tipomat"
 					paginator="true" rows="10">
 					<p:column headerText="Editar tipo">
-						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
-							actionListener="#{beanJefeTaller.getTtipoMaterialByID(tipomat)}" />
+
+						<p:commandButton icon="pi pi-pencil" title="Editar"
+							value="Editar" 
+							id="cmdEdicion"
+							actionListener="#{beanInvTipoMaterial.actionSeleccionarTipo(tipomat.tipId)}"
+							update="@form" />
+
+
 						<p:overlayPanel for="cmdEdicion" dynamic="true"
 							showCloseIcon="true">
 							<p:panel header="Editar tipo" style="width:75%; margin: 0 auto ">
 								<p:panelGrid columns="2" style="margin: 0 auto">
 									<h:outputText value="Nombre: " />
-									<h:inputText value="#{beanJefeTaller.tipo.tipNombre}" />
-									<h:outputText value="Estado: " />
-									<p:inputText value="#{beanJefeTaller.tipo.tipEstado}" />
+									<p:inputText value="#{beanInvTipoMaterial.tipo.tipNombre}" />
 								</p:panelGrid>
 								<p:commandButton value="Guardar cambios"
-									actionListener="#{beanJefeTaller.actionUpdateTipoMaterial()}"
+									actionListener="#{beanInvTipoMaterial.actionActuaizarTipo()}"
 									update="@form,:form2" icon="pi pi-save" />
 							</p:panel>
 						</p:overlayPanel>
+
+
+						<p:commandButton icon="pi pi-times" title="Eliminar"
+							value="Eliminar" styleClass="ui-button-danger"
+							actionListener="#{beanInvTipoMaterial.actionEliminarTipo(tipomat.tipId)}"
+							update="@form" />
+
+
+
 					</p:column>
 					<p:column headerText="ID del tipo de material"
 						filterBy="#{tipomat.tipId}" filterMatchMode="contains">
@@ -71,10 +89,7 @@
 						filterBy="#{tipomat.tipNombre}" filterMatchMode="contains">
 						<h:outputText value="#{tipomat.tipNombre}" />
 					</p:column>
-					<p:column headerText="Estado del tipo de material"
-						filterBy="#{tipomat.tipEstado}" filterMatchMode="contains">
-						<h:outputText value="#{tipomat.tipEstado}" />
-					</p:column>
+					
 
 				</p:dataTable>
 			</p:panel>

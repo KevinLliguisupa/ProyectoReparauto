@@ -13,18 +13,8 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
-			<p:menuitem value="Administrar Materiales" icon="pi pi-book"
-				action="materiales" />
-			<p:menuitem value="Administrar Compras" icon="pi pi-users"
-				action="maestroIngreso" />
-			<p:menuitem value="Actualizar Stock" icon="pi pi-users"
-				action="#{beanJefeTaller.actioCargaVistaActualizarStock()}" />
-			<p:menuitem value="Egreso de Materiales" icon="pi pi-angle-double-up"
-				action="maestroRetiro" />
-			<p:menuitem value="Administrar Categorias" icon="pi pi-angle-double-up"
-				action="tipomateriales" />
-				
-
+			<p:menuitem value="Administrar Vehiculos" icon="pi pi-users"
+				action="administrarVehiculos" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -34,7 +24,7 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
+		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
 	</h:form>
 	<div></div>
 </body>

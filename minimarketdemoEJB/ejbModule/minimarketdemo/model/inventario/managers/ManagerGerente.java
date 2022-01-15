@@ -215,6 +215,8 @@ public class ManagerGerente {
 	public void updateProveedores(InvProveedor Proveedor) throws Exception {
 		mDao.actualizar(Proveedor);
 	}
+	
+	
 
 	public List<InvMaterial> findAllMaterial() {
 		return mDao.findWhere(InvMaterial.class, "mat_estado=true", null);
