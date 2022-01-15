@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Servicios</title>
+</h:head>
+<body>
+	<div>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<div>
+			<h:form id="form1">
+				<p:panelGrid columns="4" value="Información de vehículo">
+					<h:outputText value="Placa:" />
+					<h:outputText value="Placa del vehículo" />
+					<h:inputText value="Marca:" />
+					<h:outputText value="Marca del vehículo" />
+					<h:outputText value="Color:" />
+					<h:outputText value="Color example" />
+					<h:outputText value="Año:" />
+					<h:outputText value="Año del vehículo" />
+					<h:outputText value="Clave:" />
+					<h:outputText value="Clave vehiculo" />
+					<h:outputText value="Número de chasis:" />
+					<h:outputText value="Nro Chasis" />
+					<h:outputText value="Motor:" />
+					<h:outputText value="Motor vehiculo" />
+					<h:outputText value="Kilometraje:" />
+					<h:outputText value="Kilometraje del vehiculo" />
+					<h:outputText value="Combustible:" />
+					<h:outputText value="Combustible actual" />
+					<h:outputText value="Buscar mediante placa:" />
+					<p:commandButton value="Buscar"
+									update="@form,:form2" icon="pi pi-search"/>
+				</p:panelGrid>
+			</h:form>
+		</div>
+		<h:form id="form2">
+			<p:panel header="Información de los servicios" toggleable="true"
+				collapsed="false" style="width:95%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					paginator="true" rows="10">
+					<p:column headerText="Estado del servicio">
+						<h:outputText value="Estado" />
+					</p:column>
+					<p:column headerText="Descripción del servicio">
+						<h:outputText value="Desc" />
+					</p:column>
+					<p:column headerText="Precio del servicio">
+						<h:outputText value="Precio" />
+					</p:column>
+					<p:column headerText="Servicio concluido">
+						<h:selectBooleanCheckbox value="true" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>
