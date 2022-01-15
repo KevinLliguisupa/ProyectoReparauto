@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Servicios</title>
+</h:head>
+<body>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de Recepción"></p:staticMessage>
+	</h:form>
+
+	<div>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<h:form id="form1">
+			<p:panelGrid columns="2" value="Añadir servicio">
+				<h:outputText value="Nombre del Servicio:" />
+				<h:inputText value="#{beanGerente.nuevoServicio.recSerNombre}" />
+				<h:outputText value="Precio del Servicio:" />
+				<h:inputText value="#{beanGerente.nuevoServicio.recSerPrecio}" />
+				<p:commandButton value="Añadir "
+					actionListener="#{beanGerente.actionCreateServicio()}"
+					update="@form,:form2" icon="pi pi-save" />
+			</p:panelGrid>
+		</h:form>
+		<h:form id="form2">
+			<p:panel header="SERVICIOS ACTUALES:" toggleable="true"
+				collapsed="false" style="width:75%; margin: 0 auto ">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanGerente.actionfindAllServicios()}" var="serv"
+					paginator="true" rows="10">
+					<p:column headerText="ID del servicio" filterBy="#{serv.recSerId}"
+						filterMatchMode="contains">
+						<h:outputText value="#{serv.recSerId}" />
+					</p:column>
+					<p:column headerText="Nombre del servicio"
+						filterBy="#{serv.recSerNombre}" filterMatchMode="contains">
+						<h:outputText value="#{serv.recSerNombre}" />
+					</p:column>
+					<p:column headerText="Precio del Servicio"
+						filterBy="#{serv.recSerPrecio}" filterMatchMode="contains">
+						<h:outputText value="#{serv.recSerPrecio}" />
+					</p:column>
+					<p:column headerText="Opciones">
+						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
+							actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
+						<p:overlayPanel for="cmdEdicion" dynamic="true"
+							showCloseIcon="true">
+							<p:panel header="Editar Servicio"
+								style="width:225%; margin: 0 auto ">
+								<p:panelGrid columns="2" style="margin: 0 auto">
+									<h:outputText value="Nombre: " />
+									<h:inputText value="#{beanGerente.servicio.recSerNombre}" />
+									<h:outputText value="Precio: " />
+									<h:inputText value="#{beanGerente.servicio.recSerPrecio}" />
+								</p:panelGrid>
+								<p:commandButton value="Guardar cambios"
+									actionListener="#{beanGerente.actionUpdateServicio()}"
+									update="@form,:form2" icon="pi pi-save" />
+							</p:panel>
+						</p:overlayPanel>
+						<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+							styleClass="ui-button-danger" update="@form,:form2"
+							actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+							<p:confirm header="Confirmación"
+								message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>

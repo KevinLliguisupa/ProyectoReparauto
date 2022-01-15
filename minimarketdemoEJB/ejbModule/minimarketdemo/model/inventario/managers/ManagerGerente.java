@@ -17,6 +17,7 @@ import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.InvMaterialSalida;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvSalida;
+import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
@@ -146,7 +147,37 @@ public class ManagerGerente {
 
 		return valorTotal;
 	}
+	//Metodos CrudServicios
+		//************************************************************************************
+		public List<RecServicio> findAllServicios() {
+			return  mDao.findWhere(RecServicio.class, "rec_ser_estado=true", "rec_ser_nombre ASC");
+		}
 
+		public RecServicio findIdServicios(int id) throws Exception {
+			return (RecServicio) mDao.findById(RecServicio.class, id);
+		}
+
+		public void createServicios(RecServicio servicio) throws Exception {
+			//RecServicio NewServ = new RecServicio();
+			//NewServ.setRecSerId(findAllServicios().size() + 1);
+			//NewServ.setRecSerNombre(Servicio.getRecSerNombre());
+			//NewServ.setRecSerPrecio(Servicio.getRecSerPrecio());
+			servicio.setRecSerEstado(true);
+			mDao.insertar(servicio);
+		}
+
+		public void deleteServicio(RecServicio  Servicio) throws Exception {
+			Servicio.setRecSerEstado(false);
+			mDao.actualizar(Servicio);
+		}
+
+		public void updateServicios(RecServicio  Servicio) throws Exception {
+			mDao.actualizar(Servicio);
+		}
+
+		public RecServicio findIdServicio(int id) throws Exception {
+			return (RecServicio) mDao.findById(RecServicio.class, id);
+		}
 	// Metodo CrudProveedores
 	public List<InvProveedor> findAllProveedores() {
 		return mDao.findAll(InvProveedor.class);
