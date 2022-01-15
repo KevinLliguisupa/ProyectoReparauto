@@ -26,8 +26,9 @@ public class BeanInvMaterial implements Serializable {
 	private List<InvMaterial> listaMaterialesElegidos;
 	private InvMaterial material;
 	
-	
 	private List<InvTipo> listaTipos;
+	private int IDMaterialTemporal;
+	private int cantidadRetirar;
 	private int idTipoMaterial;
 	private InvTipo tipo;
 
@@ -46,9 +47,7 @@ public class BeanInvMaterial implements Serializable {
 		material= new InvMaterial();
 		tipo= new InvTipo();
 		idTipoMaterial=0;
-	}
-	
-	
+	}	
 
 	public void actionListenerInsertarMaterial() {
 		try {
@@ -79,8 +78,21 @@ public class BeanInvMaterial implements Serializable {
 
 	}
 	
+	public InvMaterial actionListenerFindMaterialByID() throws Exception {
+		if (mJefeTaller.findMaterialId(this.IDMaterialTemporal) != null) {
+			material = mJefeTaller.findMaterialId(this.IDMaterialTemporal);
+		}
+		return material;
+	}
+	
 	public void actionListenerCargarMaterial(InvMaterial selectMaterial) {
 		material = selectMaterial;
+	}
+	
+	public void actionListenerRetirarMaterialExistente() throws Exception {
+		mJefeTaller.retirarMaterialExistente(material, cantidadRetirar);
+		listaMateriales=mJefeTaller.findAllMaterial();
+		cantidadRetirar = 0;
 	}
 	
 	public void actionListenerGuardarEdicionMaterial() {
@@ -99,10 +111,6 @@ public class BeanInvMaterial implements Serializable {
 		}
 
 	}
-
-	
-	
-	
 
 	public List<InvMaterial> getListaMateriales() {
 		return listaMateriales;
@@ -150,6 +158,22 @@ public class BeanInvMaterial implements Serializable {
 
 	public void setTipo(InvTipo tipo) {
 		this.tipo = tipo;
+	}
+
+	public int getIDMaterialTemporal() {
+		return IDMaterialTemporal;
+	}
+
+	public void setIDMaterialTemporal(int iDMaterialTemporal) {
+		IDMaterialTemporal = iDMaterialTemporal;
+	}
+
+	public int getCantidadIngresar() {
+		return cantidadRetirar;
+	}
+
+	public void setCantidadIngresar(int cantidadIngresar) {
+		this.cantidadRetirar = cantidadIngresar;
 	}
 	
 	

@@ -9,9 +9,12 @@
 		type="preRenderView"></f:event>
 </f:metadata>
 <h:head>
-
+	<title>Selección Materiales</title>
 </h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
 
 	<h:form>
 		<p:menubar>
@@ -29,19 +32,20 @@
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
 
-
 	<h:form>
 		<p:panelGrid columns="3">
 
-
 			<h:outputText value="Categoria" />
-			<p:selectOneMenu value="#{beanJefeTaller.idTipo}">
-				<f:selectItems value="#{beanJefeTaller.listaTipo}" var="u"
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvEgresos.idTipo}">
+				<f:selectItem itemLabel="Seleccione una categoria..."
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanInvEgresos.listaTipo}" var="u"
 					itemLabel="#{u.tipNombre}" itemValue="#{u.tipId}"></f:selectItems>
 			</p:selectOneMenu>
 
 			<p:commandButton value="Clasificar" icon="pi pi-save"
-				actionListener="#{beanJefeTaller.actionClasificarMateriales()}"
+				actionListener="#{beanInvEgresos.actionListenerClasificarMateriales()}"
 				update="@form:,mat1"></p:commandButton>
 		</p:panelGrid>
 
@@ -51,60 +55,55 @@
 	<h:form id="mat1">
 		<p:panelGrid columns="2">
 
-
 			<h:outputText value="Material" />
-			<p:selectOneMenu value="#{beanJefeTaller.idMaterial}">
-				<f:selectItems value="#{beanJefeTaller.listaMatAux}" var="u"
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvEgresos.idMaterial}">
+				<f:selectItem itemLabel="Seleccione un material..."
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanInvEgresos.listaMatAux}" var="u"
 					itemLabel="#{u.matNombre} Unidades: #{u.matExistencia}"
 					itemValue="#{u.matId}"></f:selectItems>
 			</p:selectOneMenu>
+
 			<h:outputText value="Cantidad" />
-			<p:spinner value="#{beanJefeTaller.cantidadRetirar}" min="1"
+			<p:spinner value="#{beanInvEgresos.cantidadRetirar}" min="1"
 				max="100" />
 
+			<p:commandButton value="Elegir" icon="pi pi-save"
+				actionListener="#{beanInvEgresos.actionListenerSeleccinarMaterialRetirar()}"
+				update="@form:,formDatos1"></p:commandButton>
+
+
+			<p:commandButton value="Guardar" icon="pi pi-save"
+				actionListener="#{beanInvEgresos.actionListenerRetirarMaterial()}"
+				update="@form:,formDatos,formDatos1"></p:commandButton>
 		</p:panelGrid>
-
-		<p:commandButton value="Elegir" icon="pi pi-save"
-			actionListener="#{beanJefeTaller.actionSeleccinarMaterialRetirar()}"
-			update="@form:,formDatos1"></p:commandButton>
-
-
-		<p:commandButton value="Guardar" icon="pi pi-save"
-			actionListener="#{beanJefeTaller.actionRetirarMaterial()}"
-			update="@form:,formDatos,formDatos1"></p:commandButton>
 	</h:form>
 
-
-
-
 	<h:form id="formDatos1">
-		<p:dataTable value="#{beanJefeTaller.listaMateriales}" var="p">
-
+		<p:dataTable value="#{beanInvEgresos.listaMateriales}" var="p">
 
 			<p:column headerText="Opciones">
 
 				<p:commandButton icon="pi pi-times" title="Eliminar"
 					value="Eliminar" styleClass="ui-button-danger"
-					actionListener="#{beanJefeTaller.actionDeleteSeleccionMaterial(p)}"
+					actionListener="#{beanInvEgresos.actionListenerDeleteSeleccionMaterial(p)}"
 					update="@form" />
 
 				<p:commandButton id="Actualizar" title="Actualizar"
 					value="Actualizar" icon="pi pi-pencil"
-					actionListener="#{beanJefeTaller.actionDatosActualizar(p)}" />
+					actionListener="#{beanInvEgresos.actionListenerDatosActualizar(p)}" />
 
-
-				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true" style="width:40%">
+				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
+					style="width:40%">
 					<p:panel header="Actualizar Material">
 						<p:panelGrid columns="2">
 
 							<h:outputText value="Nombre" />
-							<h:outputText value="#{beanJefeTaller.material.matNombre}" />
+							<h:outputText value="#{beanInvEgresos.material.matNombre}" />
 
 							<h:outputText value="Cantidad" />
-							<p:inputText value="#{beanJefeTaller.material.matExistencia}"/>
-
-
-
+							<p:inputText value="#{beanInvEgresos.material.matExistencia}" />
 
 						</p:panelGrid>
 
@@ -136,19 +135,14 @@
 		</p:dataTable>
 	</h:form>
 
-
-
-
 	<h:form id="formDatos">
 
-
-
-		<p:dataTable value="#{beanJefeTaller.detalleSalida}" var="p">
+		<p:dataTable value="#{beanInvEgresos.detalleSalida}" var="p">
 			<p:column headerText="Opciones">
 
 				<p:commandButton icon="pi pi-times" title="Eliminar"
 					value="Eliminar Registro" styleClass="ui-button-danger"
-					actionListener="#{beanJefeTaller.actionDeleteDetalleSalida(p)}"
+					actionListener="#{beanInvEgresos.actionListenerDeleteDetalleSalida(p)}"
 					update="@form" />
 
 			</p:column>

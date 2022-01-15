@@ -32,27 +32,32 @@
 		<h:form id="form1">
 			<p:panelGrid columns="2">
 				<h:outputText value="ID Material:" />
-				<h:inputText value="#{beanJefeTaller.IDMaterialTemporal}" />
+				<p:inputText value="#{beanInvMaterial.IDMaterialTemporal}"
+					required="true" requiredMessage="Ingrese el ID del material" />
+
 				<h:outputText value="Nombre del material:" />
-				<h:outputText value="#{beanJefeTaller.material.matNombre}" />
+				<h:outputText value="#{beanInvMaterial.material.matNombre}" />
+
 				<h:outputText value="Unidad de medida del material:" />
-				<h:outputText value="#{beanJefeTaller.material.matUnidadMedida}" />
-				<h:outputText value="Cantidad a añadir:" />
-				<h:inputText value="#{beanJefeTaller.cantidadIngresar}" />
+				<h:outputText value="#{beanInvMaterial.material.matUnidadMedida}" />
+
+				<h:outputText value="Cantidad a retirar:" />
+				<p:inputText value="#{beanInvMaterial.cantidadIngresar}" />
+
 				<p:commandButton value="Buscar Material"
-					actionListener="#{beanJefeTaller.actionfindMaterialByID()}"
+					actionListener="#{beanInvMaterial.actionListenerFindMaterialByID()}"
 					update="@form,:form2" icon="pi pi-save" />
-				<p:commandButton value="IngresarMaterial"
-					actionListener="#{beanJefeTaller.actionAgregarMaterialExistente()}"
+				<p:commandButton value="Retirar Material"
+					actionListener="#{beanInvMaterial.actionListenerRetirarMaterialExistente()}"
 					update="@form,:form2" icon="pi pi-save" />
 			</p:panelGrid>
-			
+
 		</h:form>
 		<h:form id="form2">
 			<p:panel header="Materiales actuales:" toggleable="true"
 				collapsed="false" style="width:75%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanJefeTaller.listaMateriales}" var="mat"
+					value="#{beanInvMaterial.listaMateriales}" var="mat"
 					paginator="true" rows="10">
 					<p:column headerText="ID de material" filterBy="#{mat.matId}"
 						filterMatchMode="contains">

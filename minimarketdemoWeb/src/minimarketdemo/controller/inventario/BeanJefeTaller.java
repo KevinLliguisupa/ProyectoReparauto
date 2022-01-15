@@ -354,15 +354,15 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	// modificado verificado
-	public void actionIngresarMaterial() throws Exception {
-		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadIngresar=0;
-
-	}
+//	public void actionIngresarMaterial() throws Exception {
+//		mJefeTaller.ingresarMaterial(listaMateriales, ingreso);
+//		listaMateriales = new ArrayList<InvMaterial>();
+//		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+//		listaMatAux = mJefeTaller.findAllMaterial();
+//		material = new InvMaterial();
+//		cantidadIngresar=0;
+//
+//	}
 	
 	// nuevo verificado
 //	public void actionSeleccinarMaterial() throws Exception {
@@ -373,12 +373,12 @@ public class BeanJefeTaller implements Serializable {
 //
 //	}
 
-	public void actionSeleccionarMaterial() throws Exception {
-		material = mJefeTaller.findMaterialId(idMaterial);
-		idMaterial=0;
-		mJefeTaller.agregarMaterialSeleccion(listaMateriales, material,cantidadIngresar);
-
-	}
+//	public void actionSeleccionarMaterial() throws Exception {
+//		material = mJefeTaller.findMaterialId(idMaterial);
+//		idMaterial=0;
+//		mJefeTaller.agregarMaterialSeleccion(listaMateriales, material,cantidadIngresar);
+//
+//	}
 
 
 	
@@ -416,35 +416,35 @@ public class BeanJefeTaller implements Serializable {
 
 	}
 
-	public void actionRetirarMaterial() throws Exception {
-		mJefeTaller.retirarMaterial(listaMateriales, salida);
-		listaMateriales = new ArrayList<InvMaterial>();
-		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
-		cantidadRetirar = 0;
-	}
+//	public void actionRetirarMaterial() throws Exception {
+//		mJefeTaller.retirarMaterial(listaMateriales, salida);
+//		listaMateriales = new ArrayList<InvMaterial>();
+//		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
+//		listaMatAux = mJefeTaller.findAllMaterial();
+//		material = new InvMaterial();
+//		cantidadRetirar = 0;
+//	}
 
-	// Nuevo verificado
-	public void actionIngresarCabeceraIngreso() throws Exception {
-		proveedor = mJefeTaller.findIdProveedor(idProveedor);
-		mJefeTaller.ingresarCabeceraIngreso(proveedor);
-		idProveedor = 0;
-		proveedor = new InvProveedor();
-		listaIngresos = mJefeTaller.findAllIngresos();
-	}
+//	// Nuevo verificado
+//	public void actionIngresarCabeceraIngreso() throws Exception {
+//		proveedor = mJefeTaller.findIdProveedor(idProveedor);
+//		mJefeTaller.ingresarCabeceraIngreso(proveedor);
+//		idProveedor = 0;
+//		proveedor = new InvProveedor();
+//		listaIngresos = mJefeTaller.findAllIngresos();
+//	}
 
 	// Nuevo
-	public void actionIngresarCabeceraRetiro() throws Exception {
-		empleados = mJefeTaller.findEmpleadosById(id_empleados);
-		vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
-		mJefeTaller.ingresarCabeceraRetiro(vehiculos, empleados);
-		id_empleados = 0;
-		id_vehiculos = 0;
-		empleados = new ThmEmpleado();
-		vehiculos = new RecVehiculo();
-		listaSalidas = mJefeTaller.findAllSalidas();
-	}
+//	public void actionIngresarCabeceraRetiro() throws Exception {
+//		empleados = mJefeTaller.findEmpleadosById(id_empleados);
+//		vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
+//		mJefeTaller.ingresarCabeceraRetiro(vehiculos, empleados);
+//		id_empleados = 0;
+//		id_vehiculos = 0;
+//		empleados = new ThmEmpleado();
+//		vehiculos = new RecVehiculo();
+//		listaSalidas = mJefeTaller.findAllSalidas();
+//	}
 
 	// Nuevo verificado
 	public String actionCargarDetalles(int id) throws Exception {
@@ -578,10 +578,10 @@ public class BeanJefeTaller implements Serializable {
 		mJefeTaller.updatematerial(material);
 	}
 
-	public void actionAgregarMaterialExistente() throws Exception {
-		mJefeTaller.añadirMaterialExistente(material, cantidadIngresar);
-		cantidadIngresar = 0;
-	}
+//	public void actionAgregarMaterialExistente() throws Exception {
+//		mJefeTaller.añadirMaterialExistente(material, cantidadIngresar);
+//		cantidadIngresar = 0;
+//	}
 
 	// Tipo Material Crud
 
