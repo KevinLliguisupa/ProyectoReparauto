@@ -46,6 +46,9 @@ public class RecRecepcionCabecera implements Serializable {
 	@Column(name="rec_cab_saldo", precision=7, scale=2)
 	private BigDecimal recCabSaldo;
 
+	@Column(name="rec_cab_terminado")
+	private Boolean recCabTerminado;
+
 	@Column(name="rec_cab_total", precision=7, scale=2)
 	private BigDecimal recCabTotal;
 
@@ -137,6 +140,14 @@ public class RecRecepcionCabecera implements Serializable {
 
 	public void setRecCabSaldo(BigDecimal recCabSaldo) {
 		this.recCabSaldo = recCabSaldo;
+	}
+
+	public Boolean getRecCabTerminado() {
+		return this.recCabTerminado;
+	}
+
+	public void setRecCabTerminado(Boolean recCabTerminado) {
+		this.recCabTerminado = recCabTerminado;
 	}
 
 	public BigDecimal getRecCabTotal() {

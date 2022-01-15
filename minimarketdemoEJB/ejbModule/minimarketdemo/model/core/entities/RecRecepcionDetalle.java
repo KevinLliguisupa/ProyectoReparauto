@@ -26,11 +26,14 @@ public class RecRecepcionDetalle implements Serializable {
 	@Column(name="rec_det_estado")
 	private Boolean recDetEstado;
 
+	@Column(name="rec_det_observacion", length=100)
+	private String recDetObservacion;
+
+	@Column(name="rec_det_precio_final", precision=7, scale=2)
+	private BigDecimal recDetPrecioFinal;
+
 	@Column(name="rec_det_servicio_extra")
 	private Boolean recDetServicioExtra;
-
-	@Column(name="rec_det_valor", precision=7, scale=2)
-	private BigDecimal recDetValor;
 
 	@Column(name="\"rec-det_horas_empleadas\"")
 	private Integer rec_detHorasEmpleadas;
@@ -77,20 +80,28 @@ public class RecRecepcionDetalle implements Serializable {
 		this.recDetEstado = recDetEstado;
 	}
 
+	public String getRecDetObservacion() {
+		return this.recDetObservacion;
+	}
+
+	public void setRecDetObservacion(String recDetObservacion) {
+		this.recDetObservacion = recDetObservacion;
+	}
+
+	public BigDecimal getRecDetPrecioFinal() {
+		return this.recDetPrecioFinal;
+	}
+
+	public void setRecDetPrecioFinal(BigDecimal recDetPrecioFinal) {
+		this.recDetPrecioFinal = recDetPrecioFinal;
+	}
+
 	public Boolean getRecDetServicioExtra() {
 		return this.recDetServicioExtra;
 	}
 
 	public void setRecDetServicioExtra(Boolean recDetServicioExtra) {
 		this.recDetServicioExtra = recDetServicioExtra;
-	}
-
-	public BigDecimal getRecDetValor() {
-		return this.recDetValor;
-	}
-
-	public void setRecDetValor(BigDecimal recDetValor) {
-		this.recDetValor = recDetValor;
 	}
 
 	public Integer getRec_detHorasEmpleadas() {

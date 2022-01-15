@@ -642,12 +642,13 @@ CREATE SEQUENCE public.rec_recepcion_detalle_id_recepcion_detalle
 -- DROP TABLE IF EXISTS public.rec_recepcion_detalle CASCADE;
 CREATE TABLE public.rec_recepcion_detalle (
 	rec_det_id integer NOT NULL DEFAULT nextval('public.rec_recepcion_detalle_id_recepcion_detalle'::regclass),
-	rec_det_valor numeric(7,2),
-	rec_ser_id_rec_servicio integer,
+	rec_det_precio_final numeric(7,2),
 	"rec-det_horas_empleadas" int2,
 	rec_det_concluido boolean,
 	rec_det_servicio_extra boolean,
 	rec_det_estado boolean,
+	rec_det_observacion character varying(100),
+	rec_ser_id_rec_servicio integer,
 	rec_cab_id_rec_recepcion_cabecera integer,
 	id_thm_empleado_thm_empleado integer,
 	CONSTRAINT rec_recepcion_detalle_pk PRIMARY KEY (rec_det_id)
@@ -717,8 +718,9 @@ CREATE TABLE public.rec_recepcion_cabecera (
 	rec_cab_total numeric(7,2),
 	rec_cab_abono numeric(7,2),
 	rec_cab_saldo numeric(7,2),
-	veh_id_rec_vehiculos integer,
 	rec_cab_estado boolean,
+	rec_cab_terminado boolean,
+	veh_id_rec_vehiculos integer,
 	cli_id_rec_cliente integer,
 	id_seg_usuario_seg_usuario integer,
 	CONSTRAINT rec_recepcion_cabecera_pk PRIMARY KEY (rec_cab_id)
