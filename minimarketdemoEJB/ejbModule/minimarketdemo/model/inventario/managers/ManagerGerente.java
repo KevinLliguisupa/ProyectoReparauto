@@ -150,7 +150,7 @@ public class ManagerGerente {
 	//Metodos CrudServicios
 		//************************************************************************************
 		public List<RecServicio> findAllServicios() {
-			return mDao.findAll(RecServicio.class);
+			return  mDao.findWhere(RecServicio.class, "rec_ser_estado=true", "rec_ser_nombre ASC");
 		}
 
 		public RecServicio findIdServicios(int id) throws Exception {

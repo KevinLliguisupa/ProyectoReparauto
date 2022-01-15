@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-	<title>Servicios perra</title>
+	<title>Servicios</title>
 </h:head>
 <body>
 	<h:form>
@@ -58,15 +58,7 @@
 						filterBy="#{serv.recSerPrecio}" filterMatchMode="contains">
 						<h:outputText value="#{serv.recSerPrecio}" />
 					</p:column>
-					<p:column>
-											<p:commandButton icon="pi pi-times-circle" title="Eliminar"
-							styleClass="ui-button-danger" update="@form,:form2"
-							actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
-							<p:confirm header="Confirmación"
-								message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
-						</p:commandButton>
-					</p:column>
-					<p:column headerText="Editar Servicio">
+					<p:column headerText="Opciones">
 						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
 							actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
 						<p:overlayPanel for="cmdEdicion" dynamic="true"
@@ -84,7 +76,12 @@
 									update="@form,:form2" icon="pi pi-save" />
 							</p:panel>
 						</p:overlayPanel>
-
+						<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+							styleClass="ui-button-danger" update="@form,:form2"
+							actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+							<p:confirm header="Confirmación"
+								message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
