@@ -72,8 +72,11 @@ public class ManagerJefeTaller {
 		cabIngreso.setInvProveedor(proveedor);
 		mDao.insertar(cabIngreso);
 		mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarCabeceraIngreso", "Ingreso de material Usu."+loginDTO.getIdSegUsuario());
-	}	
-	
+	}
+
+//	 modificado verificado
+
+
 	public void ingresarMaterial(LoginDTO loginDTO, List<InvMaterial> listaMaterial, InvIngreso cabeceraIngreso) throws Exception {
 		
 		for (InvMaterial m : listaMaterial) {
@@ -82,6 +85,7 @@ public class ManagerJefeTaller {
 			detalleIngreso.setInvIngreso(cabeceraIngreso);
 			detalleIngreso.setMatIngEstado(true);
 			detalleIngreso.setMatIngCantidad(m.getMatExistencia());
+			//Hay que cambiar precio venta por compra
 			detalleIngreso.setMatIngPrecioCompra(m.getMatPrecioVenta());
 			detalleIngreso.setInvMaterial(m);
 			InvMaterial materialAux = this.findMaterialId(m.getMatId());
@@ -141,6 +145,7 @@ public class ManagerJefeTaller {
 	}
 
 	public void createTipoMaterial(InvTipo tipoMaterial) throws Exception {
+		tipoMaterial.setTipEstado(true);
 		mDao.insertar(tipoMaterial);
 	}
 
@@ -171,8 +176,6 @@ public class ManagerJefeTaller {
 
 	public List<ThmEmpleado> findAllEmpleados() {
 		return mDao.findAll(ThmEmpleado.class);
-
-		
 	}
 
 	public ThmEmpleado findEmpleadosById(int id) throws Exception {
@@ -424,8 +427,8 @@ public class ManagerJefeTaller {
 		}
 	}
 
-	public void añadirMaterialExistente(InvMaterial material, int cantidad) throws Exception {
-		calcularSock(material, BigDecimal.valueOf(cantidad), true);
+	public void retirarMaterialExistente(InvMaterial material, int cantidad) throws Exception {
+		calcularSock(material, BigDecimal.valueOf(cantidad), false);
 		updatematerial(material);
 	}
 
@@ -438,3 +441,4 @@ public class ManagerJefeTaller {
 		mDao.insertar(NewTipoMat);
 	}
 }
+
