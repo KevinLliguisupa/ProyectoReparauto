@@ -26,6 +26,9 @@ public class RecRecepcionDetalle implements Serializable {
 	@Column(name="rec_det_estado")
 	private Boolean recDetEstado;
 
+	@Column(name="rec_det_horas_empleadas")
+	private Integer recDetHorasEmpleadas;
+
 	@Column(name="rec_det_observacion", length=100)
 	private String recDetObservacion;
 
@@ -34,9 +37,6 @@ public class RecRecepcionDetalle implements Serializable {
 
 	@Column(name="rec_det_servicio_extra")
 	private Boolean recDetServicioExtra;
-
-	@Column(name="\"rec-det_horas_empleadas\"")
-	private Integer rec_detHorasEmpleadas;
 
 	//bi-directional many-to-one association to RecRecepcionCabecera
 	@ManyToOne
@@ -80,6 +80,14 @@ public class RecRecepcionDetalle implements Serializable {
 		this.recDetEstado = recDetEstado;
 	}
 
+	public Integer getRecDetHorasEmpleadas() {
+		return this.recDetHorasEmpleadas;
+	}
+
+	public void setRecDetHorasEmpleadas(Integer recDetHorasEmpleadas) {
+		this.recDetHorasEmpleadas = recDetHorasEmpleadas;
+	}
+
 	public String getRecDetObservacion() {
 		return this.recDetObservacion;
 	}
@@ -102,14 +110,6 @@ public class RecRecepcionDetalle implements Serializable {
 
 	public void setRecDetServicioExtra(Boolean recDetServicioExtra) {
 		this.recDetServicioExtra = recDetServicioExtra;
-	}
-
-	public Integer getRec_detHorasEmpleadas() {
-		return this.rec_detHorasEmpleadas;
-	}
-
-	public void setRec_detHorasEmpleadas(Integer rec_detHorasEmpleadas) {
-		this.rec_detHorasEmpleadas = rec_detHorasEmpleadas;
 	}
 
 	public RecRecepcionCabecera getRecRecepcionCabecera() {
