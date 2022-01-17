@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
+	</h:form>
+
+	<h:form id="mat1">
+		<p:panelGrid columns="2">
+
+			<h:outputText value="Servicios" />
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanRecCotizacion.idServicio}">
+				<f:selectItem itemLabel="Seleccione un servicio..."
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanRecCotizacion.listaServicios}" var="u"
+					itemLabel="#{u.recSerNombre}" itemValue="#{u.recSerId}"></f:selectItems>
+			</p:selectOneMenu>
+
+			<p:commandButton value="Seleccionar" icon="pi pi-save"
+				actionListener="#{beanRecCotizacion.actionAgregarServicioSeleccion()}"
+				update="@form:,formDatos1,formPrecio"></p:commandButton>
+
+
+		</p:panelGrid>
+	</h:form>
+
+	<h:form id="formDatos1">
+		<p:dataTable value="#{beanRecCotizacion.listaServiciosSeleccionados}"
+			var="p">
+
+			<p:column headerText="Opciones">
+
+				<p:commandButton icon="pi pi-times" title="Eliminar"
+					value="Eliminar" styleClass="ui-button-danger"
+					actionListener="#{beanRecCotizacion.actionEliminarSeleccionServicio(p.recSerId)}"
+					update="@form:, formPrecio" />
+
+				<p:commandButton id="Actualizar" title="Editar precio"
+					value="Editar" icon="pi pi-pencil"
+					actionListener="#{beanRecCotizacion.actionElegirSeleccionServicio(p.recSerId)}" />
+
+
+				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
+					style="width:40%">
+					<p:panel header="Actualizar Valor">
+						<p:panelGrid columns="2">
+							<h:outputText value="Servicio" />
+							<h:outputText value="#{p.recSerNombre}" />
+							<h:outputText value="Precio" />
+							<p:inputText value="#{p.recSerPrecio}" />
+						</p:panelGrid>
+					</p:panel>
+					<p:commandButton value="Actualizar"
+						actionListener="#{beanRecCotizacion.actionActualizarSeleccionServicio()}"
+						update="@form:, formPrecio" icon="pi pi-save" />
+				</p:overlayPanel>
+
+			</p:column>
+
+			<p:column headerText="Id">
+				<h:outputText value="#{p.recSerId}" />
+			</p:column>
+			<p:column headerText="Nombre">
+				<h:outputText value="#{p.recSerNombre}" />
+			</p:column>
+			<p:column headerText="Precio">
+				<h:outputText value="#{p.recSerPrecio}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+
+	<h:form id="formPrecio">
+		<p:panelGrid columns="4">
+			<h:outputText value="Precio Total" />
+			<h:outputText value="#{beanRecCotizacion.precioTotalServicios}" />
+			<p:commandButton icon="pi pi-times" title="Eliminar" value="Eliminar"
+				styleClass="ui-button-danger"
+				actionListener="#{beanRecCotizacion.actionEliminarListaServicios()}"
+				update="@form:, formDatos1">
+				
+			</p:commandButton>
+			<p:commandButton icon="pi pi-save" title="Generar" value="Generar orden de servicio"
+				>
+				
+			</p:commandButton>
+		</p:panelGrid>
+	</h:form>
+
+
+</body>
+</html>
