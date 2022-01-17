@@ -8,20 +8,24 @@
 	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
 		type="preRenderView"></f:event>
 </f:metadata>
-<h:head></h:head>
+<h:head>
+	<title>Menú Recepción</title>
+</h:head>
 <body>
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
 			<p:menuitem value="Administrar Vehiculos" icon="pi pi-users"
 				action="administrarVehiculos" />
-				<p:menuitem value="Clientes"
-				icon="pi pi-angle-double-up" action="Clientes" />
-				<p:menuitem value="Vehiculos"
-				icon="pi pi-angle-double-up" action="ingresarVehiculo" />
-				<p:menuitem value="Servicios"
-				icon="pi pi-angle-double-up" action="servicios" />
-				
+			<p:menuitem value="Clientes" icon="pi pi-angle-double-up"
+				action="Clientes" />
+			<p:menuitem value="Vehiculos" icon="pi pi-angle-double-up"
+				action="ingresarVehiculo" />
+			<p:menuitem value="Servicios" icon="pi pi-angle-double-up"
+				action="servicios" />
+			<p:menuitem value="Recepcion" icon="pi pi-angle-double-up"
+				action="recepcion" />
+
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -34,5 +38,6 @@
 		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
 	</h:form>
 	<div></div>
+
 </body>
 </html>

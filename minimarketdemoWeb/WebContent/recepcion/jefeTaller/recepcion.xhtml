@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+
+<h:head>
+	<title>Recepción</title>
+
+	<style>
+        /* reset on the showcase style*/
+        body .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+
+        /* example use of styles for your form */
+        .my-heading-row {
+            background-color: var(--surface-c);
+            font-weight: bold;
+        }
+	</style>
+</h:head>
+
+<body>
+
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de recepcion"></p:staticMessage>
+	</h:form>
+
+	<p:panel header="" style="width:85%; margin: 0 auto">
+
+		<div class="card">
+
+			<div style="text-align: center">
+				<p:graphicImage value="https://i.ibb.co/bWfHYGT/reparautologo.png"
+					height="80" />
+			</div>
+			<div>
+				<h2 style="text-align: center">RECEPCIÓN DE VEHÍCULOS</h2>
+			</div>
+
+			<div style="text-align: center">
+				<p:panelGrid columns="3" layout="grid"
+					styleClass="showcase-text-align-center">
+					<h:outputText value="N° Recepcion: 54" />
+					<h:outputText value="Fecha de Ingreso: 2022-01-17" />
+					<h:outputText value="Hora de Ingreso: 09:45" />
+
+					<p:outputLabel for="dateB" value="Fecha de Entrega: " />
+					<p:datePicker id="dateB" showIcon="true" style="width:50" />
+
+				</p:panelGrid>
+
+			</div>
+
+			<p:panelGrid columns="4"
+				columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+				layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+				style="border:0px none; background-color:transparent;">
+
+				<p:row styleClass="my-heading-row">
+            Información del Cliente
+        </p:row>
+
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Numero de cedula:" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Numero Celular:" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Correo Electronico: " />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:commandButton value="Agregar Cliente" styleClass="p-mr-2"
+					style="width: auto" />
+				<p:commandButton value="Seleccionar Cliente" styleClass="p-mr-2"
+					style="width: auto" />
+
+				<p:row id="my-row-id" styleClass="my-heading-row"
+					style="font-weight: bold">
+            Información del Vehiculo
+        </p:row>
+
+				<p:outputLabel for="@next" value="Placa del vehiculo:" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Marca:" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Año" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:outputLabel for="@next" value="Kilometraje" />
+				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+
+				<p:commandButton value="Agregar Vehiculo" styleClass="p-mr-2"
+					style="width: auto" />
+				<p:commandButton value="Seleccionar Vehiculo" styleClass="p-mr-2"
+					style="width: auto" />
+
+			</p:panelGrid>
+		</div>
+
+	</p:panel>
+
+	<h:form id="form2">
+		<p:panel header="Servicios a realizar:" collapsed="false"
+			style="width:75%; margin: 0 auto">
+			<p:dataTable class="table table-bordered table-striped"
+				value="#{beanGerente.actionfindAllServicios()}" var="serv"
+				paginator="true" rows="10">
+				<p:column headerText="ID del servicio">
+					<h:outputText value="#{serv.recSerId}" />
+				</p:column>
+				<p:column headerText="Nombre del servicio">
+					<h:outputText value="#{serv.recSerNombre}" />
+				</p:column>
+				<p:column headerText="Precio del Servicio">
+					<h:outputText value="#{serv.recSerPrecio}" />
+				</p:column>
+				<p:column headerText="Opciones">
+					<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
+						actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
+					<p:overlayPanel for="cmdEdicion" dynamic="true"
+						showCloseIcon="true">
+						<p:panel header="Editar Servicio"
+							style="width:225%; margin: 0 auto ">
+							<p:panelGrid columns="2" style="margin: 0 auto">
+								<h:outputText value="Nombre: " />
+								<h:inputText value="#{beanGerente.servicio.recSerNombre}" />
+								<h:outputText value="Precio: " />
+								<h:inputText value="#{beanGerente.servicio.recSerPrecio}" />
+							</p:panelGrid>
+							<p:commandButton value="Guardar cambios"
+								actionListener="#{beanGerente.actionUpdateServicio()}"
+								update="@form,:form2" icon="pi pi-save" />
+						</p:panel>
+					</p:overlayPanel>
+					<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+						styleClass="ui-button-danger" update="@form,:form2"
+						actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+						<p:confirm header="Confirmación"
+							message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:panelGrid columns="2" style="text-align: center">
+
+				<h:outputText value="Total: " />
+				<h:outputText value="489" />
+
+				<h:outputText value="Abono: " />
+				<h:inputText value="0" />
+
+				<h:outputText value="Saldo: " />
+				<h:outputText value="456" />
+			</p:panelGrid>
+			<div style="text-align: right;">
+				<p:commandButton value="GENERAR RECEPCIÓN" icon="pi pi-times-circle"
+					title="Eliminar" styleClass="ui-button-danger"
+					update="@form,:form2"
+					actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+					<p:confirm header="Confirmación"
+						message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+				</p:commandButton>
+			</div>
+
+
+		</p:panel>
+
+
+	</h:form>
+
+</body>
+</html>
