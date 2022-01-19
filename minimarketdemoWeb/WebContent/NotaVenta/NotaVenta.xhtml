@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Nota de venta</title>
+</h:head>
+<body>
+	<div>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<div> 
+			<h:form id="form1">
+				<p:panelGrid columns="4" header="Información de la nota de venta" value = "#{beanNotaVenta.cabeceraSeleccionada}" id="tbl">
+					<h:outputText value="ID Detalle:" />
+					<p:commandButton id="cabsearch" value="Buscar">
+					<p:overlayPanel for="cabsearch" dynamic="true"
+							showCloseIcon="true" style="width:400px; margin: 0 auto ">
+							<p:dataTable class="table table-bordered table-striped" value="#{beanNotaVenta.cabeceras}" var ="cab"
+								paginator="true" rows="5">
+								<p:column headerText="ID" filterBy="#{cab.recCabId}" filterMatchMode="contains">
+									<h:outputText value="#{cab.recCabId}" />
+								</p:column>
+								<p:column headerText="Cédula cliente" filterBy="#{cab.recCliente.cliCedula}" filterMatchMode="contains">
+									<h:outputText value="#{cab.recCliente.cliCedula}" />
+								</p:column>
+								<p:column headerText="Seleccionar">
+									<p:commandButton value="Aceptar"
+									actionListener="#{beanNotaVenta.EstablecerCabecera(cab)}"
+									update="@form,:form2" icon="pi pi-check" />
+								</p:column>
+								
+							</p:dataTable>
+								
+					</p:overlayPanel>
+					</p:commandButton>
+					
+					<h:outputText value="ID:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabId}" />
+					<h:outputText value="Fecha de recepción:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabFechaRecepcion}" />
+					<h:outputText value="Fecha de entrega:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabFechaEntrega}" />
+					<h:outputText value="Hora:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabHora}" />
+					<h:outputText value="Observación:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabObservacion}" />
+					<h:outputText value="Total:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabTotal}" />
+					<h:outputText value="Abono:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabAbono}" />
+					<h:outputText value="Saldo:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCabSaldo}" />
+					<h:outputText value="Placa del vehículo:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recVehiculo.vehPlaca}" />
+					<h:outputText value="Marca del vehículo:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recVehiculo.vehMarca}" />
+					<h:outputText value="Cédula del cliente:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCliente.cliCedula}" />
+					<h:outputText value="Nombre del cliente:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCliente.cliNombreApellido}" />
+					<h:outputText value="Correo del cliente:" />
+					<h:outputText value="#{beanNotaVenta.cabeceraSeleccionada.recCliente.cliCorreo}" />
+					<h:outputText value="Vista previa:" />
+					<p:commandButton value="Visualizar" action="VistaNotaVenta" icon="ui-icon-print"/>
+				</p:panelGrid>
+			</h:form>
+		</div>
+		<h:form id="form2">
+			<p:panel header="Información de los servicios" toggleable="true"
+				collapsed="false" style="width:95%; margin: 0 auto ">
+				<p:dataTable id="tbl2" class="table table-bordered table-striped" value="#{beanNotaVenta.detallesCabecera}" var ="c"
+					paginator="true" rows="10">
+					<p:column headerText="Servicio">
+						<h:outputText value="#{c.recServicio.recSerNombre}" />
+					</p:column>
+					<p:column headerText="Horas Empleadas">
+						<h:outputText value="#{c.rec_detHorasEmpleadas}" />
+					</p:column>
+					<p:column headerText="Servicios extra">
+						<h:outputText value="#{c.recDetServicioExtra}" />
+					</p:column>
+					<p:column headerText="Observaciones">
+						<h:outputText value="#{c.recDetObservacion}" />
+					</p:column>
+					<p:column headerText="Costo del servicio">
+						<h:outputText value="#{c.recDetPrecioFinal}" />
+					</p:column>
+					<p:column headerText="Cambiar Costo" exportable="false">
+							<p:commandButton id="prec" value="Modificar Precio" action="#{beanNotaVenta.EstablecerDetalle(c)}">
+							<p:overlayPanel for="prec" dynamic="true"
+									showCloseIcon="true" style="width:300px; margin: 0 auto ">
+									<p:panelGrid columns="2" value="Información de la nota de venta">
+										<h:outputText value="Precio:" />
+										<h:inputText value="#{beanNotaVenta.detalleSelect.recDetPrecioFinal}" />
+										<p:commandButton value="Guardar Precio" icon="pi pi-save"
+											action="#{beanNotaVenta.ActualizarDetalle()}" update="@form,:form2, :form1"/>
+										</p:panelGrid>
+							</p:overlayPanel>
+							</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>
+
