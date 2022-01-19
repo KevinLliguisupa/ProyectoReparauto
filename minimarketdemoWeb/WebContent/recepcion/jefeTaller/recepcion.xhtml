@@ -47,6 +47,8 @@
 		<p:staticMessage severity="info" summary="Módulo de recepcion"></p:staticMessage>
 	</h:form>
 
+
+
 	<p:panel header="" style="width:85%; margin: 0 auto">
 
 		<div class="card">
@@ -62,12 +64,17 @@
 			<div style="text-align: center">
 				<p:panelGrid columns="3" layout="grid"
 					styleClass="showcase-text-align-center">
-					<h:outputText value="N° Recepcion: 54" />
-					<h:outputText value="Fecha de Ingreso: 2022-01-17" />
-					<h:outputText value="Hora de Ingreso: 09:45" />
+					<h:outputText
+						value="N° Recepcion: #{beanRecepcion.numeroRecepcion}" />
+					<h:outputText
+						value="Fecha de Ingreso: #{beanRecepcion.fechaActualTexto}" />
+					<h:outputText
+						value="Hora de Ingreso: #{beanRecepcion.horaRecepcion}" />
 
-					<p:outputLabel for="dateB" value="Fecha de Entrega: " />
-					<p:datePicker id="dateB" showIcon="true" style="width:50" />
+					<p:outputLabel for="dateB" value="Fecha de Entrega:" />
+					<p:datePicker id="dateB" showIcon="true" style="width:50"
+						required="true" requiredMessage="Ingrese la fecha de salida"
+						value="#{beanRecepcion.cabeceraRecepcion.recCabFechaEntrega}" />
 
 				</p:panelGrid>
 
@@ -76,28 +83,38 @@
 			<p:panelGrid columns="4"
 				columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
 				layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
-				style="border:0px none; background-color:transparent;">
+				style="border:0px none; background-color:transparent;"
+				id="infoCliente">
 
 				<p:row styleClass="my-heading-row">
             Información del Cliente
         </p:row>
 
 				<p:outputLabel for="@next" value="Nombre y Apellido:" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.cliente.cliNombreApellido}" />
 
 				<p:outputLabel for="@next" value="Numero de cedula:" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.cliente.cliCedula}" />
 
 				<p:outputLabel for="@next" value="Numero Celular:" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.cliente.cliCelular}" />
 
 				<p:outputLabel for="@next" value="Correo Electronico: " />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.cliente.cliCorreo}" />
 
-				<p:commandButton value="Agregar Cliente" styleClass="p-mr-2"
+				<p:commandButton value="Agregar Cliente" icon="pi pi-user-plus"
+					styleClass="p-mr-2" style="width: auto" />
+
+				<p:commandButton value="Seleccionar Cliente" icon="pi pi-id-card"
+					title="Seleccionar Cliente"
+					actionListener="#{beanRecepcion.actionListenerCargarClientes()}"
+					oncomplete="PF('dialogoSeleccion').show()" update="formSeleccion"
 					style="width: auto" />
-				<p:commandButton value="Seleccionar Cliente" styleClass="p-mr-2"
-					style="width: auto" />
+
 
 				<p:row id="my-row-id" styleClass="my-heading-row"
 					style="font-weight: bold">
@@ -105,20 +122,26 @@
         </p:row>
 
 				<p:outputLabel for="@next" value="Placa del vehiculo:" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.vehiculo.vehPlaca}" />
 
 				<p:outputLabel for="@next" value="Marca:" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.vehiculo.vehMarca}" />
 
 				<p:outputLabel for="@next" value="Año" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next" value="#{beanRecepcion.vehiculo.vehAnio}" />
 
 				<p:outputLabel for="@next" value="Kilometraje" />
-				<p:outputLabel for="@next" value="Nombre y Apellido:" />
+				<p:outputLabel for="@next"
+					value="#{beanRecepcion.vehiculo.vehKilometraje}" />
 
 				<p:commandButton value="Agregar Vehiculo" styleClass="p-mr-2"
 					style="width: auto" />
-				<p:commandButton value="Seleccionar Vehiculo" styleClass="p-mr-2"
+				<p:commandButton value="Seleccionar Vehiculo" icon="pi pi-id-card"
+					title="Seleccionar Vehiculo"
+					actionListener="#{beanRecepcion.actionListenerCargarVehiculos()}"
+					oncomplete="PF('dialogoSeleccionV').show()" update="formSeleccionV"
 					style="width: auto" />
 
 			</p:panelGrid>
@@ -127,73 +150,161 @@
 	</p:panel>
 
 	<h:form id="form2">
-		<p:panel header="Servicios a realizar:" collapsed="false"
+		<p:panel header="SERVICIOS COTIZADOS" collapsed="false"
 			style="width:75%; margin: 0 auto">
 			<p:dataTable class="table table-bordered table-striped"
-				value="#{beanGerente.actionfindAllServicios()}" var="serv"
-				paginator="true" rows="10">
+				value="#{beanRecepcion.listaServicios}" var="serv" paginator="true"
+				rows="10">
 				<p:column headerText="ID del servicio">
 					<h:outputText value="#{serv.recSerId}" />
 				</p:column>
 				<p:column headerText="Nombre del servicio">
 					<h:outputText value="#{serv.recSerNombre}" />
 				</p:column>
-				<p:column headerText="Precio del Servicio">
+				<p:column headerText="Precio Acordado">
 					<h:outputText value="#{serv.recSerPrecio}" />
 				</p:column>
 				<p:column headerText="Opciones">
-					<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
-						actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
-					<p:overlayPanel for="cmdEdicion" dynamic="true"
-						showCloseIcon="true">
-						<p:panel header="Editar Servicio"
-							style="width:225%; margin: 0 auto ">
-							<p:panelGrid columns="2" style="margin: 0 auto">
-								<h:outputText value="Nombre: " />
-								<h:inputText value="#{beanGerente.servicio.recSerNombre}" />
-								<h:outputText value="Precio: " />
-								<h:inputText value="#{beanGerente.servicio.recSerPrecio}" />
-							</p:panelGrid>
-							<p:commandButton value="Guardar cambios"
-								actionListener="#{beanGerente.actionUpdateServicio()}"
-								update="@form,:form2" icon="pi pi-save" />
-						</p:panel>
-					</p:overlayPanel>
-					<p:commandButton icon="pi pi-times-circle" title="Eliminar"
+
+					<p:commandButton icon="pi pi-times-circle" title="Retirar"
 						styleClass="ui-button-danger" update="@form,:form2"
-						actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+						actionListener="#{beanRecepcion.actionListenerRetirarServicio(serv.recSerId)}">
 						<p:confirm header="Confirmación"
-							message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
+							message="Desea retirar este Servicio?" icon="pi pi-info-circle" />
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>
 
-			<p:panelGrid columns="2" style="text-align: center">
 
-				<h:outputText value="Total: " />
-				<h:outputText value="489" />
 
-				<h:outputText value="Abono: " />
-				<h:inputText value="0" />
+			<div style="text-align: left;">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="showcase-text-align-center">
+					<p:column>
+						<h:outputText value="Observaciones: " />
+						<br />
+						<p:inputTextarea style="width:80%" rows="4"
+							value="#{beanRecepcion.cabeceraRecepcion.recCabObservacion}" />
+					</p:column>
+					<p:column style="">
+						<p:panel header="Valores a cancelar"
+							style="text-align: center; width:60%">
+							<div style="text-align: center">
+								<p:panelGrid columns="2" style="text-align: right">
 
-				<h:outputText value="Saldo: " />
-				<h:outputText value="456" />
-			</p:panelGrid>
-			<div style="text-align: right;">
-				<p:commandButton value="GENERAR RECEPCIÓN" icon="pi pi-times-circle"
-					title="Eliminar" styleClass="ui-button-danger"
-					update="@form,:form2"
-					actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
-					<p:confirm header="Confirmación"
-						message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
-				</p:commandButton>
+									<h:outputText value="Total: " />
+									<h:outputText value="#{beanRecepcion.precioTotal}" />
+
+									<h:outputText value="Abono: " />
+									<p:inputText value="#{beanRecepcion.abono}" />
+
+									<h:outputText value="Saldo: " />
+									<h:outputText value="#{beanRecepcion.saldo}" />
+
+									<h:outputText value="" />
+									<p:commandButton value="Calcular" icon="pi pi-percentage"
+										update="@form,:form2" styleClass="p-mr-2"
+										actionListener="#{beanRecepcion.actionListenerCalcularSaldo()}"
+										style="width: auto" />
+
+								</p:panelGrid>
+							</div>
+						</p:panel>
+					</p:column>
+
+				</p:panelGrid>
+
 			</div>
 
 
+			<div style="text-align: right;">
+
+				<p:commandButton value="GENERAR RECEPCIÓN" icon="pi pi-upload"
+					title="Eliminar"
+					styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success p-mr-2 p-mb-2"
+					update="@form,:form2,infoCliente"
+					actionListener="#{beanRecepcion.actionListenerCrearRecepcion()}">
+
+					<p:confirm header="Confirmación"
+						message="Desea generar la recepcion?" icon="pi pi-info-circle" />
+				</p:commandButton>
+
+			</div>
 		</p:panel>
 
 
 	</h:form>
+
+
+	<p:dialog header="Seleccione un cliente" widgetVar="dialogoSeleccion"
+		width="900" height="650">
+		<h:form id="formSeleccion">
+
+			<p:panel header="CLIENTES EXISTENTES" collapsed="false"
+				style="height:90%; margin: 0 auto">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanRecepcion.listaClientes}" var="cliente"
+					paginator="true" rows="10">
+
+					<p:column headerText="N° Cedula" filterBy="#{cliente.cliCedula}"
+						filterMatchMode="contains">
+						<h:outputText value="#{cliente.cliCedula}" />
+					</p:column>
+
+					<p:column headerText="Nombre Cliente"
+						filterBy="#{cliente.cliNombreApellido}" filterMatchMode="contains">
+						<h:outputText value="#{cliente.cliNombreApellido}" />
+					</p:column>
+					<p:column headerText="Seleccionar">
+
+						<p:commandButton value="Seleccionar" update="@form,:infoCliente"
+							icon="pi pi-eject" title="seleccionar"
+							action="#{beanRecepcion.actionSeleccionarCliente(cliente)}"
+							oncomplete="PF('dialogoSeleccion').hide()" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+
+	<p:dialog header="Seleccione un Vehiculo" widgetVar="dialogoSeleccionV"
+		width="900" height="650">
+		<h:form id="formSeleccionV">
+
+			<p:panel header="VEHICULOS EXISTENTES" collapsed="false"
+				style="height:90%; margin: 0 auto">
+				<p:dataTable class="table table-bordered table-striped"
+					value="#{beanRecepcion.listaVehiculos}" var="vehiculo"
+					paginator="true" rows="10">
+
+					<p:column headerText="N° Placa" filterBy="#{vehiculo.vehPlaca}"
+						filterMatchMode="contains">
+						<h:outputText value="#{vehiculo.vehPlaca}" />
+					</p:column>
+
+					<p:column headerText="Marca Vehiculo"
+						filterBy="#{vehiculo.vehMarca}" filterMatchMode="contains">
+						<h:outputText value="#{vehiculo.vehMarca}" />
+					</p:column>
+					<p:column headerText="Seleccionar">
+
+						<p:commandButton value="Seleccionar" update="@form,:infoCliente"
+							icon="pi pi-eject" title="seleccionar"
+							action="#{beanRecepcion.actionSeleccionarVehiculo(vehiculo)}"
+							oncomplete="PF('dialogoSeleccionV').hide()" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</p:dialog>
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
 
 </body>
 </html>
