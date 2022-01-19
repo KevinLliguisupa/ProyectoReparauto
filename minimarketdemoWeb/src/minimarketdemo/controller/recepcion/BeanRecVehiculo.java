@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
+import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.recepcion.managers.ManagerRecJefeTaller;
 
@@ -26,6 +27,8 @@ public class BeanRecVehiculo implements Serializable {
 	private Boolean actualizarVehiculo;
 	private RecVehiculo vehiculo;
 	private int idVehiculo;
+	
+	
 
 	public BeanRecVehiculo() {
 		// TODO Auto-generated constructor stub
@@ -36,6 +39,8 @@ public class BeanRecVehiculo implements Serializable {
 		listaRecVehiculos = mJefeTaller.findAllVehiculos();
 		vehiculo = new RecVehiculo();
 		actualizarVehiculo = false;
+		idVehiculo = 0;
+		
 	}
 
 	public String actionRegistrarVehiculo() throws Exception {
@@ -63,6 +68,13 @@ public class BeanRecVehiculo implements Serializable {
 		vehiculo = new RecVehiculo();
 		JSFUtil.crearMensajeINFO("Vehiculo eliminado.");
 
+	}
+	public RecVehiculo ActionConsultarVehiculoById() throws Exception {
+		if (mJefeTaller.findVehiculoById(idVehiculo) != null) {
+			vehiculo = mJefeTaller.findVehiculoById(idVehiculo);
+		}
+
+		return vehiculo;
 	}
 
 	public String actionCargarDetallesVehiculo(int id) throws Exception {
@@ -95,4 +107,7 @@ public class BeanRecVehiculo implements Serializable {
 		this.idVehiculo = idVehiculo;
 	}
 
+
+	
+	
 }
