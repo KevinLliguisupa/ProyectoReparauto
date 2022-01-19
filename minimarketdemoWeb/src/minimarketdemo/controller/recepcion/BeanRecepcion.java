@@ -117,6 +117,8 @@ public class BeanRecepcion implements Serializable {
 		listaServicios=new ArrayList<RecServicio>();
 		precioTotal=mRecepcion.calcularTotal(listaServicios);
 		saldo=precioTotal.subtract(abono);
+		beanCotizacion.setListaServiciosSeleccionados(new ArrayList<RecServicio>());
+		beanCotizacion.setPrecioTotalServicios(0);
 		
 		
 	}
