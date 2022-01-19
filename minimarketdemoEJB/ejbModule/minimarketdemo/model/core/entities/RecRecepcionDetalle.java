@@ -35,7 +35,7 @@ public class RecRecepcionDetalle implements Serializable {
 	@Column(name="rec_det_servicio_extra")
 	private Boolean recDetServicioExtra;
 
-	@Column(name="\"rec-det_horas_empleadas\"")
+	@Column(name="\"rec_det_horas_empleadas\"")
 	private Integer rec_detHorasEmpleadas;
 
 	//bi-directional many-to-one association to RecRecepcionCabecera
