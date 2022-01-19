@@ -40,6 +40,9 @@ public class BeanTHumanoEmpleados implements Serializable {
 	public BeanTHumanoEmpleados() {
 		
 	}
+	public List<ThmEmpleado> findAllEmpleados(){
+		return listaEmpleados=mTHumano.findAllThmEmpleado();
+	}
 	
 	public String actionCargarMenuEmpleados() {
 		listaUsuarios=mSeguridades.findAllUsuarios();

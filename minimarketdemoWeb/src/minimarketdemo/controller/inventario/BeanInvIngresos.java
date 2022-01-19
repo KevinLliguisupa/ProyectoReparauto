@@ -180,8 +180,8 @@ public class BeanInvIngresos implements Serializable {
 		} else {
 			JSFUtil.crearMensajeERROR("Seleccione un proveedor");
 		}
-
 	}
+
 
 	public void actionListenerSeleccionarMaterial() throws Exception {
 		if (precioCompra.compareTo(precioCompra.ZERO) != 0 && idMaterial != 0) {
