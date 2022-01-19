@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Avance de servicios</title>
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<h2>AVANCE DE PROCESOS POR VEHÍCULO</h2>
+	<div>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
+		<div class="card">
+			<h:form id="form10">
+				<p:growl>
+					<p:autoUpdate />
+				</p:growl>
+				<p:panel>
+					<h:panelGrid columns="4">
+						<p:selectOneMenu filterMatchMode="contains" filter="true"
+							value="#{beanAvanceServicio.idRecepcionCab}">
+							<f:selectItem itemLabel="Seleccion un cliente."
+								noSelectionOption="true" />
+							<f:selectItems value="#{beanAvanceServicio.listaRecepcionCab}"
+								var="recCab" itemLabel="#{recCab.recCabId}"
+								itemValue="#{recCab.recCabId}"></f:selectItems>
+						</p:selectOneMenu>
+						<p:commandButton value="Consultar"
+							action="#{beanAvanceServicio.ActionConsultarRecepcionCabId()}"
+							update="@form,:form1" icon="pi pi-search"></p:commandButton>
+
+
+					</h:panelGrid>
+				</p:panel>
+			</h:form>
+		</div>
+		<div>
+			<h:form id="form1">
+				<p:panelGrid columns="6" value="Información del Servicio">
+					<h:outputText value="Cedula:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCliente.cliCedula}" />
+					<h:outputText value="Nombres:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCliente.cliNombreApellido}" />
+					<h:outputText value="Placas:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recVehiculo.vehPlaca}" />
+					<h:outputText value="Fecha de Recepción:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCabFechaRecepcion}" />
+					<h:outputText value="Fecha de Entrega:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCabFechaEntrega}" />
+					<h:outputText value="Hora:" />
+					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabHora}" />
+					<h:outputText value="Total:" />
+					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabTotal}" />
+					<h:outputText value="Abono:" />
+					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabAbono}" />
+					<h:outputText value="Saldo" />
+					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabSaldo}" />
+					<h:outputText value="Observación:" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCabObservacion}" />
+
+				</p:panelGrid>
+			</h:form>
+		</div>
+		<h:form id="form2">
+			<p:panel header="Información de los servicios" toggleable="true"
+				collapsed="false" style="width:95%; margin: 0 auto ">
+				<p:dataTable value="#{beanAvanceServicio.listaRecepcionDet}" var="p"
+					class="table table-bordered table-striped" paginator="true"
+					rows="10">
+					<p:column headerText="ID:">
+						<h:outputText value="#{p.recDetId}" />
+					</p:column>
+					<p:column headerText="Servicio Concluido">
+						<h:outputText value="#{p.recServicio.recSerNombre}" />
+					</p:column>
+					<p:column headerText="Valor">
+						<h:inputText value="#{p.recDetPrecioFinal}" />
+					</p:column>
+					<p:column headerText="Servicio concluido">
+						<h:selectBooleanCheckbox value="true" />
+					</p:column>
+					<p:column headerText="empleado">
+						<p:selectOneMenu filterMatchMode="contains" filter="true"
+							value="#{beanTHumanoEmpleados.findAllEmpleados()}">
+							<f:selectItem itemLabel="Seleccion un empleado."
+								noSelectionOption="true" />
+							<f:selectItems value="#{beanTHumanoEmpleados.listaEmpleados}"
+								var="empleados" itemLabel="#{empleados.thmCargo.nombreCargo}"
+								itemValue="#{empleados.idThmEmpleado}"></f:selectItems>
+						</p:selectOneMenu>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+	</div>
+</body>
+</html>
