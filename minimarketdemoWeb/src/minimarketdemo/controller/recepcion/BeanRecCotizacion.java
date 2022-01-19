@@ -8,10 +8,13 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
+import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.recepcion.managers.ManagerRecCotizacion;
+import minimarketdemo.model.recepcion.managers.ManagerRecepcion;
 
 @Named
 @SessionScoped
@@ -19,6 +22,10 @@ public class BeanRecCotizacion implements Serializable {
 
 	@EJB
 	private ManagerRecCotizacion mCotizacion;
+	
+	@Inject
+	private BeanRecepcion bRecepcion;
+	
 	private List<RecServicio> listaServicios;
 	private List<RecServicio> listaServiciosSeleccionados;
 	private int idServicio;
@@ -59,6 +66,10 @@ public class BeanRecCotizacion implements Serializable {
 		listaServiciosSeleccionados= new ArrayList<RecServicio>();
 	}
 	
+	public String actionGenerarOrden() throws Exception {
+		return "recepcion?faces-redirect=true";
+		
+	}
 
 	public List<RecServicio> getListaServicios() {
 		return listaServicios;

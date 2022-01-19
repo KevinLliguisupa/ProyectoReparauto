@@ -28,6 +28,9 @@ public class BeanRecepcion implements Serializable {
 
 	@EJB
 	private ManagerRecepcion mRecepcion;
+	
+	@Inject
+	private BeanRecCotizacion beanCotizacion;
 
 	private List<RecVehiculo> listaVehiculos;
 	private List<RecServicio> listaServicios;
@@ -54,7 +57,7 @@ public class BeanRecepcion implements Serializable {
 	@PostConstruct
 	public void inicializar() throws Exception {
 		listaVehiculos = mRecepcion.findAllVehiculos();
-		listaServicios = mRecepcion.findAllServicios();
+		listaServicios = beanCotizacion.getListaServiciosSeleccionados();
 		cabeceraRecepcion= new RecRecepcionCabecera();
 		cliente=new RecCliente();
 		vehiculo=new RecVehiculo();
