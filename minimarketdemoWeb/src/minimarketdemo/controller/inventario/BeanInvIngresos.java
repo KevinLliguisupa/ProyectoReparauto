@@ -64,8 +64,8 @@ public class BeanInvIngresos implements Serializable {
 		listaProveedor = mJefeTaller.findAllProveedor();
 		listaTipo = mJefeTaller.findAllTipoMaterial();
 		listaMatAux = mJefeTaller.findAllMaterial();
-		cantidadIngresar=0;
-		idTipo=0;
+		cantidadIngresar = 0;
+		idTipo = 0;
 		listaMateriales = new ArrayList<InvMaterial>();
 		idMaterial = 0;
 		precioCompra = new BigDecimal(0);
@@ -73,6 +73,7 @@ public class BeanInvIngresos implements Serializable {
 		nuevoMaterial = new InvMaterial();
 		tipo = new InvTipo();
 		material.setMatId(1);
+		idProveedor = 0;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// Fecha de inicio:
@@ -115,18 +116,10 @@ public class BeanInvIngresos implements Serializable {
 
 	public String actionCargarDetalles(int id) throws Exception {
 		ingreso = mJefeTaller.findIngresoById(id);
-		//listaMatAux = mJefeTaller.findAllMaterial();
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		//listaTipo = mJefeTaller.findAllTipoMaterial();
-		//material = new InvMaterial();
-		//listaMatAux= mJefeTaller.findAllMaterial();
-		//precioCompra= new BigDecimal(0);
-		//cantidadIngresar=0;
-		//idTipo=0;
-		//listaMateriales = new ArrayList<InvMaterial>();
-		
+
 		return "maestroIngreso?faces-redirect=true";
-		
+
 	}
 
 	public BigDecimal actioncalcularValorTotalIngreso(int idIngreso) throws Exception {
@@ -145,26 +138,31 @@ public class BeanInvIngresos implements Serializable {
 	// Here are all the ACTIONLISTENER methods
 
 	public void actionListenerIngresarMaterial() throws Exception {
-		
-	
+		if (idProveedor != 0) {
 			try {
 				proveedor = mJefeTaller.findIdProveedor(idProveedor);
 				mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
-				idProveedor = 0;
 				proveedor = new InvProveedor();
-				
-				JSFUtil.crearMensajeINFO("Ingreso creado correctamente.");
+
+				JSFUtil.crearMensajeINFO("Ingreso creado correctamente. " );
 			} catch (Exception e) {
-				JSFUtil.crearMensajeERROR(e.getMessage()+String.valueOf(proveedor));
+				JSFUtil.crearMensajeERROR(proveedor + "");
 				e.printStackTrace();
 			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione un proveedor");
+
+		}
+		ingreso=mJefeTaller.findAllIngresos().get(0);
+	
 		
-		
+	
+
 		if (listaMateriales.size() != 0) {
 			try {
+				
 				mJefeTaller.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
 				listaMateriales = new ArrayList<InvMaterial>();
-				detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
 				listaMatAux = mJefeTaller.findAllMaterial();
 				material = new InvMaterial();
 				listaIngresos = mJefeTaller.findAllIngresos();
@@ -200,14 +198,14 @@ public class BeanInvIngresos implements Serializable {
 		}
 
 	}
-	
+
 	public void actionListenerCrearMaterial() {
 		try {
 			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
 			idTipo = 0;
 			mJefeTaller.createMaterial(this.nuevoMaterial, selectTipo);
 			nuevoMaterial = new InvMaterial();
-			listaMatAux=mJefeTaller.findAllMaterial();
+			listaMatAux = mJefeTaller.findAllMaterial();
 			JSFUtil.crearMensajeINFO("Material creado correctamente");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
@@ -223,7 +221,7 @@ public class BeanInvIngresos implements Serializable {
 			JSFUtil.crearMensajeERROR("Seleccione una categoria.");
 		}
 	}
-	
+
 	public void actionListenerUpdateSeleccionMat() throws Exception {
 		tipo = mJefeTaller.findTipoMaterialById(idTipo);
 		material.setInvTipo(tipo);

@@ -13,14 +13,9 @@
 </h:head>
 <body>
 
-	<p:growl>
-		<p:autoUpdate />
-	</p:growl>
-
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home"
-				action="menu" />
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -34,21 +29,20 @@
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
 
-	<h:form>
-		<p:panelGrid columns="2">
-			<h:outputText value="Proveedor" />
 
-			<p:selectOneMenu filterMatchMode="contains" filter="true"
-				value="#{beanInvIngresos.idProveedor}">
-				<f:selectItem itemLabel="Seleccione un proveedor..."
-					noSelectionOption="true" />
-				<f:selectItems value="#{beanInvIngresos.listaProveedor}" var="u"
-					itemLabel="#{u.proNombre}" itemValue="#{u.proId}"></f:selectItems>
-			</p:selectOneMenu>
+
+	<h:form id="formPro">
+		<p:panelGrid columns="2">
+
 
 		</p:panelGrid>
 
 	</h:form>
+
+
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
 	<h:form>
 		<p:panelGrid columns="3">
 
@@ -69,7 +63,15 @@
 
 	<h:form id="mat1">
 		<p:panelGrid columns="2">
+			<h:outputText value="Proveedor" />
 
+			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				value="#{beanInvIngresos.idProveedor}">
+				<f:selectItem itemLabel="Seleccione un proveedor..."
+					noSelectionOption="true" />
+				<f:selectItems value="#{beanInvIngresos.listaProveedor}" var="u"
+					itemLabel="#{u.proNombre}" itemValue="#{u.proId}"></f:selectItems>
+			</p:selectOneMenu>
 			<h:outputText value="Material" />
 			<p:selectOneMenu filterMatchMode="contains" filter="true"
 				value="#{beanInvIngresos.idMaterial}">
@@ -83,7 +85,7 @@
 			<p:spinner value="#{beanInvIngresos.cantidadIngresar}" min="1"
 				max="100" />
 
-			<h:outputText value="Precio Compra" />
+			<h:outputText value="Precio Compra $" />
 			<p:inputText value="#{beanInvIngresos.precioCompra}" />
 
 			<p:commandButton value="Nuevo Material" icon="pi pi-pencil"
@@ -91,11 +93,11 @@
 
 			<p:commandButton value="Seleccionar" icon="pi pi-save"
 				actionListener="#{beanInvIngresos.actionListenerSeleccionarMaterial()}"
-				update="@form:,formDatos1"></p:commandButton>
+				update="formDatos1"></p:commandButton>
 
 			<p:commandButton value="Guardar" icon="pi pi-save"
 				actionListener="#{beanInvIngresos.actionListenerIngresarMaterial()}"
-				update="@form:,formDatos12,formDatos1">
+				update="@form:,formDatos12,formDatos1,formPro">
 			</p:commandButton>
 		</p:panelGrid>
 	</h:form>
@@ -163,7 +165,7 @@
 		</p:dataTable>
 	</h:form>
 
-	
+
 	<h:form id="formDatos12">
 
 		<p:dataTable value="#{beanInvIngresos.listaIngresos}" var="p"
@@ -191,9 +193,9 @@
 			</p:column>
 		</p:dataTable>
 	</h:form>
-	
-	
-	
+
+
+
 
 	<p:dialog header="Edición" widgetVar="dialogoNuevo" width="550">
 		<h:form id="formNuevo">

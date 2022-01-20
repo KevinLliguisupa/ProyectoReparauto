@@ -89,5 +89,9 @@ public class InvMaterialIngreso implements Serializable {
 	public void setInvMaterial(InvMaterial invMaterial) {
 		this.invMaterial = invMaterial;
 	}
+	public BigDecimal getTotalxMaterial() {
+		return this.matIngCantidad.multiply(this.matIngPrecioCompra);
+ 
+	}
 
 }
