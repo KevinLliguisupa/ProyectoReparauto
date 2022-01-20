@@ -18,7 +18,7 @@
 
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Regresar" icon="pi pi-home" action="detalleIngreso" />
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -32,52 +32,36 @@
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
 
-	<h:form>
-		<p:panelGrid columns="2">
-			<h:outputText value="Proveedor" />
+	
+	<h:form id="formDatos12">
+		<p:dataTable value="#{beanInvIngresos.detalleIngreso}" var="p">
 
-			<p:selectOneMenu filterMatchMode="contains" filter="true"
-				value="#{beanInvIngresos.idProveedor}">
-				<f:selectItem itemLabel="Seleccione un proveedor..."
-					noSelectionOption="true" />
-				<f:selectItems value="#{beanInvIngresos.listaProveedor}" var="u"
-					itemLabel="#{u.proNombre}" itemValue="#{u.proId}"></f:selectItems>
-			</p:selectOneMenu>
-
-			<p:commandButton value="Crear Ingreso" icon="pi pi-save"
-				actionListener="#{beanInvIngresos.actionListenerIngresarCabeceraIngreso()}"
-				update="@form:,formDatos"></p:commandButton>
-
-		</p:panelGrid>
-
-	</h:form>
-
-	<h:form id="formDatos">
-
-		<p:dataTable value="#{beanInvIngresos.listaIngresos}" var="p"
-			paginator="true" rows="6">
-			<f:facet name="header">
-				<div style="text-align: center; font-size: 20px">Entradas de
-					material</div>
-
-			</f:facet>
-			<p:column headerText="Id">
-				<h:outputText value="#{p.ingId}" />
-			</p:column>
-
-			<p:column headerText="Fecha Ingreso">
-				<h:outputText value="#{p.ingFecha}" />
-			</p:column>
-			<p:column headerText="Proveedor">
-				<h:outputText value="#{p.invProveedor.proNombre}" />
-			</p:column>
 			<p:column headerText="Opciones">
 
-				<p:commandButton icon="pi pi-pencil" title="Ingresar Materiales"
-					value="Ingresar Materiales"
-					action="#{beanInvIngresos.actionCargarDetalles(p.ingId)}" />
+				<p:commandButton icon="pi pi-times" title="Eliminar"
+					value="Eliminar Registro" styleClass="ui-button-danger"
+					actionListener="#{beanInvIngresos.actionListenerDeleteDetalleIngreso(p)}"
+					update="@form" />
+
 			</p:column>
+			<p:column headerText="Id">
+				<h:outputText value="#{p.matEntId}" />
+			</p:column>
+			<p:column headerText="Material">
+				<h:outputText value="#{p.invMaterial.matNombre}" />
+			</p:column>
+			<p:column headerText="Precio Compra">
+				<h:outputText value="#{p.matIngPrecioCompra}" />
+			</p:column>
+			<p:column headerText="Cantidad">
+				<h:outputText value="#{p.matIngCantidad}" />
+			</p:column>
+			<p:column headerText="Tipo">
+				<h:outputText value="#{p.invMaterial.invTipo.tipNombre}" />
+			</p:column>
+
 		</p:dataTable>
 	</h:form>
+	
 </body>
 </html>

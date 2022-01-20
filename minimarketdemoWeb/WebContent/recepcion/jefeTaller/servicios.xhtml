@@ -4,11 +4,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-	<title>Servicios</title>
-</h:head>
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
+	</h:form>
+
 	<div>
 		<p:messages>
 			<p:autoUpdate />
@@ -35,8 +54,8 @@
 					<h:outputText value="Combustible:" />
 					<h:outputText value="Combustible actual" />
 					<h:outputText value="Buscar mediante placa:" />
-					<p:commandButton value="Buscar"
-									update="@form,:form2" icon="pi pi-search"/>
+					<p:commandButton value="Buscar" update="@form,:form2"
+						icon="pi pi-search" />
 				</p:panelGrid>
 			</h:form>
 		</div>

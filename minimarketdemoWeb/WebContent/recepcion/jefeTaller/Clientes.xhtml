@@ -4,11 +4,30 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
-
-<h:head>
-	<title>Clientes</title>
-</h:head>
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head></h:head>
 <body>
+
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
+	</h:form>
 	<div>
 		<p:messages>
 			<p:autoUpdate />
@@ -16,7 +35,8 @@
 		<h:form id="form1">
 			<p:panelGrid columns="2" value="Añadir cliente">
 				<h:outputText value="Nombre del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliNombreApellido}" />
+				<h:inputText
+					value="#{beanRecCliente.nuevoCliente.cliNombreApellido}" />
 				<h:outputText value="Cédula del cliente:" />
 				<h:inputText value="#{beanRecCliente.nuevoCliente.cliCedula}" />
 				<h:outputText value="Celular del cliente:" />
@@ -36,8 +56,8 @@
 			<p:panel header="Clientes actuales:" toggleable="true"
 				collapsed="false" style="width:95%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanRecCliente.listaClientes}" var="cli"
-					paginator="true" rows="10">
+					value="#{beanRecCliente.listaClientes}" var="cli" paginator="true"
+					rows="10">
 					<p:column headerText="Editar Cliente">
 						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
 							actionListener="#{beanRecCliente.actionfindClienteByID(cli)}" />
@@ -47,7 +67,8 @@
 								style="width:450px; margin: 0 auto ">
 								<p:panelGrid columns="2" style="margin: 0 auto">
 									<h:outputText value="Nombre del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliNombreApellido}" />
+									<h:inputText
+										value="#{beanRecCliente.cliente.cliNombreApellido}" />
 									<h:outputText value="Cédula del cliente:" />
 									<h:inputText value="#{beanRecCliente.cliente.cliCedula}" />
 									<h:outputText value="Celular del cliente:" />
@@ -64,7 +85,7 @@
 									update="@form,:form2" icon="pi pi-save" />
 								<p:commandButton value="Eliminar Cliente"
 									actionListener="#{beanRecCliente.actionEliminarCliente(beanRecCliente.cliente)}"
-									update="@form,:form2"/>
+									update="@form,:form2" />
 							</p:panel>
 						</p:overlayPanel>
 					</p:column>
@@ -72,28 +93,28 @@
 						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliId}" />
 					</p:column>
-					<p:column headerText="Cédula"
-						filterBy="#{cli.cliCedula}" filterMatchMode="contains">
+					<p:column headerText="Cédula" filterBy="#{cli.cliCedula}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliCedula}" />
 					</p:column>
-					<p:column headerText="Nombre"
-						filterBy="#{cli.cliNombreApellido}" filterMatchMode="contains">
+					<p:column headerText="Nombre" filterBy="#{cli.cliNombreApellido}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliNombreApellido}" />
 					</p:column>
-					<p:column headerText="Celular"
-						filterBy="#{cli.cliCelular}" filterMatchMode="contains">
+					<p:column headerText="Celular" filterBy="#{cli.cliCelular}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliCelular}" />
 					</p:column>
-					<p:column headerText="Dirección"
-						filterBy="#{cli.cliDireccion}" filterMatchMode="contains">
+					<p:column headerText="Dirección" filterBy="#{cli.cliDireccion}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliDireccion}" />
 					</p:column>
-					<p:column headerText="Correo"
-						filterBy="#{cli.cliCorreo}" filterMatchMode="contains">
+					<p:column headerText="Correo" filterBy="#{cli.cliCorreo}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliCorreo}" />
 					</p:column>
-					<p:column headerText="Teléfono"
-						filterBy="#{cli.cliTelefono}" filterMatchMode="contains">
+					<p:column headerText="Teléfono" filterBy="#{cli.cliTelefono}"
+						filterMatchMode="contains">
 						<h:outputText value="#{cli.cliTelefono}" />
 					</p:column>
 					<p:column headerText="Estado">

@@ -62,11 +62,12 @@ public class BeanInvIngresos implements Serializable {
 	public void inicializar() throws ParseException {
 		listaIngresos = mJefeTaller.findAllIngresos();
 		listaProveedor = mJefeTaller.findAllProveedor();
-		listaMateriales = mJefeTaller.findAllMaterial();
 		listaTipo = mJefeTaller.findAllTipoMaterial();
-
+		listaMatAux = mJefeTaller.findAllMaterial();
+		cantidadIngresar=0;
+		idTipo=0;
+		listaMateriales = new ArrayList<InvMaterial>();
 		idMaterial = 0;
-		idProveedor = 0;
 		precioCompra = new BigDecimal(0);
 		material = new InvMaterial();
 		nuevoMaterial = new InvMaterial();
@@ -114,17 +115,17 @@ public class BeanInvIngresos implements Serializable {
 
 	public String actionCargarDetalles(int id) throws Exception {
 		ingreso = mJefeTaller.findIngresoById(id);
-		listaMatAux = mJefeTaller.findAllMaterial();
+		//listaMatAux = mJefeTaller.findAllMaterial();
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
-		listaTipo = mJefeTaller.findAllTipoMaterial();
-		material = new InvMaterial();
-		listaMatAux= mJefeTaller.findAllMaterial();
-		precioCompra= new BigDecimal(0);
-		cantidadIngresar=0;
-		idTipo=0;
-		listaMateriales = new ArrayList<InvMaterial>();
+		//listaTipo = mJefeTaller.findAllTipoMaterial();
+		//material = new InvMaterial();
+		//listaMatAux= mJefeTaller.findAllMaterial();
+		//precioCompra= new BigDecimal(0);
+		//cantidadIngresar=0;
+		//idTipo=0;
+		//listaMateriales = new ArrayList<InvMaterial>();
 		
-		return "detalleIngreso?faces-redirect=true";
+		return "maestroIngreso?faces-redirect=true";
 		
 	}
 
@@ -144,6 +145,21 @@ public class BeanInvIngresos implements Serializable {
 	// Here are all the ACTIONLISTENER methods
 
 	public void actionListenerIngresarMaterial() throws Exception {
+		
+	
+			try {
+				proveedor = mJefeTaller.findIdProveedor(idProveedor);
+				mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
+				idProveedor = 0;
+				proveedor = new InvProveedor();
+				
+				JSFUtil.crearMensajeINFO("Ingreso creado correctamente.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage()+String.valueOf(proveedor));
+				e.printStackTrace();
+			}
+		
+		
 		if (listaMateriales.size() != 0) {
 			try {
 				mJefeTaller.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
@@ -151,6 +167,7 @@ public class BeanInvIngresos implements Serializable {
 				detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
 				listaMatAux = mJefeTaller.findAllMaterial();
 				material = new InvMaterial();
+				listaIngresos = mJefeTaller.findAllIngresos();
 				cantidadIngresar = 0;
 				JSFUtil.crearMensajeINFO("Materiales ingresados correctamente");
 			} catch (Exception e) {
@@ -163,25 +180,6 @@ public class BeanInvIngresos implements Serializable {
 		}
 
 	}
-
-	public void actionListenerIngresarCabeceraIngreso() throws Exception {
-		if (idProveedor != 0) {
-			try {
-				proveedor = mJefeTaller.findIdProveedor(idProveedor);
-				mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
-				idProveedor = 0;
-				proveedor = new InvProveedor();
-				listaIngresos = mJefeTaller.findAllIngresos();
-				JSFUtil.crearMensajeINFO("Ingreso creado correctamente.");
-			} catch (Exception e) {
-				JSFUtil.crearMensajeERROR(e.getMessage());
-				e.printStackTrace();
-			}
-		} else {
-			JSFUtil.crearMensajeERROR("Seleccione un proveedor");
-		}
-	}
-
 
 	public void actionListenerSeleccionarMaterial() throws Exception {
 		if (precioCompra.compareTo(precioCompra.ZERO) != 0 && idMaterial != 0) {
