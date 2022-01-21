@@ -11,6 +11,7 @@ import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.RecCliente;
 import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.RecVehiculoExtra;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
@@ -24,9 +25,10 @@ public class ManagerRecJefeTaller {
 	@EJB
 	private ManagerDAO mDao;
 	
+	@EJB
 	private ManagerAuditoria mAuditoria;
+	
     public ManagerRecJefeTaller() {
-    	mAuditoria= new ManagerAuditoria();
     }
     
     public List<RecVehiculo> findAllVehiculos(){
@@ -49,6 +51,18 @@ public class ManagerRecJefeTaller {
     	mDao.insertar(vehiculo);
     	mAuditoria.mostrarLog(loginDto, this.getClass(), "insertarVehiculo", "Registro de Vehiculo de placa"+vehiculo.getVehPlaca());
     }
+    
+    public void insertarVehiculo(RecVehiculo vehiculo, RecVehiculoExtra extras, LoginDTO loginDto) throws Exception {
+    	vehiculo.setVehEstado(true);
+    	extras.setVehExtEstado(true);
+    	extras.setRecVehiculo(vehiculo);
+    	mDao.insertar(vehiculo);
+    	
+    	mAuditoria.mostrarLog(loginDto, this.getClass(), "insertarVehiculo", "Registro de Vehiculo de placa"+vehiculo.getVehPlaca());
+    	mDao.insertar(extras);
+    	mAuditoria.mostrarLog(loginDto, this.getClass(), "insertarVehiculo", "Registro de extras de Vehiculo de placa"+vehiculo.getVehPlaca());
+    }
+    
     public void actualizarVehiculo(RecVehiculo vehiculo, LoginDTO loginDto) throws Exception {
     	mDao.actualizar(vehiculo);
     	mAuditoria.mostrarLog(loginDto, getClass(), "actualizarVehiculo", "Actualizadion de Vehiculo de placa"+vehiculo.getVehPlaca());

@@ -51,7 +51,7 @@
 
 
 
-	<p:panel header="" style="width:85%; margin: 0 auto">
+	<p:panel header="" style="width:85%; margin: 0 auto" id="infoCliente">
 
 		<div class="card">
 
@@ -86,7 +86,7 @@
 				columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
 				layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
 				style="border:0px none; background-color:transparent;"
-				id="infoCliente">
+				>
 
 				<p:row styleClass="my-heading-row">
             Información del Cliente
@@ -109,9 +109,12 @@
 					value="#{beanRecepcion.cliente.cliCorreo}" />
 
 				<p:commandButton value="Agregar Cliente" icon="pi pi-user-plus"
-					styleClass="p-mr-2" style="width: auto" />
+					title="Crear Cliente"
+					oncomplete="PF('dialogoCreacionC').show()" update="formCreacionC"
+					style="width: auto" />
+				
 
-				<p:commandButton value="Seleccionar Cliente" icon="pi pi-id-card"
+				<p:commandButton value="Seleccionar Cliente" icon="pi pi-users"
 					title="Seleccionar Cliente"
 					actionListener="#{beanRecepcion.actionListenerCargarClientes()}"
 					oncomplete="PF('dialogoSeleccion').show()" update="formSeleccion"
@@ -138,8 +141,11 @@
 				<p:outputLabel for="@next"
 					value="#{beanRecepcion.vehiculo.vehKilometraje}" />
 
-				<p:commandButton value="Agregar Vehiculo" styleClass="p-mr-2"
+				<p:commandButton value="Agregar Vehiculo" 	
+				action="nuevoVehiculo"				
 					style="width: auto" />
+					
+					
 				<p:commandButton value="Seleccionar Vehiculo" icon="pi pi-id-card"
 					title="Seleccionar Vehiculo"
 					actionListener="#{beanRecepcion.actionListenerCargarVehiculos()}"
@@ -299,6 +305,55 @@
 			</p:panel>
 		</h:form>
 	</p:dialog>
+	
+		<p:dialog header="Cree un nuevo cliente" widgetVar="dialogoCreacionC"
+		width="700" height="630">
+		<h:form id="formCreacionC">
+
+		
+
+			<p:panel header="CREACION DE CLIENTES" collapsed="false"
+				style="height:90%; margin: 0 auto">
+				
+				
+				<p:panelGrid columns="2" layout="grid">
+
+				<h:outputText value="Nombre y apellido" />
+				<p:inputText value="#{beanRecepcion.nuevoCliente.cliNombreApellido}"
+					required="true" requiredMessage="Ingrese el nombre del cliente" />
+
+				<h:outputText value="Numero de cedula:" />
+				<p:inputText value="#{beanRecepcion.nuevoCliente.cliCedula}" 
+				required="true" requiredMessage="Ingrese el numero de cedula" />
+
+				<h:outputText value="Numero de celular:" />
+				<p:inputText value="#{beanRecepcion.nuevoCliente.cliCelular}"
+					required="true" requiredMessage="Ingrese el numero de celular" />
+
+				<h:outputText value="Correo electronico:" />
+				<p:inputText value="#{beanRecepcion.nuevoCliente.cliCorreo}"/>
+				
+				<h:outputText value="Numero de telefono:" />
+				<p:inputText value="#{beanRecepcion.nuevoCliente.cliTelefono}"/>
+				
+								<h:outputText value="Direccion: " />
+				<p:inputTextarea style="width:86%" rows="4"
+							value="#{beanRecepcion.nuevoCliente.cliDireccion}"/>
+				
+
+				<p:commandButton value="Guardar" icon="pi pi-save"
+					update="@form,:form2,infoCliente"
+					actionListener="#{beanRecepcion.actionListenerCrearCliente()}"
+					oncomplete="PF('dialogoCreacionC').hide()"></p:commandButton>
+			</p:panelGrid>
+				
+				
+			</p:panel>
+		</h:form>
+	</p:dialog>
+
+
+
 
 	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
 		responsive="true" width="350">

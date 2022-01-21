@@ -132,4 +132,58 @@ UPDATE inv_material	SET mat_existencia=9 WHERE mat_id=2;
 UPDATE inv_material	SET mat_existencia=13 WHERE mat_id=5;
 UPDATE inv_material	SET mat_existencia=14 WHERE mat_id=4;
 
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Esteban Campues', '0102116381', '0981891516', 'Ibarra - La victoria', 'ecampues@gmail.com', '022110615', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Kevin Guerrero', '1728848373', '0969796346', 'Cayambe - Los girasoles', 'kguerrero@gmail.com', '063700200', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Julio Negrete', '1786959751', 'cel2', 'dir2', 'correo2', 'tel2', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Diego Ponce', '0196587415', 'cel3', 'dir3', 'correo3', 'tel3', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Marco Puerres', '1598654862', 'cel4', 'dir4', 'correo4', 'tel4', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Victor Cabrera', '0254856328', 'cel5', 'dir5', 'correo5', 'tel5', true);
+INSERT INTO public.rec_cliente(cli_nombre_apellido, cli_cedula, cli_celular, cli_direccion, cli_correo, cli_telefono, cli_estado)
+	VALUES ('Alison Correa', '0569845630', 'cel6', 'dir6', 'correo6', 'tel6', true);
+	
+
+INSERT INTO public.rec_recepcion_cabecera( rec_cab_fecha_recepcion, rec_cab_fecha_entrega, rec_cab_hora, rec_cab_observacion, rec_cab_total, rec_cab_abono, rec_cab_saldo, rec_cab_estado, rec_cab_terminado, veh_id_rec_vehiculos, cli_id_rec_cliente, id_seg_usuario_seg_usuario)
+	VALUES ('1/8/2021','5/8/2021','08:30','Ninguna','500.50','200','300.50',true,true,1,1,1);
+INSERT INTO public.rec_recepcion_cabecera( rec_cab_fecha_recepcion, rec_cab_fecha_entrega, rec_cab_hora, rec_cab_observacion, rec_cab_total, rec_cab_abono, rec_cab_saldo, rec_cab_estado, rec_cab_terminado, veh_id_rec_vehiculos, cli_id_rec_cliente, id_seg_usuario_seg_usuario)
+	VALUES ('10/10/2021','12/10/2021','09:30','Daño en la parilla delantera','800','350','450',true,true,3,2,1);
+INSERT INTO public.rec_recepcion_cabecera( rec_cab_fecha_recepcion, rec_cab_fecha_entrega, rec_cab_hora, rec_cab_observacion, rec_cab_total, rec_cab_abono, rec_cab_saldo, rec_cab_estado, rec_cab_terminado, veh_id_rec_vehiculos, cli_id_rec_cliente, id_seg_usuario_seg_usuario)
+	VALUES ('1/8/2012','3/1/2012','15:50','Auto de Hitler','2023','4120','25330',true,true,2,3,1);
+INSERT INTO public.rec_recepcion_cabecera( rec_cab_fecha_recepcion, rec_cab_fecha_entrega, rec_cab_hora, rec_cab_observacion, rec_cab_total, rec_cab_abono, rec_cab_saldo, rec_cab_estado, rec_cab_terminado, veh_id_rec_vehiculos, cli_id_rec_cliente, id_seg_usuario_seg_usuario)
+	VALUES ('5/11/2021','8/11/2021','09:15','Carro de mier....','25000','4450','25130',true,true,4,4,1);
+
+
+INSERT INTO public.rec_servicio(rec_ser_nombre, rec_ser_precio, rec_ser_estado)
+	VALUES ('Enderezada Puerta',150,true);
+INSERT INTO public.rec_servicio(rec_ser_nombre, rec_ser_precio, rec_ser_estado)
+	VALUES ('Pintura',250,true);
+INSERT INTO public.rec_servicio(rec_ser_nombre, rec_ser_precio, rec_ser_estado)
+	VALUES ('Pintura horno',500,true);
+INSERT INTO public.rec_servicio(rec_ser_nombre, rec_ser_precio, rec_ser_estado)
+	VALUES ('Masillada',80,true);
+INSERT INTO public.rec_servicio(rec_ser_nombre, rec_ser_precio, rec_ser_estado)
+	VALUES ('Limpieza completa',20,true);
+
+
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (155,5,true,true,true,'Ninguna',1,1,1);
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (80,2.5,true,true,true,'Obs1',4,1,1);
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (490,3,true,true,true,'Ninguna',3,1,1);
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (20,2,true,true,true,'Ninguna',5,1,1);
+	
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (90,3,true,true,true,'Ninguna',4,2,1);
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (510,3,true,true,true,'Ninguna',3,2,1);
+INSERT INTO public.rec_recepcion_detalle(rec_det_precio_final, rec_det_horas_empleadas, rec_det_concluido, rec_det_servicio_extra, rec_det_estado, rec_det_observacion, rec_ser_id_rec_servicio, rec_cab_id_rec_recepcion_cabecera, id_thm_empleado_thm_empleado)
+	VALUES (20,2,true,true,true,'Obs2',5,2,1);
+
 
