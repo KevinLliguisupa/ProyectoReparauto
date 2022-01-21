@@ -64,12 +64,14 @@ public class BeanInvEgresos implements Serializable {
 		listaVehiculos = mJefeTaller.findAllVehiculos();
 		listaEmpleados = mJefeTaller.findAllEmpleados();
 		listaSalidas = mJefeTaller.findAllSalidas();
-		listaMateriales = mJefeTaller.findAllMaterial();
+		
 		listaTipo = mJefeTaller.findAllTipoMaterial();
-
+		listaMatAux = mJefeTaller.findAllMaterial();
+		material = new InvMaterial();
+		listaMateriales = new ArrayList<InvMaterial>();
+		cantidadRetirar = 0;
 		idMaterial = 0;
 		id_vehiculos = 0;
-		material = new InvMaterial();
 		material.setMatId(1);
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -84,13 +86,13 @@ public class BeanInvEgresos implements Serializable {
 
 	public String actionCargarDetallesRetiro(int id) throws Exception {
 		salida = mJefeTaller.findSalidaById(id);
-		listaMatAux = mJefeTaller.findAllMaterial();
-		material = new InvMaterial();
+		//listaMatAux = mJefeTaller.findAllMaterial();
+		//material = new InvMaterial();
 		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
-		listaTipo = mJefeTaller.findAllTipoMaterial();
-		listaMateriales = new ArrayList<InvMaterial>();
-		cantidadRetirar = 0;
-		return "detalleRetiro?faces-redirect=true";
+		//listaTipo = mJefeTaller.findAllTipoMaterial();
+		//listaMateriales = new ArrayList<InvMaterial>();
+		//cantidadRetirar = 0;
+		return "maestroRetiro?faces-redirect=true";
 
 	}
 
@@ -139,26 +141,6 @@ public class BeanInvEgresos implements Serializable {
 
 	// Here are all the ACTIONLISTENER methods
 
-	public void actionListenerIngresarCabeceraRetiro() {
-		if (id_vehiculos != 0 && id_empleados != 0) {
-			try {
-				empleados = mJefeTaller.findEmpleadosById(id_empleados);
-				vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
-				mJefeTaller.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
-				id_empleados = 0;
-				id_vehiculos = 0;
-				empleados = new ThmEmpleado();
-				vehiculos = new RecVehiculo();
-				listaSalidas = mJefeTaller.findAllSalidas();
-				JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
-			} catch (Exception e) {
-				JSFUtil.crearMensajeERROR(e.getMessage());
-				e.printStackTrace();
-			}
-		} else {
-			JSFUtil.crearMensajeERROR("Seleccione un vehiculo y un empleado");
-		}
-	}
 
 	public void actionListenerClasificarMateriales() {
 		listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
@@ -182,6 +164,28 @@ public class BeanInvEgresos implements Serializable {
 	}
 
 	public void actionListenerRetirarMaterial() {
+		
+		if (id_vehiculos != 0 && id_empleados != 0) {
+			try {
+				empleados = mJefeTaller.findEmpleadosById(id_empleados);
+				vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
+				mJefeTaller.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
+				id_empleados = 0;
+				id_vehiculos = 0;
+				empleados = new ThmEmpleado();
+				vehiculos = new RecVehiculo();
+				listaSalidas = mJefeTaller.findAllSalidas();
+				JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
+			} catch (Exception e) {
+				JSFUtil.crearMensajeERROR(e.getMessage());
+				e.printStackTrace();
+			}
+		} else {
+			JSFUtil.crearMensajeERROR("Seleccione un vehiculo y un empleado");
+		}
+		
+		
+				salida=mJefeTaller.findAllSalidas().get(0);
 		if (listaMateriales.size() != 0) {
 			try {
 				mJefeTaller.retirarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, salida);
@@ -190,7 +194,7 @@ public class BeanInvEgresos implements Serializable {
 				listaMatAux = mJefeTaller.findAllMaterial();
 				material = new InvMaterial();
 				cantidadRetirar = 0;
-				JSFUtil.crearMensajeINFO("Materiales retirados correctamente");
+				
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
 				e.printStackTrace();

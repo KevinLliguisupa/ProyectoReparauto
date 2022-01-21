@@ -38,6 +38,7 @@ public class RecRecepcionDetalle implements Serializable {
 	@Column(name="rec_det_servicio_extra")
 	private Boolean recDetServicioExtra;
 
+
 	//bi-directional many-to-one association to RecRecepcionCabecera
 	@ManyToOne
 	@JoinColumn(name="rec_cab_id_rec_recepcion_cabecera")
@@ -111,6 +112,7 @@ public class RecRecepcionDetalle implements Serializable {
 	public void setRecDetServicioExtra(Boolean recDetServicioExtra) {
 		this.recDetServicioExtra = recDetServicioExtra;
 	}
+
 
 	public RecRecepcionCabecera getRecRecepcionCabecera() {
 		return this.recRecepcionCabecera;
