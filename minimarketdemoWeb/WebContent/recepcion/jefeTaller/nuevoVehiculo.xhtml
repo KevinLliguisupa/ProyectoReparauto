@@ -1,0 +1,212 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+<h:head>
+	<title>Creacion Vehiculo</title>
+
+	    <style>
+        /* reset on the showcase style*/
+        body .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+
+        /* example use of styles for your form */
+        .my-heading-row {
+            background-color: var(--surface-c);
+            font-weight: bold;
+        }
+    </style>
+
+</h:head>
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home"
+				action="administrarVehiculos" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+
+	</h:form>
+
+
+
+	<h:form id="form2">
+		<p:panel header="Creacion nuevo vehiculo" collapsed="false"
+			style="width:85%; margin: 0 auto">
+
+
+
+			<div style="text-align: right;">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="showcase-text-align-center">
+					<p:column>
+
+
+						<p:panelGrid columns="4"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+							style="border:0px none; background-color:transparent;">
+
+							<p:row styleClass="my-heading-row"> Info.Vehiculo </p:row>
+
+							<h:outputText value="Placa" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehPlaca}" />
+
+							<h:outputText value="Marca" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehMarca}" />
+
+							<h:outputText value="Color" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehColor}" />
+
+							<h:outputText value="Año" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehAnio}" />
+
+							<h:outputText value="Clave" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehClave}" />
+
+							<h:outputText value="Numero de chasis" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehNumeroChasis}" />
+
+							<h:outputText value="Motor" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehMotor}" />
+
+							<h:outputText value="Kilometraje" />
+							<p:inputText value="#{beanRecVehiculo.vehiculo.vehKilometraje}" />
+
+							<h:outputText value="Nivel de combustible" />
+							<p:inputText
+								value="#{beanRecVehiculo.vehiculo.vehNivelCombustible}" />
+
+							<p:row styleClass="my-heading-row">Extras.Vehiculo</p:row>
+
+							<h:outputText value="Numero Ruedas:" />
+							<p:inputText value="#{beanRecVehiculo.extras.vehExtNumRuedas}" />
+
+							<h:outputText value="Numero Tapacubos" />
+							<p:inputText value="#{beanRecVehiculo.extras.vehExtTapacubos}" />
+
+							<h:outputText value="N° Limpia Parabrisas" />
+							<p:inputText value="#{beanRecVehiculo.extras.vehExtNumLimpiaParabrisas}" />
+
+							<h:outputText value="Numero Retrovisores" />
+							<p:inputText value="#{beanRecVehiculo.extras.vehExtNumRetrovisores}" />
+
+
+						</p:panelGrid>
+
+					</p:column>
+					<p:column style="text-align: left;">
+
+
+						<p:panelGrid columns="4"
+							columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+							layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+							style="border:0px none; background-color:transparent; text-align: left;">
+
+
+
+
+							<h:outputText value="Encendedor: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtEncendor}" />
+
+							<h:outputText value="Doc. Matricula: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtMatriculaDocumento}" />
+
+							<h:outputText value="Radio:" />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtRadio}" />
+
+							<h:outputText value="Llavero: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtLlavero}" />
+
+							<h:outputText value="Control alarma:" />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtControlAlarma}" />
+
+							<h:outputText value="Bateria: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtBateria}" />
+
+							<h:outputText value="Llave ruedas: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtLlaveRuedas}" />
+
+							<h:outputText value="Llanta emergencia: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtLlantaEmergencia}" />
+
+							<h:outputText value="Herramientas: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtHerramientasBasicas}" />
+
+							<h:outputText value="Extintor: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtExtintor}" />
+
+							<h:outputText value="Triangulos: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtTriangulos}" />
+
+							<h:outputText value="Cables corriente: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtCablesCorriente}" />
+
+							<h:outputText value="Mascarilla radio " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtMascarillaRadio}" />
+
+							<h:outputText value="Antena: " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtAntena}" />
+
+							<h:outputText value="Memoria (USB): " />
+							<h:selectBooleanCheckbox value="#{beanRecVehiculo.extras.vehExtUsb}" />
+
+						</p:panelGrid>
+									
+						<br />
+						<h:outputText value="Extras Adicionales: "  />
+						<br />
+						<p:inputTextarea style="width:80%" rows="4"
+							value="#{beanRecVehiculo.extras.vehExtAdicionales}" />
+
+					</p:column>
+
+				</p:panelGrid>
+
+			</div>
+
+			<div style="text-align: right;">
+
+
+				<p:commandButton value="CREAR VEHICULO" icon="pi pi-upload"
+					title="Eliminar"
+					styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success p-mr-2 p-mb-2"
+					update="@form,:form2"
+					action="#{beanRecVehiculo.actionRegistarVehiculoRecepcion()}">
+
+
+				</p:commandButton>
+
+			</div>
+		</p:panel>
+
+	</h:form>
+
+
+
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+		responsive="true" width="350">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirmdialog-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirmdialog-yes" />
+	</p:confirmDialog>
+</body>
+</html>

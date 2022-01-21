@@ -38,7 +38,7 @@ public class ManagerRecepcion {
 
 	@EJB
 	private ManagerAuditoria mAuditoria;
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -70,45 +70,48 @@ public class ManagerRecepcion {
 			valorMax = (Integer) q.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new Exception("Error al obtener valor maximo"+ e.getMessage());
+			throw new Exception("Error al obtener valor maximo" + e.getMessage());
 		}
-		return valorMax;
+		return valorMax+1;
 	}
-	
+
 	public BigDecimal calcularTotal(List<RecServicio> serviciosCotizacion) {
-		BigDecimal total= new BigDecimal(0);
-		for(RecServicio servicio : serviciosCotizacion) {
-			total= total.add(servicio.getRecSerPrecio());
+		BigDecimal total = new BigDecimal(0);
+		for (RecServicio servicio : serviciosCotizacion) {
+			total = total.add(servicio.getRecSerPrecio());
 		}
 		return total;
 	}
-	
-	public List<RecServicio> retirarServicio(List<RecServicio> serviciosCotizacion, RecServicio servicioSeleccionado){
+
+	public List<RecServicio> retirarServicio(List<RecServicio> serviciosCotizacion, RecServicio servicioSeleccionado) {
 		List<RecServicio> lista = new ArrayList<RecServicio>();
 		for (int i = 0; i < serviciosCotizacion.size(); i++) {
-			if(serviciosCotizacion.get(i).getRecSerId()!=servicioSeleccionado.getRecSerId()) {
+			if (serviciosCotizacion.get(i).getRecSerId() != servicioSeleccionado.getRecSerId()) {
 				lista.add(serviciosCotizacion.get(i));
-			}	
-			
+			}
+
 		}
 		return lista;
 	}
-	
+
 	public RecServicio findServicioById(int id) throws Exception {
 		return (RecServicio) mDao.findById(RecServicio.class, id);
 	}
-	
-	public void ingresarRecepcion(LoginDTO loginDTO, RecRecepcionCabecera cabeceraRecepcion, List<RecServicio> serviciosCotizacion) throws Exception {
+
+	public void ingresarRecepcion(LoginDTO loginDTO, RecRecepcionCabecera cabeceraRecepcion,
+			List<RecServicio> serviciosCotizacion) throws Exception {
 		cabeceraRecepcion.setRecCabEstado(true);
 		cabeceraRecepcion.setRecCabTerminado(false);
 		SegUsuario usuario = new SegUsuario();
 		usuario.setIdSegUsuario(loginDTO.getIdSegUsuario());
-		cabeceraRecepcion.setSegUsuario(usuario);;
+		cabeceraRecepcion.setSegUsuario(usuario);
+		;
 		mDao.insertar(cabeceraRecepcion);
-		mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarRecepcion", "Recepcion de vehiculo Usu. "+
-				cabeceraRecepcion.getSegUsuario().getIdSegUsuario()+" "+" Veh. "+cabeceraRecepcion.getRecVehiculo().getVehPlaca());
-		
-		for (RecServicio servicio: serviciosCotizacion) {
+		mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarRecepcion",
+				"Recepcion de vehiculo Usu. " + cabeceraRecepcion.getSegUsuario().getIdSegUsuario() + " " + " Veh. "
+						+ cabeceraRecepcion.getRecVehiculo().getVehPlaca());
+
+		for (RecServicio servicio : serviciosCotizacion) {
 			RecRecepcionDetalle detalle = new RecRecepcionDetalle();
 			detalle.setRecDetPrecioFinal(servicio.getRecSerPrecio());
 			detalle.setRecDetConcluido(false);
@@ -118,22 +121,16 @@ public class ManagerRecepcion {
 			detalle.setRecRecepcionCabecera(cabeceraRecepcion);
 			detalle.setRecServicio(servicio);
 			mDao.insertar(detalle);
-			mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarRecepcion", "Servicio a vehiculo Ser. "+
-					detalle.getRecServicio().getRecSerId()+" "+" Rec."+detalle.getRecRecepcionCabecera().getRecCabId());
+			mAuditoria.mostrarLog(loginDTO, getClass(), "ingresarRecepcion",
+					"Servicio a vehiculo Ser. " + detalle.getRecServicio().getRecSerId() + " " + " Rec."
+							+ detalle.getRecRecepcionCabecera().getRecCabId());
 		}
-		
+
+	}
+
+	public void ingresarCliente(RecCliente clienteNuevo) throws Exception {
+		clienteNuevo.setCliEstado(true);
+		mDao.insertar(clienteNuevo);
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

@@ -38,23 +38,23 @@ public class BeanRecJefeTaller implements Serializable {
 		actualizarVehiculo = false;
 	}
 
-	public String actionRegistrarVehiculo() throws Exception {
-
-		if (actualizarVehiculo) {
-			mJefeTaller.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mJefeTaller.findAllVehiculos();
-			vehiculo = new RecVehiculo();
-			actualizarVehiculo = false;
-
-		} else {
-			mJefeTaller.insertarVehiculo(vehiculo,beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mJefeTaller.findAllVehiculos();
-			vehiculo = new RecVehiculo();
-		
-		}
-		return "administrarVehiculos?faces-redirect=true";
-
-	}
+//	public String actionRegistrarVehiculo() throws Exception {
+//
+//		if (actualizarVehiculo) {
+//			mJefeTaller.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+//			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+//			vehiculo = new RecVehiculo();
+//			actualizarVehiculo = false;
+//
+//		} else {
+//			mJefeTaller.insertarVehiculo(vehiculo,beanSegLogin.getLoginDTO());
+//			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+//			vehiculo = new RecVehiculo();
+//		
+//		}
+//		return "administrarVehiculos?faces-redirect=true";
+//
+//	}
 
 	public void actionEliminarVehiculo(int id) throws Exception {
 		vehiculo = mJefeTaller.findVehiculoById(id);

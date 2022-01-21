@@ -67,6 +67,8 @@ public class BeanRecCotizacion implements Serializable {
 	}
 	
 	public String actionGenerarOrden() throws Exception {
+//		bRecepcion.inicializar();
+		bRecepcion.setListaServicios(listaServiciosSeleccionados);
 		return "recepcion?faces-redirect=true";
 		
 	}

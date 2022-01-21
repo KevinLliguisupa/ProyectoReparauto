@@ -39,6 +39,7 @@ public class BeanRecepcion implements Serializable {
 	private RecRecepcionCabecera cabeceraRecepcion;
 	private RecVehiculo vehiculo;
 	private RecCliente cliente;
+	private RecCliente nuevoCliente;
 	private Date fechaRecepcion;
 	private Time horaRecepcion;
 	
@@ -57,9 +58,18 @@ public class BeanRecepcion implements Serializable {
 	@PostConstruct
 	public void inicializar() throws Exception {
 		listaVehiculos = mRecepcion.findAllVehiculos();
+		
+//		if (beanCotizacion.getListaServiciosSeleccionados()==null) {
+//			listaServicios=new ArrayList<RecServicio>();
+//		}else {
+//			listaServicios = beanCotizacion.getListaServiciosSeleccionados();
+//		}
+		
 		listaServicios = beanCotizacion.getListaServiciosSeleccionados();
 		cabeceraRecepcion= new RecRecepcionCabecera();
+		
 		cliente=new RecCliente();
+		nuevoCliente=new RecCliente();
 		vehiculo=new RecVehiculo();
 		numeroRecepcion = mRecepcion.findNumeroRecepcion();
 			
@@ -113,6 +123,7 @@ public class BeanRecepcion implements Serializable {
 		cabeceraRecepcion.setRecCliente(cliente);
 		mRecepcion.ingresarRecepcion(beanSegLogin.getLoginDTO(),cabeceraRecepcion, listaServicios);
 		cabeceraRecepcion=new RecRecepcionCabecera();
+
 		inicializar();
 		listaServicios=new ArrayList<RecServicio>();
 		precioTotal=mRecepcion.calcularTotal(listaServicios);
@@ -121,6 +132,12 @@ public class BeanRecepcion implements Serializable {
 		beanCotizacion.setPrecioTotalServicios(0);
 		
 		
+	}
+	
+	public void actionListenerCrearCliente() throws Exception {
+		mRecepcion.ingresarCliente(nuevoCliente);
+		cliente=nuevoCliente;
+		nuevoCliente=new RecCliente();
 	}
 	
 	
@@ -228,6 +245,14 @@ public class BeanRecepcion implements Serializable {
 
 	public void setCabeceraRecepcion(RecRecepcionCabecera cabeceraRecepcion) {
 		this.cabeceraRecepcion = cabeceraRecepcion;
+	}
+
+	public RecCliente getNuevoCliente() {
+		return nuevoCliente;
+	}
+
+	public void setNuevoCliente(RecCliente nuevoCliente) {
+		this.nuevoCliente = nuevoCliente;
 	}
 
 	
