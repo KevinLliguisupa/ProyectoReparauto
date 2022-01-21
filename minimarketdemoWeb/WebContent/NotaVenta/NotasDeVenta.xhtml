@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Cabeceras</title>
+</h:head>
+
+<body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+	<br />
+	<div class="card">
+		<h:form id="form2">
+			<p:panelGrid columns="1" header="Regresar">
+				<p:commandButton value="Volver a cabeceras" action="CabecerasNotaVenta"
+					icon="ui-icon-print" />
+			</p:panelGrid>
+
+			<br />
+			<p:dataTable var="nota" value="#{beanNotaVenta.notasDeVenta}"
+				rowKey="#{nota.proNotId}" paginator="true" rows="5">
+				<f:facet name="header">
+                Registro de Notas de venta
+            </f:facet>
+
+				<p:column style="width:2rem" headerText="Info">
+					<p:rowToggler />
+					<h:outputText value="Info" />
+				</p:column>
+
+				<p:column headerText="ID Nota de venta">
+					<h:outputText value="#{nota.proNotId}" />
+				</p:column>
+
+				<p:column headerText="Fecha de emisión">
+					<h:outputText value="#{nota.proNotFecha}" />
+				</p:column>
+
+				<p:column headerText="Cédula del cliente">
+					<h:outputText value="#{nota.recRecepcionCabecera.recCliente.cliCedula}" />
+				</p:column>
+
+				<p:column headerText="Nombre del cliente">
+					<h:outputText value="#{nota.recRecepcionCabecera.recCliente.cliNombreApellido}" />
+				</p:column>
+				
+				<p:column headerText="Total">
+					<h:outputText value="#{nota.proNotTotal}" />
+				</p:column>
+
+				<p:rowExpansion>
+					<p:dataTable var="det"
+						value="#{beanNotaVenta.EstablecerCabecera(nota.recRecepcionCabecera)}"
+						rowKey="#{det.recDetId }">
+
+						<p:column headerText="ID del detalle">
+							<h:outputText value="#{det.recDetId}" />
+						</p:column>
+
+						<p:column headerText="Servicio">
+							<h:outputText value="#{det.recServicio.recSerNombre}" />
+						</p:column>
+
+						<p:column headerText="Servicios extra">
+							<h:outputText value="#{det.recDetServicioExtra}" />
+						</p:column>
+
+						<p:column headerText="Costo del servicio">
+							<h:outputText value="#{det.recDetPrecioFinal}">
+								<f:convertNumber type="currency" currencySymbol="$" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Observaciones">
+							<h:outputText value="#{det.recDetObservacion}" />
+						</p:column>
+
+
+
+					</p:dataTable>
+				</p:rowExpansion>
+			</p:dataTable>
+		</h:form>
+	</div>
+
+
+</body>
+</html>
