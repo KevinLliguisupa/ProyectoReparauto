@@ -203,7 +203,7 @@ public class BeanInvIngresos implements Serializable {
 		try {
 			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
 			idTipo = 0;
-			mJefeTaller.createMaterial(this.nuevoMaterial, selectTipo);
+			mJefeTaller.createMaterial(beanSegLogin.getLoginDTO(),this.nuevoMaterial, selectTipo);
 			nuevoMaterial = new InvMaterial();
 			listaMatAux = mJefeTaller.findAllMaterial();
 			JSFUtil.crearMensajeINFO("Material creado correctamente");
@@ -228,7 +228,7 @@ public class BeanInvIngresos implements Serializable {
 	}
 
 	public void actionListenerDeleteDetalleIngreso(InvMaterialIngreso detalle) throws Exception {
-		mJefeTaller.deleteDetalleIngreso(detalle);
+		mJefeTaller.deleteDetalleIngreso(beanSegLogin.getLoginDTO(),detalle);
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
 	}
 

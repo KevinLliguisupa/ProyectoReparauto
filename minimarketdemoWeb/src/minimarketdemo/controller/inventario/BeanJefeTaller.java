@@ -11,9 +11,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
+import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -55,7 +57,8 @@ public class BeanJefeTaller implements Serializable {
 	private List<InvSalida> listaSalidas;
 	private int cantidadIngresar;
 	private int IDMaterialTemporal;
-
+	@Inject
+	private BeanSegLogin beanLogin;
 	// nuevo
 	private InvIngreso ingreso;
 	// nuevo
@@ -310,7 +313,7 @@ public class BeanJefeTaller implements Serializable {
 
 	public void actionListenerDeleteMaterial(InvMaterial material) throws Exception {
 		try {
-			mJefeTaller.deleteMaterial(material);
+			mJefeTaller.deleteMaterial(beanLogin.getLoginDTO(), material);
 			listaMateriales = mJefeTaller.findAllMaterial();
 			JSFUtil.crearMensajeINFO("Material eliminado.");
 		} catch (Exception e) {
@@ -324,7 +327,7 @@ public class BeanJefeTaller implements Serializable {
 		try {
 			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
 			idTipo = 0;
-			mJefeTaller.createMaterial(this.nuevoMaterial, selectTipo);
+			mJefeTaller.createMaterial(beanLogin.getLoginDTO() ,this.nuevoMaterial, selectTipo);
 			nuevoMaterial = new InvMaterial();
 			listaMateriales = mJefeTaller.findAllMaterial();
 			JSFUtil.crearMensajeINFO("Material Creado");
@@ -344,7 +347,7 @@ public class BeanJefeTaller implements Serializable {
 			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
 			idTipo = 0;
 			material.setInvTipo(selectTipo);
-			mJefeTaller.updatematerial(material);
+			mJefeTaller.updatematerial(beanLogin.getLoginDTO(), material);
 			JSFUtil.crearMensajeINFO("Material editado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
@@ -478,13 +481,13 @@ public class BeanJefeTaller implements Serializable {
 
 	// nuevo verificado
 	public void actionDeleteDetalleIngreso(InvMaterialIngreso detalle) throws Exception {
-		mJefeTaller.deleteDetalleIngreso(detalle);
+		mJefeTaller.deleteDetalleIngreso(beanLogin.getLoginDTO(), detalle);
 		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
 	}
 
 	// nuevo
 	public void actionDeleteDetalleSalida(InvMaterialSalida detalle) throws Exception {
-		mJefeTaller.deleteDetalleSalida(detalle);
+		mJefeTaller.deleteDetalleSalida(beanLogin.getLoginDTO(), detalle);
 		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
 	}
 
@@ -575,7 +578,7 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	public void actionUpdateMaterialExtra() throws Exception {
-		mJefeTaller.updatematerial(material);
+		mJefeTaller.updatematerial(beanLogin.getLoginDTO() ,material);
 	}
 
 //	public void actionAgregarMaterialExistente() throws Exception {
@@ -587,7 +590,7 @@ public class BeanJefeTaller implements Serializable {
 
 	public InvTipo getTtipoMaterialByID(InvTipo TipoMat) throws Exception {
 		this.tipo = mJefeTaller.findTipoMaterialById(TipoMat.getTipId());
-		mJefeTaller.updateTipoMaterial(tipo);
+		mJefeTaller.updateTipoMaterial(beanLogin.getLoginDTO() ,tipo);
 		return tipo;
 	}
 
@@ -601,7 +604,7 @@ public class BeanJefeTaller implements Serializable {
 	}
 
 	public void actionUpdateTipoMaterial() throws Exception {
-		mJefeTaller.updateTipoMaterial(tipo);
+		mJefeTaller.updateTipoMaterial(beanLogin.getLoginDTO() ,tipo);
 	}
 
 	// Getter y setter para la cantidad a ingresar

@@ -6,9 +6,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
+import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.inventario.managers.ManagerGerente;
@@ -22,7 +24,8 @@ public class BeanInvProveedor implements Serializable {
 	private ManagerGerente mGerente;
 	private List<InvProveedor> listaProveedores;
 	private InvProveedor proveedor;
-
+	@Inject
+	private BeanSegLogin beanLogin;
 	public BeanInvProveedor() {
 
 	}
@@ -36,7 +39,7 @@ public class BeanInvProveedor implements Serializable {
 	public void actionCreateProveedor() throws Exception {
 
 		try {
-			mGerente.createProveedores(proveedor);
+			mGerente.createProveedores(beanLogin.getLoginDTO(),proveedor);
 			listaProveedores = mGerente.findAllProveedores();
 			proveedor = new InvProveedor();
 			JSFUtil.crearMensajeINFO("Proveedor creado");
@@ -61,7 +64,7 @@ public class BeanInvProveedor implements Serializable {
 	public void actionUpdateProveedor() throws Exception {
 
 		try {
-			mGerente.updateProveedores(proveedor);
+			mGerente.updateProveedores(beanLogin.getLoginDTO() ,proveedor);
 			listaProveedores = mGerente.findAllProveedores();
 			proveedor = new InvProveedor();
 			JSFUtil.crearMensajeINFO("Proveedor editado");
@@ -74,7 +77,7 @@ public class BeanInvProveedor implements Serializable {
 	
 	
 	public void actionDeleteProveedor(InvProveedor pro) throws Exception {
-			mGerente.deleteProveedores(pro);
+			mGerente.deleteProveedores(beanLogin.getLoginDTO() ,pro);
 			listaProveedores = mGerente.findAllProveedores();
 			JSFUtil.crearMensajeINFO("Proveedor Eliminado");
 		

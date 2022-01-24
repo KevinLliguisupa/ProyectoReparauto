@@ -11,6 +11,8 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.sun.tools.javac.util.Log;
+
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
@@ -44,7 +46,7 @@ public class ManagerJefeTaller {
 		return  mDao.findWhere(InvMaterial.class, "mat_estado=true", "mat_nombre ASC");
 	}
 
-	public void createMaterial(InvMaterial material, InvTipo selectTipo) throws Exception {
+	public void createMaterial(LoginDTO loginDTO,InvMaterial material, InvTipo selectTipo) throws Exception {
 		InvMaterial newMaterial = new InvMaterial();
 		
 		newMaterial.setMatEstado(true);
@@ -56,12 +58,13 @@ public class ManagerJefeTaller {
 		newMaterial.setInvTipo(selectTipo);
 		
 		mDao.insertar(newMaterial);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "createMaterial", "Ingreso de material ."+newMaterial.getMatNombre());
 	}
 	
-	public void deleteMaterial(InvMaterial material) throws Exception {
+	public void deleteMaterial(LoginDTO loginDTO, InvMaterial material) throws Exception {
 		material.setMatEstado(false);
 		mDao.actualizar(material);
-
+		mAuditoria.mostrarLog(loginDTO, getClass(), "deleteMaterial", "Eliminacion de material: "+material.getMatNombre());
 	}
 	
 
@@ -144,18 +147,22 @@ public class ManagerJefeTaller {
 		return (InvTipo) mDao.findById(InvTipo.class, id);
 	}
 
-	public void createTipoMaterial(InvTipo tipoMaterial) throws Exception {
+	public void createTipoMaterial(LoginDTO loginDTO,  InvTipo tipoMaterial) throws Exception {
 		tipoMaterial.setTipEstado(true);
 		mDao.insertar(tipoMaterial);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "createTipoMaterial", "Crear tipo de material: "+tipoMaterial.getTipNombre());
 	}
+	
 
-	public void deleteTipoMaterial(InvTipo tipoMaterial) throws Exception {
+	public void deleteTipoMaterial(LoginDTO loginDTO, InvTipo tipoMaterial) throws Exception {
 		tipoMaterial.setTipEstado(false);
 		mDao.actualizar(tipoMaterial);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "deleteTipoMaterial", "Eliminacion de tipo de material: "+tipoMaterial.getTipId());
 	}
 
-	public void updateTipoMaterial(InvTipo tipoMaterial) throws Exception {
+	public void updateTipoMaterial(LoginDTO loginDTO, InvTipo tipoMaterial) throws Exception {
 		mDao.actualizar(tipoMaterial);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "updateTipoMaterial", "Actualiacion tipo de material: "+tipoMaterial.getTipId());
 	}
 
 	public InvProveedor findIdProveedor(int id) throws Exception {
@@ -264,15 +271,19 @@ public class ManagerJefeTaller {
 	}
 
 	// nuevo verificado
-	public void deleteDetalleIngreso(InvMaterialIngreso detalle) throws Exception {
+	public void deleteDetalleIngreso(LoginDTO loginDTO, InvMaterialIngreso detalle) throws Exception {
 		detalle.setMatIngEstado(false);
 		mDao.actualizar(detalle);
+		
+		mAuditoria.mostrarLog(loginDTO, getClass(), "deleteDetalleIngreso", "Eliminacion de detalle de ingreso: "+detalle.getMatEntId());
 	}
 
 	// nuevo
-	public void deleteDetalleSalida(InvMaterialSalida detalle) throws Exception {
+	public void deleteDetalleSalida(LoginDTO loginDTO, InvMaterialSalida detalle) throws Exception {
 		detalle.setMatSalEstado(false);
 		mDao.actualizar(detalle);
+		
+		mAuditoria.mostrarLog(loginDTO, getClass(), "Eliminar detalle de salida", "Eliminacion de detalle salida: "+detalle.getMatSalId());
 	}
 
 	// nuevo
@@ -416,19 +427,21 @@ public class ManagerJefeTaller {
 	}
 
 	// Material
-	public void updatematerial(InvMaterial material) throws Exception {
+	public void updatematerial(LoginDTO loginDTO,  InvMaterial material) throws Exception {
 		if (material == null)
 			throw new Exception("No se puede actualizar un dato null");
 		try {
 			mDao.actualizar(material);
+			mAuditoria.mostrarLog(loginDTO, getClass(), "Actualizar material", "Actualizacion de material: "+material.getMatId());
 		} catch (Exception e) {
 			throw new Exception("No se pudo actualizar el dato: " + e.getMessage());
 		}
 	}
 
-	public void retirarMaterialExistente(InvMaterial material, int cantidad) throws Exception {
+	public void retirarMaterialExistente(LoginDTO loginDTO, InvMaterial material, int cantidad) throws Exception {
 		calcularSock(material, BigDecimal.valueOf(cantidad), false);
-		updatematerial(material);
+		updatematerial(loginDTO,material);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "Retirar material", "Retiro de material: "+material.getMatId()+" cantidad: "+cantidad);
 	}
 
 	// Tipo Material

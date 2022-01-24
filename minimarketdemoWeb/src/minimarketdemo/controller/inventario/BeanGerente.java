@@ -11,9 +11,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
+import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -51,7 +53,8 @@ public class BeanGerente implements Serializable {
 	private RecServicio servicio;
 	private RecServicio nuevoServicio;
 	private List<RecServicio> listaServicios;
-
+	@Inject
+	private BeanSegLogin beanLogin;
 	public BeanGerente() {
 
 	}
@@ -327,11 +330,11 @@ public class BeanGerente implements Serializable {
 	}
 
 	public void actionCreateProveedor() throws Exception {
-		mGerente.createProveedores(nuevoProveedor);
+		mGerente.createProveedores(beanLogin.getLoginDTO() ,nuevoProveedor);
 	}
 
 	public void actionUpdateProveedor() throws Exception {
-		mGerente.updateProveedores(proveedor);
+		mGerente.updateProveedores(beanLogin.getLoginDTO() ,proveedor);
 	}
 	//Servicios
 		public RecServicio actionfindServicioByID(RecServicio ServID) throws Exception {

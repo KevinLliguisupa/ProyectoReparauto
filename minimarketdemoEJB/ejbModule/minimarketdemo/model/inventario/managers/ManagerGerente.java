@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
@@ -21,6 +22,8 @@ import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.seguridades.dtos.LoginDTO;
+import sun.util.logging.resources.logging;
 
 /**
  * Session Bean implementation class ManagerGerente
@@ -31,6 +34,9 @@ public class ManagerGerente {
 
 	@EJB
 	private ManagerDAO mDao;
+
+	@EJB
+	private ManagerAuditoria mAuditoria;
 
 	public ManagerGerente() {
 
@@ -187,7 +193,7 @@ public class ManagerGerente {
 		return (InvProveedor) mDao.findById(InvProveedor.class, id);
 	}
 
-	public void createProveedores(InvProveedor Proveedor) throws Exception {
+	public void createProveedores(LoginDTO loginDTO, InvProveedor Proveedor) throws Exception {
 		InvProveedor NewProv = new InvProveedor();
 		NewProv.setProCorreo(Proveedor.getProCorreo());
 		NewProv.setProEstado(true);
@@ -195,11 +201,13 @@ public class ManagerGerente {
 		NewProv.setProNombre(Proveedor.getProNombre());
 		NewProv.setProTelefono(Proveedor.getProTelefono());
 		mDao.insertar(NewProv);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "createProveedores", "Proveedor ingresado: "+Proveedor.getProNombre());
 	}
 
-	public void deleteProveedores(InvProveedor Proveedor) throws Exception {
+	public void deleteProveedores(LoginDTO loginDTO ,InvProveedor Proveedor) throws Exception {
 		Proveedor.setProEstado(false);
 		mDao.actualizar(Proveedor);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "deleteProveedores", "Proveedor eliminado: "+Proveedor.getProNombre());
 	}
 
 	public void CreateProveedores(InvProveedor Proveedor) throws Exception {
@@ -212,8 +220,9 @@ public class ManagerGerente {
 		mDao.insertar(Proveedor);
 	}
 
-	public void updateProveedores(InvProveedor Proveedor) throws Exception {
+	public void updateProveedores(LoginDTO loginDTO, InvProveedor Proveedor) throws Exception {
 		mDao.actualizar(Proveedor);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "updateProveedores", "Proveedor actulizado: "+Proveedor.getProId());
 	}
 	
 	

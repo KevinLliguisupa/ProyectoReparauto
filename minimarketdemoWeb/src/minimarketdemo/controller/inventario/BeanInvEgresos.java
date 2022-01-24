@@ -214,7 +214,7 @@ public class BeanInvEgresos implements Serializable {
 	}
 
 	public void actionListenerDeleteDetalleSalida(InvMaterialSalida detalle) throws Exception {
-		mJefeTaller.deleteDetalleSalida(detalle);
+		mJefeTaller.deleteDetalleSalida(beanSegLogin.getLoginDTO(),detalle);
 		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
 	}
 

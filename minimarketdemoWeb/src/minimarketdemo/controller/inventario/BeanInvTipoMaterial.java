@@ -7,9 +7,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import minimarketdemo.controller.JSFUtil;
+import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
 
@@ -21,7 +23,8 @@ public class BeanInvTipoMaterial implements Serializable {
 	private ManagerJefeTaller mJefeTaller;
 	private List<InvTipo> listaTipos;
 	private InvTipo tipo;
-
+	@Inject
+	private BeanSegLogin beanLogin;
 	public BeanInvTipoMaterial() {
 
 	}
@@ -35,7 +38,7 @@ public class BeanInvTipoMaterial implements Serializable {
 	public void actionInsertarTipo() throws Exception {
 
 		try {
-			mJefeTaller.createTipoMaterial(tipo);
+			mJefeTaller.createTipoMaterial(beanLogin.getLoginDTO() ,tipo);
 			listaTipos = mJefeTaller.findAllTipoMaterial();
 			tipo = new InvTipo();
 			JSFUtil.crearMensajeINFO("Tipo creado");
@@ -49,7 +52,7 @@ public class BeanInvTipoMaterial implements Serializable {
 	public void actionActuaizarTipo() throws Exception {
 
 		try {
-			mJefeTaller.updateTipoMaterial(tipo);
+			mJefeTaller.updateTipoMaterial(beanLogin.getLoginDTO() ,tipo);
 			listaTipos = mJefeTaller.findAllTipoMaterial();
 			tipo = new InvTipo();
 			JSFUtil.crearMensajeINFO("Tipo actualizado");
@@ -63,7 +66,7 @@ public class BeanInvTipoMaterial implements Serializable {
 
 		try {
 			tipo = mJefeTaller.findTipoMaterialById(id);
-			mJefeTaller.deleteTipoMaterial(tipo);
+			mJefeTaller.deleteTipoMaterial(beanLogin.getLoginDTO() ,tipo);
 			listaTipos = mJefeTaller.findAllTipoMaterial();
 			tipo = new InvTipo();
 			JSFUtil.crearMensajeINFO("Tipo eliminado");

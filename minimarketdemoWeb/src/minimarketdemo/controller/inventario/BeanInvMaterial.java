@@ -52,7 +52,7 @@ public class BeanInvMaterial implements Serializable {
 	public void actionListenerInsertarMaterial() {
 		try {
 			this.tipo = mJefeTaller.findTipoMaterialById(this.idTipoMaterial);
-			mJefeTaller.createMaterial(this.material, this.tipo);
+			mJefeTaller.createMaterial(beanSegLogin.getLoginDTO() ,this.material, this.tipo);
 			listaMateriales = mJefeTaller.findAllMaterial();
 			idTipoMaterial = 0;
 			material = new InvMaterial();
@@ -66,7 +66,7 @@ public class BeanInvMaterial implements Serializable {
 	
 	public void actionListenerDeleteMaterial(InvMaterial material) throws Exception {
 		try {
-			mJefeTaller.deleteMaterial(material);
+			mJefeTaller.deleteMaterial(beanSegLogin.getLoginDTO(), material);
 			listaMateriales = mJefeTaller.findAllMaterial();
 			material = new InvMaterial();
 			tipo= new InvTipo();
@@ -90,7 +90,7 @@ public class BeanInvMaterial implements Serializable {
 	}
 	
 	public void actionListenerRetirarMaterialExistente() throws Exception {
-		mJefeTaller.retirarMaterialExistente(material, cantidadRetirar);
+		mJefeTaller.retirarMaterialExistente(beanSegLogin.getLoginDTO(), material, cantidadRetirar);
 		listaMateriales=mJefeTaller.findAllMaterial();
 		cantidadRetirar = 0;
 	}
@@ -100,7 +100,7 @@ public class BeanInvMaterial implements Serializable {
 			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipoMaterial);
 			idTipoMaterial = 0;
 			material.setInvTipo(selectTipo);
-			mJefeTaller.updatematerial(material);
+			mJefeTaller.updatematerial(beanSegLogin.getLoginDTO() ,material);
 			material = new InvMaterial();
 			tipo= new InvTipo();
 			idTipoMaterial = 0;
