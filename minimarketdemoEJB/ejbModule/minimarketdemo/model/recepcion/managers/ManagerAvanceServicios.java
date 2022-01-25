@@ -1,3 +1,4 @@
+
 package minimarketdemo.model.recepcion.managers;
 
 import java.util.ArrayList;
@@ -8,7 +9,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
+import minimarketdemo.model.core.entities.InvIngreso;
 import minimarketdemo.model.core.entities.InvMaterial;
+import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.RecCliente;
 import minimarketdemo.model.core.entities.RecRecepcionCabecera;
 import minimarketdemo.model.core.entities.RecRecepcionDetalle;
@@ -25,38 +28,62 @@ public class ManagerAvanceServicios {
 	@EJB
 	private ManagerDAO mDao;
 	private ManagerAuditoria mAuditoria;
-	
-    public ManagerAvanceServicios() {
-    	mAuditoria= new ManagerAuditoria();
+
+	public ManagerAvanceServicios() {
+		mAuditoria = new ManagerAuditoria();
+	}
+
+	public List<RecRecepcionCabecera> findAllRecepcionCabecera() {
+		List<RecRecepcionCabecera> lista = mDao.findAll(RecRecepcionCabecera.class, "recCabId", true);
+		List<RecRecepcionCabecera> listaRecCabe = new ArrayList<RecRecepcionCabecera>();
+		for (RecRecepcionCabecera rcab : lista) {
+			if (rcab.getRecCabEstado()) {
+				listaRecCabe.add(rcab);
+			}
+
+		}
+		return listaRecCabe;
+	}
+
+	public List<RecRecepcionDetalle> findAllRecepcionDetalle() {
+		List<RecRecepcionDetalle> lista = mDao.findAll(RecRecepcionDetalle.class, "recDetId", true);
+		List<RecRecepcionDetalle> listaRecDet = new ArrayList<RecRecepcionDetalle>();
+		for (RecRecepcionDetalle rdet : lista) {
+			if (rdet.getRecDetEstado()) {
+				listaRecDet.add(rdet);
+			}
+
+		}
+		return listaRecDet;
+	}
+
+	// Metodo que devuelve recepecion detalle por id de cabecera
+	public List<RecRecepcionDetalle> findRecDetalleByIdCabecera(int cabId) throws Exception {
+		String consulta = "rec_cab_id_rec_recepcion_cabecera=" + cabId;
+		List<RecRecepcionDetalle> listaRecDet = mDao.findWhere(RecRecepcionDetalle.class, consulta, "rec_det_id DESC");
+		return listaRecDet;
+	}
+	public List<RecRecepcionDetalle> findRecDetalleByEstado() throws Exception {
+		String consulta = "rec_det_concluido=" + true;
+		List<RecRecepcionDetalle> listaRecDet = mDao.findWhere(RecRecepcionDetalle.class, consulta, "rec_det_id DESC");
+		return listaRecDet;
+	}
+	public List<RecRecepcionDetalle> findRecDetalleByEstadoAndId(int cabId) throws Exception {
+		String consulta1 = "rec_det_concluido=" + true;
+		String consulta2 = "rec_cab_id_rec_recepcion_cabecera=" + cabId;
+		List<RecRecepcionDetalle> listaRecDet = mDao.findDoubleWhere(RecRecepcionDetalle.class, consulta1,consulta2,"rec_det_id DESC");
+		return listaRecDet;
+	}
+
+	public RecRecepcionCabecera findRecepcionCabeceraById(int id) throws Exception {
+		return (RecRecepcionCabecera) mDao.findById(RecRecepcionCabecera.class, id);
+	}
+
+	public RecRecepcionDetalle findRecepcionDetallerById(int id) throws Exception {
+		return (RecRecepcionDetalle) mDao.findById(RecRecepcionDetalle.class, id);
+	}
+    public void actualizarRecDetalle(RecRecepcionDetalle detalleUpdate) throws Exception {
+    	mDao.actualizar(detalleUpdate);
     }
-    
-    public List<RecRecepcionCabecera> findAllRecepcionCabecera(){
-    	List<RecRecepcionCabecera> lista= mDao.findAll(RecRecepcionCabecera.class, "recCabId",true);
-    	List<RecRecepcionCabecera> listaRecCabe= new ArrayList<RecRecepcionCabecera>();
-    	for(RecRecepcionCabecera rcab: lista) {
-    		if(rcab.getRecCabEstado()) {
-    			listaRecCabe.add(rcab);
-    		}
-    		
-    	}
-    	return listaRecCabe;
-    }
-    public List<RecRecepcionDetalle> findAllRecepcionDetalle(){
-    	List<RecRecepcionDetalle> lista= mDao.findAll(RecRecepcionDetalle.class, "recDetId",true);
-    	List<RecRecepcionDetalle> listaRecDet= new ArrayList<RecRecepcionDetalle>();
-    	for(RecRecepcionDetalle rdet: lista) {
-    		if(rdet.getRecDetEstado()) {
-    			listaRecDet.add(rdet);
-    		}
-    		
-    	}
-    	return listaRecDet;
-    }
-    public RecRecepcionCabecera findRecepcionCabeceraById(int id) throws Exception{
-    	return (RecRecepcionCabecera) mDao.findById(RecRecepcionCabecera.class, id);
-    }
-    public RecRecepcionDetalle findRecepcionDetallerById(int id) throws Exception{
-    	return (RecRecepcionDetalle) mDao.findById(RecRecepcionDetalle.class, id);
-    }
-    
+
 }
