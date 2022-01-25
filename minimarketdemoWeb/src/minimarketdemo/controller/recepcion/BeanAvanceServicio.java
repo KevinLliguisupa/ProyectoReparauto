@@ -17,6 +17,7 @@ import minimarketdemo.model.core.entities.RecRecepcionCabecera;
 import minimarketdemo.model.core.entities.RecRecepcionDetalle;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.recepcion.managers.ManagerAvanceServicios;
 import minimarketdemo.model.recepcion.managers.ManagerRecJefeTaller;
 
@@ -36,6 +37,7 @@ public class BeanAvanceServicio implements Serializable {
 	private List<RecRecepcionDetalle> listaRecepcionDet;
 	private List<RecRecepcionDetalle> listaAuxiliar1;
 	private List<RecRecepcionDetalle> listaAuxiliar2;
+	private List<ThmEmpleado> listaEmpleados;
 	private RecRecepcionDetalle recDetalle;
 	private int idrecDetalle;
 	private String servicioConcluido;
@@ -54,6 +56,7 @@ public class BeanAvanceServicio implements Serializable {
 
 		listaRecepcionCab = mAvanceServicios.findAllRecepcionCabecera();
 		listaRecepcionDet = mAvanceServicios.findAllRecepcionDetalle();
+		listaEmpleados=mAvanceServicios.findAllEmpleados();
 		recCabecera = new RecRecepcionCabecera();
 		idRecepcionCab = 0;
 
@@ -85,6 +88,9 @@ public class BeanAvanceServicio implements Serializable {
 
 	// Metodo que cambia de estado al servicio detalle
 	public String estadoServicioConcluido(int idDetalle) throws Exception {
+		ThmEmpleado empleado = mAvanceServicios.findEmpleadoById(idEmpleado);
+		idEmpleado=0;
+		
 		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
 		if (recDetalle.getRecDetConcluido())
 			return "Finalizado";
@@ -234,5 +240,15 @@ public class BeanAvanceServicio implements Serializable {
 	public void setListaAuxiliar2(List<RecRecepcionDetalle> listaAuxiliar2) {
 		this.listaAuxiliar2 = listaAuxiliar2;
 	}
+
+	public List<ThmEmpleado> getListaEmpleados() {
+		return listaEmpleados;
+	}
+
+	public void setListaEmpleados(List<ThmEmpleado> listaEmpleados) {
+		this.listaEmpleados = listaEmpleados;
+	}
+	
+	
 
 }

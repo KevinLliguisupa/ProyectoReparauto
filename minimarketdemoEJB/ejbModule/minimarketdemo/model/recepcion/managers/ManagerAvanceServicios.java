@@ -16,6 +16,7 @@ import minimarketdemo.model.core.entities.RecCliente;
 import minimarketdemo.model.core.entities.RecRecepcionCabecera;
 import minimarketdemo.model.core.entities.RecRecepcionDetalle;
 import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
@@ -56,6 +57,10 @@ public class ManagerAvanceServicios {
 		}
 		return listaRecDet;
 	}
+	
+	public List<ThmEmpleado> findAllEmpleados(){
+		return mDao.findAll(ThmEmpleado.class);
+	}
 
 	// Metodo que devuelve recepecion detalle por id de cabecera
 	public List<RecRecepcionDetalle> findRecDetalleByIdCabecera(int cabId) throws Exception {
@@ -77,6 +82,10 @@ public class ManagerAvanceServicios {
 
 	public RecRecepcionCabecera findRecepcionCabeceraById(int id) throws Exception {
 		return (RecRecepcionCabecera) mDao.findById(RecRecepcionCabecera.class, id);
+	}
+	
+	public ThmEmpleado findEmpleadoById(int id) throws Exception {
+		return (ThmEmpleado) mDao.findById(ThmEmpleado.class, id);
 	}
 
 	public RecRecepcionDetalle findRecepcionDetallerById(int id) throws Exception {

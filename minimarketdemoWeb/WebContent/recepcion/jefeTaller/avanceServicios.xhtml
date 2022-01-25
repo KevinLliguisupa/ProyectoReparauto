@@ -39,10 +39,10 @@
 					<h:panelGrid columns="4">
 						<p:selectOneMenu filterMatchMode="contains" filter="true"
 							value="#{beanAvanceServicio.idRecepcionCab}">
-							<f:selectItem itemLabel="Seleccione un cliente."
+							<f:selectItem itemLabel="Seleccione el vehiculo"
 								noSelectionOption="true" />
 							<f:selectItems value="#{beanAvanceServicio.listaRecepcionCab}"
-								var="recCab" itemLabel="#{recCab.recCabId}"
+								var="recCab" itemLabel="#{recCab.recVehiculo.vehPlaca}"
 								itemValue="#{recCab.recCabId}"></f:selectItems>
 						</p:selectOneMenu>
 						<p:commandButton value="Consultar"
@@ -106,34 +106,20 @@
 					<p:column headerText="Valor">
 						<h:outputText value="#{p.recDetPrecioFinal}" />
 					</p:column>
-					<p:column headerText="empleado">
-						<h:outputText value="#{p.thmEmpleado.thmCargo.nombreCargo}" />
+					<p:column headerText="Empleado">		
+								<p:selectOneMenu filterMatchMode="contains" filter="true"
+							value="#{beanAvanceServicio.idEmpleado}">
+							<f:selectItem itemLabel="Seleccione empleado..."
+								noSelectionOption="true" />
+							<f:selectItems value="#{beanAvanceServicio.listaEmpleados}"
+								var="empleado" itemLabel="#{empleado.segUsuario.nombres} #{empleado.segUsuario.apellidos}"
+								itemValue="#{empleado.idThmEmpleado}"></f:selectItems>
+						</p:selectOneMenu>	
 					</p:column>
 
 					<p:column headerText="Agregar Horas">
-						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
-							actionListener="#{beanAvanceServicio.ActionConsultarRecepcionDetId()}" />
-						<p:overlayPanel for="cmdEdicion" dynamic="true"
-							showCloseIcon="true">
-							<p:panel header="Agregar Horas y Empleado"
-								style="width:450px; margin: 0 auto ">
-								<p:panelGrid columns="2" style="margin: 0 auto">
-									<h:outputText value="Agregar Empleado:" />
-									<p:selectOneMenu filterMatchMode="contains" filter="true"
-										value="#{beanAvanceServicio.idEmpleado}">
-										<f:selectItems value="#{beanTHumanoEmpleados.listaEmpleados}"
-											var="empleados" itemLabel="#{empleados.thmCargo.nombreCargo}"
-											itemValue="#{empleados.idThmEmpleado}"></f:selectItems>
-									</p:selectOneMenu>
-									<h:outputText value="Agregar horas:" />
-									<p:inputText type="number"
-										value="#{beanAvanceServicio.horasEstimadas}"></p:inputText>
-								</p:panelGrid>
-								<p:commandButton value="Agregar"
-									actionListener="#{beanAvanceServicio.actionActualizarRecDetalle(p.recDetId)}"
-									update="@form:,form1,form3" icon="pi pi-save" />
-							</p:panel>
-						</p:overlayPanel>
+					<p:inputText value="#{p.recDetHorasEmpleadas}"
+				required="true" requiredMessage="Ingrese las horas" style="width:50%"/>
 					</p:column>
 
 					<p:column headerText="Servicio concluido">
