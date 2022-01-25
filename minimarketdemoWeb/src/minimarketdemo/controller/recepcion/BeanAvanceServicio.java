@@ -128,6 +128,12 @@ public class BeanAvanceServicio implements Serializable {
 		horasEstimadas = 0;
 		idEmpleado=0;
 	}
+	public void actionFinalizarRecDetalle(int idDetalle) throws Exception {
+		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
+		recDetalle.setRecDetConcluido(true);
+		mAvanceServicios.actualizarRecDetalle(recDetalle);
+		recDetalle = new RecRecepcionDetalle();
+	}
 
 	// Getters and Setters
 
