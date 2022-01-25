@@ -302,4 +302,18 @@ public class ManagerDAO {
 			return 0;
 		return valorMax.longValue();
 	}
+	//WHERE CON DOBLE PARAMETRO
+	@SuppressWarnings("rawtypes")
+	public List findDoubleWhere(Class clase, String pClausulaWhere,String pClausulaWhere2 ,String pOrderBy) {
+		Query q;
+		List listado;
+		String sentenciaJPQL;
+		if (pOrderBy == null || pOrderBy.length() == 0)
+			sentenciaJPQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE " + pClausulaWhere + " AND " + pClausulaWhere2;
+		else
+			sentenciaJPQL = "SELECT o FROM " + clase.getSimpleName() + " o WHERE " + pClausulaWhere + " AND " + pClausulaWhere2 + " ORDER BY " + pOrderBy;
+		q = em.createQuery(sentenciaJPQL);
+		listado = q.getResultList();
+		return listado;
+	}
 }
