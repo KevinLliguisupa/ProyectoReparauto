@@ -39,7 +39,7 @@
 					<h:panelGrid columns="4">
 						<p:selectOneMenu filterMatchMode="contains" filter="true"
 							value="#{beanAvanceServicio.idRecepcionCab}">
-							<f:selectItem itemLabel="Seleccion un cliente."
+							<f:selectItem itemLabel="Seleccione un cliente."
 								noSelectionOption="true" />
 							<f:selectItems value="#{beanAvanceServicio.listaRecepcionCab}"
 								var="recCab" itemLabel="#{recCab.recCabId}"
@@ -47,7 +47,7 @@
 						</p:selectOneMenu>
 						<p:commandButton value="Consultar"
 							action="#{beanAvanceServicio.ActionConsultarRecepcionCabId()}"
-							update="@form,:form1" icon="pi pi-search"></p:commandButton>
+							update="form1 form3 form10 " icon="pi pi-search"></p:commandButton>
 
 
 					</h:panelGrid>
@@ -83,37 +83,69 @@
 					<h:outputText value="Observación:" />
 					<h:outputText
 						value="#{beanAvanceServicio.recCabecera.recCabObservacion}" />
+					<h:outputText value="Trabajo finalizado:" />
+					<h:outputText
+						value="#{beanAvanceServicio.actionActualizarEstadoCabecera()}" />
 
 				</p:panelGrid>
 			</h:form>
 		</div>
-		<h:form id="form2">
+		<h:form id="form3">
 			<p:panel header="Información de los servicios" toggleable="true"
 				collapsed="false" style="width:95%; margin: 0 auto ">
 				<p:dataTable value="#{beanAvanceServicio.listaRecepcionDet}" var="p"
-					class="table table-bordered table-striped" paginator="true"
-					rows="10">
-					<p:column headerText="ID:">
-						<h:outputText value="#{p.recDetId}" />
-					</p:column>
-					<p:column headerText="Servicio Concluido">
+					class="table table-bordered table-striped table-responsive dataTable_width_auto display"
+					paginator="true" style="autosize" rows="10">
+
+					<p:column headerText="Servicio">
 						<h:outputText value="#{p.recServicio.recSerNombre}" />
 					</p:column>
-					<p:column headerText="Valor">
-						<h:inputText value="#{p.recDetPrecioFinal}" />
+					<p:column headerText="Horas estimadas">
+						<h:outputText value="#{p.recDetHorasEmpleadas}" />
 					</p:column>
-					<p:column headerText="Servicio concluido">
-						<h:selectBooleanCheckbox value="true" />
+					<p:column headerText="Valor">
+						<h:outputText value="#{p.recDetPrecioFinal}" />
 					</p:column>
 					<p:column headerText="empleado">
-						<p:selectOneMenu filterMatchMode="contains" filter="true"
-							value="#{beanTHumanoEmpleados.findAllEmpleados()}">
-							<f:selectItem itemLabel="Seleccion un empleado."
-								noSelectionOption="true" />
-							<f:selectItems value="#{beanTHumanoEmpleados.listaEmpleados}"
-								var="empleados" itemLabel="#{empleados.thmCargo.nombreCargo}"
-								itemValue="#{empleados.idThmEmpleado}"></f:selectItems>
-						</p:selectOneMenu>
+						<h:outputText value="#{p.thmEmpleado.thmCargo.nombreCargo}" />
+					</p:column>
+
+					<p:column headerText="Agregar Horas">
+						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
+							actionListener="#{beanAvanceServicio.ActionConsultarRecepcionDetId()}" />
+						<p:overlayPanel for="cmdEdicion" dynamic="true"
+							showCloseIcon="true">
+							<p:panel header="Agregar Horas y Empleado"
+								style="width:450px; margin: 0 auto ">
+								<p:panelGrid columns="2" style="margin: 0 auto">
+									<h:outputText value="Agregar Empleado:" />
+									<p:selectOneMenu filterMatchMode="contains" filter="true"
+										value="#{beanAvanceServicio.idEmpleado}">
+										<f:selectItems value="#{beanTHumanoEmpleados.listaEmpleados}"
+											var="empleados" itemLabel="#{empleados.thmCargo.nombreCargo}"
+											itemValue="#{empleados.idThmEmpleado}"></f:selectItems>
+									</p:selectOneMenu>
+									<h:outputText value="Agregar horas:" />
+									<p:inputText type="number"
+										value="#{beanAvanceServicio.horasEstimadas}"></p:inputText>
+								</p:panelGrid>
+								<p:commandButton value="Agregar"
+									actionListener="#{beanAvanceServicio.actionActualizarRecDetalle(p.recDetId)}"
+									update="@form:,form1,form3" icon="pi pi-save" />
+							</p:panel>
+						</p:overlayPanel>
+					</p:column>
+
+					<p:column headerText="Servicio concluido">
+						<h:outputText
+							value="#{beanAvanceServicio.estadoServicioConcluido(p.recDetId)}" />
+					</p:column>
+
+
+
+					<p:column>
+						<p:commandButton value="Finalizar" update="form1 form3"
+							icon="pi pi-eject"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
