@@ -126,11 +126,9 @@
 						<h:outputText
 							value="#{beanAvanceServicio.estadoServicioConcluido(p.recDetId)}" />
 					</p:column>
-
-
-
 					<p:column>
 						<p:commandButton value="Finalizar" update="form1 form3"
+						action="#{beanAvanceServicio.actionFinalizarRecDetalle(p.recDetId)}"
 							icon="pi pi-eject"></p:commandButton>
 					</p:column>
 				</p:dataTable>
