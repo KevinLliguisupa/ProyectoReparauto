@@ -33,20 +33,20 @@
 			<p:autoUpdate />
 		</p:messages>
 		<h:form id="form1">
-			<p:panelGrid columns="2" value="Añadir cliente">
+			<p:panelGrid columns="4" value="Añadir cliente">
 				<h:outputText value="Nombre del cliente:" />
-				<h:inputText
+				<p:inputText
 					value="#{beanRecCliente.nuevoCliente.cliNombreApellido}" />
 				<h:outputText value="Cédula del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliCedula}" />
+				<p:inputText value="#{beanRecCliente.nuevoCliente.cliCedula}" />
 				<h:outputText value="Celular del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliCelular}" />
+				<p:inputText value="#{beanRecCliente.nuevoCliente.cliCelular}" />
 				<h:outputText value="Dirección del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliDireccion}" />
+				<p:inputText value="#{beanRecCliente.nuevoCliente.cliDireccion}" />
 				<h:outputText value="Correo del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliCorreo}" />
+				<p:inputText value="#{beanRecCliente.nuevoCliente.cliCorreo}" />
 				<h:outputText value="Teléfono del cliente:" />
-				<h:inputText value="#{beanRecCliente.nuevoCliente.cliTelefono}" />
+				<p:inputText value="#{beanRecCliente.nuevoCliente.cliTelefono}" />
 				<p:commandButton value="Añadir Cliente"
 					actionListener="#{beanRecCliente.actionRegistrarCliente()}"
 					update="@form,:form2" icon="pi pi-save" />
@@ -59,35 +59,37 @@
 					value="#{beanRecCliente.listaClientes}" var="cli" paginator="true"
 					rows="10">
 					<p:column headerText="Editar Cliente">
-						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
+						<p:commandButton id="cmdEdicion" icon="pi pi-pencil" value="Editar"
 							actionListener="#{beanRecCliente.actionfindClienteByID(cli)}" />
-						<p:overlayPanel for="cmdEdicion" dynamic="true"
+						<p:overlayPanel for="cmdEdicion" dynamic="true" style="width:50%"
 							showCloseIcon="true">
 							<p:panel header="Editar Cliente"
-								style="width:450px; margin: 0 auto ">
-								<p:panelGrid columns="2" style="margin: 0 auto">
+								style=" margin: auto ">
+								<p:panelGrid columns="2" >
 									<h:outputText value="Nombre del cliente:" />
-									<h:inputText
+									<p:inputText
 										value="#{beanRecCliente.cliente.cliNombreApellido}" />
 									<h:outputText value="Cédula del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCedula}" />
+									<p:inputText value="#{beanRecCliente.cliente.cliCedula}" />
 									<h:outputText value="Celular del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCelular}" />
+									<p:inputText value="#{beanRecCliente.cliente.cliCelular}" />
 									<h:outputText value="Dirección del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliDireccion}" />
+									<p:inputText value="#{beanRecCliente.cliente.cliDireccion}" />
 									<h:outputText value="Correo del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
+									<p:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
 									<h:outputText value="Correo del cliente:" />
-									<h:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
+									<p:inputText value="#{beanRecCliente.cliente.cliCorreo}" />
 								</p:panelGrid>
 								<p:commandButton value="Guardar cambios"
 									actionListener="#{beanRecCliente.actionActualizarCliente()}"
 									update="@form,:form2" icon="pi pi-save" />
-								<p:commandButton value="Eliminar Cliente"
-									actionListener="#{beanRecCliente.actionEliminarCliente(beanRecCliente.cliente)}"
-									update="@form,:form2" />
+
 							</p:panel>
 						</p:overlayPanel>
+						<p:commandButton title="Eliminar"
+						value="Eliminar" styleClass="ui-button-danger"
+							actionListener="#{beanRecCliente.actionEliminarCliente(cli)}"
+							update="@form,:form2" />
 					</p:column>
 					<p:column headerText="ID del cliente" filterBy="#{cli.cliId}"
 						filterMatchMode="contains">
