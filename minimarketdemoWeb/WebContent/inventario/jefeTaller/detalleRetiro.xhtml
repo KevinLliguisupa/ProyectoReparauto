@@ -104,18 +104,15 @@
 
 			<p:column headerText="Opciones">
 
-				<p:commandButton icon="pi pi-times" title="Eliminar"
-					value="Eliminar" styleClass="ui-button-danger"
-					actionListener="#{beanInvEgresos.actionListenerDeleteSeleccionMaterial(p)}"
-					update="@form" />
+				
 
 				<p:commandButton id="Actualizar" title="Actualizar"
 					value="Actualizar" icon="pi pi-pencil"
 					actionListener="#{beanInvEgresos.actionListenerDatosActualizar(p)}" />
 
 				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
-					style="width:40%">
-					<p:panel header="Actualizar Material">
+					style="width:50%">
+					<p:panel header="Actualizar Material" style=" margin: auto ">
 						<p:panelGrid columns="2">
 
 							<h:outputText value="Nombre" />
@@ -130,6 +127,10 @@
 					<p:commandButton value="Actualizar" update="@form"
 						icon="pi pi-save" />
 				</p:overlayPanel>
+				<p:commandButton icon="pi pi-times" title="Eliminar"
+					value="Eliminar" styleClass="ui-button-danger"
+					actionListener="#{beanInvEgresos.actionListenerDeleteSeleccionMaterial(p)}"
+					update="@form" />
 
 			</p:column>
 			<p:column headerText="ID">

@@ -37,14 +37,7 @@
 	<h:form id="formDatos12">
 
 		<p:dataTable value="#{beanInvEgresos.detalleSalida}" var="p">
-			<p:column headerText="Opciones">
-
-				<p:commandButton icon="pi pi-times" title="Eliminar"
-					value="Eliminar Registro" styleClass="ui-button-danger"
-					actionListener="#{beanInvEgresos.actionListenerDeleteDetalleSalida(p)}"
-					update="@form" />
-
-			</p:column>
+			
 			<p:column headerText="Id">
 				<h:outputText value="#{p.matSalId}" />
 			</p:column>

@@ -186,7 +186,14 @@ public class ManagerGerente {
 		}
 	// Metodo CrudProveedores
 	public List<InvProveedor> findAllProveedores() {
-		return mDao.findAll(InvProveedor.class);
+		List<InvProveedor> lista= mDao.findAll(InvProveedor.class);
+		List<InvProveedor> nueva= new ArrayList<InvProveedor>();
+		for(InvProveedor l: lista) {
+			if(l.getProEstado()) {
+				nueva.add(l);
+			}
+		}
+		return nueva;
 	}
 
 	public InvProveedor findIdProveedores(int id) throws Exception {
@@ -236,7 +243,14 @@ public class ManagerGerente {
 	}
 
 	public List<InvProveedor> findAllProveedor() {
-		return mDao.findAll(InvProveedor.class);
+		List<InvProveedor> lista= mDao.findAll(InvProveedor.class);
+		List<InvProveedor> nueva= new ArrayList<InvProveedor>();
+		for(InvProveedor l: lista) {
+			if(l.getProEstado()) {
+				nueva.add(l);
+			}
+		}
+		return nueva;
 	}
 
 	public InvProveedor findIdProveedor(int id) throws Exception {

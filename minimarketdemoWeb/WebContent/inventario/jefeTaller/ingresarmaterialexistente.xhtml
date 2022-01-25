@@ -31,12 +31,15 @@
 		</p:messages>
 		<h:form id="form1">
 			<p:panelGrid columns="2">
-				<h:outputText value="ID Material:" />
-				<p:inputText value="#{beanInvMaterial.IDMaterialTemporal}"
-					required="true" requiredMessage="Ingrese el ID del material" />
+				<h:outputText value="Material" />
+				<p:selectOneMenu filterMatchMode="contains" filter="true"
+					value="#{beanInvMaterial.IDMaterialTemporal}">
+					<f:selectItem itemLabel="Seleccione un material"
+						noSelectionOption="true" />
+					<f:selectItems value="#{beanInvMaterial.listaMateriales}" var="u"
+						itemLabel="#{u.matNombre}" itemValue="#{u.matId}"></f:selectItems>
+				</p:selectOneMenu>
 
-				<h:outputText value="Nombre del material:" />
-				<h:outputText value="#{beanInvMaterial.material.matNombre}" />
 
 				<h:outputText value="Unidad de medida del material:" />
 				<h:outputText value="#{beanInvMaterial.material.matUnidadMedida}" />

@@ -33,9 +33,7 @@
 	</h:form>
 
 	<div>
-	<p:messages>
-			<p:autoUpdate />
-		</p:messages>
+		
 		<h:form id="form1">
 			<p:panelGrid columns="2" value="Añadir proveedor">
 				<h:outputText value="Nombre del proveedor:" />
@@ -51,14 +49,14 @@
 		</h:form>
 		<h:form id="form2">
 			<p:panel header="Proveedores actuales:" toggleable="true"
-				collapsed="false" style="width:75%; margin: 0 auto ">
+				collapsed="false" style="width:100%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
 					value="#{beanInvProveedor.listaProveedores}" var="prov"
 					paginator="true" rows="10">
 
 
 
-					<p:column headerText="Opciones">
+					<p:column headerText="Opciones" style="width:20%">
 
 
 
@@ -66,19 +64,17 @@
 						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
 							value="Editar"
 							actionListener="#{beanInvProveedor.actionfindProveedorByID(prov.proId)}" />
-						<p:overlayPanel for="cmdEdicion" dynamic="true"
+						<p:overlayPanel for="cmdEdicion" dynamic="true" style="width:60%"
 							showCloseIcon="true">
-							<p:panel header="Editar Proveedor"
-								style="width:225%; margin: 0 auto ">
+							<p:panel header="Editar Proveedor" style=" margin: auto ">
 								<p:panelGrid columns="2" style="margin: 0 auto">
 									<h:outputText value="Nombre: " />
-									<h:inputText value="#{beanInvProveedor.proveedor.proNombre}" />
+									<p:inputText value="#{beanInvProveedor.proveedor.proNombre}" />
 									<h:outputText value="Correo: " />
-									<h:inputText value="#{beanInvProveedor.proveedor.proCorreo}" />
+									<p:inputText value="#{beanInvProveedor.proveedor.proCorreo}" />
 									<h:outputText value="Telefono: " />
-									<h:inputText value="#{beanInvProveedor.proveedor.proTelefono}" />
-									<h:outputText value="Estado: " />
-									<p:inputText value="#{beanInvProveedor.proveedor.proEstado}" />
+									<p:inputText value="#{beanInvProveedor.proveedor.proTelefono}" />
+
 								</p:panelGrid>
 								<p:commandButton value="Guardar cambios"
 									actionListener="#{beanInvProveedor.actionUpdateProveedor()}"
@@ -88,17 +84,16 @@
 
 
 						<p:commandButton icon="pi pi-times-circle" title="eliminar"
-							value="Eliminar" styleClass="ui-button-danger" update="@form"
+							value="Eliminar" styleClass="ui-button-danger" update="@form,:form2"
 							actionListener="#{beanInvProveedor.actionDeleteProveedor(prov)}">
-							<p:confirm header="Confirmación"
-								message="Desea borrar este proveedor?" icon="pi pi-info-circle" />
+
 						</p:commandButton>
 					</p:column>
 
 
 
 					<p:column headerText="ID del proveedor" filterBy="#{prov.proId}"
-						filterMatchMode="contains">
+						filterMatchMode="contains" style="width:15%">
 						<h:outputText value="#{prov.proId}" />
 					</p:column>
 					<p:column headerText="Nombre del proveedor"
@@ -113,6 +108,7 @@
 						filterBy="#{prov.proCorreo}" filterMatchMode="contains">
 						<h:outputText value="#{prov.proCorreo}" />
 					</p:column>
+
 
 
 				</p:dataTable>

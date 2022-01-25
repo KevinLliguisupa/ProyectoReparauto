@@ -167,7 +167,7 @@ public class BeanInvIngresos implements Serializable {
 				material = new InvMaterial();
 				listaIngresos = mJefeTaller.findAllIngresos();
 				cantidadIngresar = 0;
-				JSFUtil.crearMensajeINFO("Materiales ingresados correctamente");
+				
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
 				e.printStackTrace();
