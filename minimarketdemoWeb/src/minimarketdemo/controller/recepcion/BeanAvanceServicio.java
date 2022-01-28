@@ -42,6 +42,7 @@ public class BeanAvanceServicio implements Serializable {
 	private int idrecDetalle;
 	private String servicioConcluido;
 	private int idEmpleado;
+	private int otroId;
 
 	private Boolean estadoConcluidoCab;
 	private Boolean estadoConcluidoDet;
@@ -55,10 +56,11 @@ public class BeanAvanceServicio implements Serializable {
 	public void inicializar() throws Exception {
 
 		listaRecepcionCab = mAvanceServicios.findAllRecepcionCabecera();
-		listaRecepcionDet = mAvanceServicios.findAllRecepcionDetalle();
 		listaEmpleados=mAvanceServicios.findAllEmpleados();
 		recCabecera = new RecRecepcionCabecera();
 		idRecepcionCab = 0;
+		idEmpleado=0;
+		otroId=0;
 
 		recDetalle = new RecRecepcionDetalle();
 		estadoConcluidoCab = false;
@@ -87,9 +89,7 @@ public class BeanAvanceServicio implements Serializable {
 	}
 
 	// Metodo que cambia de estado al servicio detalle
-	public String estadoServicioConcluido(int idDetalle) throws Exception {
-		ThmEmpleado empleado = mAvanceServicios.findEmpleadoById(idEmpleado);
-		idEmpleado=0;
+	public String estadoServicioConcluido(int idDetalle) throws Exception{
 		
 		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
 		if (recDetalle.getRecDetConcluido())
@@ -124,21 +124,25 @@ public class BeanAvanceServicio implements Serializable {
 	}
 
 	// Metodo actualizar servicios DETALLE
-	public void actionActualizarRecDetalle(int idDetalle) throws Exception {
-		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
-		recDetalle.setRecDetHorasEmpleadas(recDetalle.getRecDetHorasEmpleadas()+horasEstimadas);
-		recDetalle.getThmEmpleado().setIdThmEmpleado(idEmpleado);
-		//recDetalle.setRecDetConcluido(true);
-		mAvanceServicios.actualizarRecDetalle(recDetalle);
-		recDetalle = new RecRecepcionDetalle();
-		horasEstimadas = 0;
-		idEmpleado=0;
-	}
-	public void actionFinalizarRecDetalle(int idDetalle) throws Exception {
-		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
-		recDetalle.setRecDetConcluido(true);
-		mAvanceServicios.actualizarRecDetalle(recDetalle);
-		recDetalle = new RecRecepcionDetalle();
+//	public void actionActualizarRecDetalle(int idDetalle) throws Exception {
+//		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
+//		recDetalle.setRecDetHorasEmpleadas(recDetalle.getRecDetHorasEmpleadas()+horasEstimadas);
+//		recDetalle.getThmEmpleado().setIdThmEmpleado(idEmpleado);
+//		//recDetalle.setRecDetConcluido(true);
+//		mAvanceServicios.actualizarRecDetalle(recDetalle);
+//		recDetalle = new RecRecepcionDetalle();
+//		horasEstimadas = 0;
+//		idEmpleado=0;
+//	}
+	public void actionFinalizarRecDetalle(RecRecepcionDetalle detalle) throws Exception {
+		//recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
+		System.out.println(""+detalle.getThmEmpleado().getIdThmEmpleado());
+		ThmEmpleado empleado = mAvanceServicios.findEmpleadoById(detalle.getThmEmpleado().getIdThmEmpleado());
+		System.out.println(empleado.getSegUsuario().getNombres());
+		
+		detalle.setRecDetConcluido(true);
+		detalle.setThmEmpleado(empleado);
+		mAvanceServicios.actualizarRecDetalle(detalle);
 	}
 
 	// Getters and Setters
@@ -253,6 +257,14 @@ public class BeanAvanceServicio implements Serializable {
 
 	public void setListaEmpleados(List<ThmEmpleado> listaEmpleados) {
 		this.listaEmpleados = listaEmpleados;
+	}
+
+	public int getOtroId() {
+		return otroId;
+	}
+
+	public void setOtroId(int otroId) {
+		this.otroId = otroId;
 	}
 	
 	

@@ -36,10 +36,10 @@
 					<p:autoUpdate />
 				</p:growl>
 				<p:panel>
-					<h:panelGrid columns="4">
+					<h:panelGrid columns="6">
 						<p:selectOneMenu filterMatchMode="contains" filter="true"
 							value="#{beanAvanceServicio.idRecepcionCab}">
-							<f:selectItem itemLabel="Seleccione el vehiculo"
+							<f:selectItem itemLabel="Seleccione el vehiculo..."
 								noSelectionOption="true" />
 							<f:selectItems value="#{beanAvanceServicio.listaRecepcionCab}"
 								var="recCab" itemLabel="#{recCab.recVehiculo.vehPlaca}"
@@ -57,37 +57,34 @@
 		<div>
 			<h:form id="form1">
 				<p:panelGrid columns="6" value="Información del Servicio">
-					<h:outputText value="Cedula:" />
+					<h:outputText value="Cedula Cliente:" />
 					<h:outputText
 						value="#{beanAvanceServicio.recCabecera.recCliente.cliCedula}" />
-					<h:outputText value="Nombres:" />
+					<h:outputText value="Nombre cliente:" />
 					<h:outputText
 						value="#{beanAvanceServicio.recCabecera.recCliente.cliNombreApellido}" />
 					<h:outputText value="Placas:" />
 					<h:outputText
 						value="#{beanAvanceServicio.recCabecera.recVehiculo.vehPlaca}" />
-					<h:outputText value="Fecha de Recepción:" />
-					<h:outputText
-						value="#{beanAvanceServicio.recCabecera.recCabFechaRecepcion}" />
-					<h:outputText value="Fecha de Entrega:" />
+
+					<h:outputText value="Fecha Entrega:" />
 					<h:outputText
 						value="#{beanAvanceServicio.recCabecera.recCabFechaEntrega}" />
-					<h:outputText value="Hora:" />
-					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabHora}" />
-					<h:outputText value="Total:" />
-					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabTotal}" />
-					<h:outputText value="Abono:" />
-					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabAbono}" />
-					<h:outputText value="Saldo" />
-					<h:outputText value="#{beanAvanceServicio.recCabecera.recCabSaldo}" />
-					<h:outputText value="Observación:" />
+					<h:outputText value="Fecha Recepcion" />
 					<h:outputText
-						value="#{beanAvanceServicio.recCabecera.recCabObservacion}" />
-					<h:outputText value="Trabajo finalizado:" />
+						value="#{beanAvanceServicio.recCabecera.recCabFechaRecepcion}" />
+
+					<h:outputText value="Estado del Trabajo:" />
 					<h:outputText
 						value="#{beanAvanceServicio.actionActualizarEstadoCabecera()}" />
-
 				</p:panelGrid>
+
+				<p:panelGrid columns="2" value="Información del Servicio">
+					<h:outputText value="Observaciones" />
+					<h:outputText
+						value="#{beanAvanceServicio.recCabecera.recCabObservacion}" />
+				</p:panelGrid>
+
 			</h:form>
 		</div>
 		<h:form id="form3">
@@ -100,36 +97,42 @@
 					<p:column headerText="Servicio">
 						<h:outputText value="#{p.recServicio.recSerNombre}" />
 					</p:column>
-					<p:column headerText="Horas estimadas">
-						<h:outputText value="#{p.recDetHorasEmpleadas}" />
-					</p:column>
-					<p:column headerText="Valor">
-						<h:outputText value="#{p.recDetPrecioFinal}" />
-					</p:column>
-					<p:column headerText="Empleado">		
-								<p:selectOneMenu filterMatchMode="contains" filter="true"
-							value="#{beanAvanceServicio.idEmpleado}">
-							<f:selectItem itemLabel="Seleccione empleado..."
-								noSelectionOption="true" />
-							<f:selectItems value="#{beanAvanceServicio.listaEmpleados}"
-								var="empleado" itemLabel="#{empleado.segUsuario.nombres} #{empleado.segUsuario.apellidos}"
-								itemValue="#{empleado.idThmEmpleado}"></f:selectItems>
-						</p:selectOneMenu>	
-					</p:column>
-
-					<p:column headerText="Agregar Horas">
-					<p:inputText value="#{p.recDetHorasEmpleadas}"
-				required="true" requiredMessage="Ingrese las horas" style="width:50%"/>
-					</p:column>
-
-					<p:column headerText="Servicio concluido">
+					<p:column headerText="Estado servicio">
 						<h:outputText
 							value="#{beanAvanceServicio.estadoServicioConcluido(p.recDetId)}" />
 					</p:column>
+					<p:column headerText="Empleado">
+
+						<p:selectOneMenu filterMatchMode="contains" filter="true"
+							value="#{p.thmEmpleadoById}" disabled="#{p.recDetConcluido}">
+							<f:selectItem
+								itemLabel="#{p.thmEmpleado.segUsuario.nombres} #{p.thmEmpleado.segUsuario.apellidos}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{beanAvanceServicio.listaEmpleados}"
+								var="empleado"
+								itemLabel="#{empleado.segUsuario.nombres} #{empleado.segUsuario.apellidos}"
+								itemValue="#{empleado.idThmEmpleado}"></f:selectItems>
+						</p:selectOneMenu>
+
+					</p:column>
+
+
+					<p:column headerText="Horas empleadas">
+					
+					<p:spinner value="#{p.recDetHorasEmpleadas}" min="1" required="true"
+							requiredMessage="Ingrese las horas" style="width:40%" disabled="#{p.recDetConcluido}"/>
+					
+					</p:column>
+
+					<p:column headerText="Observaciones">
+						<p:inputTextarea rows="3" style="width:90%;font-size: 15px" autoResize="false" disabled="#{p.recDetConcluido}"
+						value="#{p.recDetObservacion}"/>
+					</p:column>
+
 					<p:column>
 						<p:commandButton value="Finalizar" update="form1 form3"
-						action="#{beanAvanceServicio.actionFinalizarRecDetalle(p.recDetId)}"
-							icon="pi pi-eject"></p:commandButton>
+							action="#{beanAvanceServicio.actionFinalizarRecDetalle(p)}"
+							icon="pi pi-eject" disabled="#{p.recDetConcluido}"></p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
