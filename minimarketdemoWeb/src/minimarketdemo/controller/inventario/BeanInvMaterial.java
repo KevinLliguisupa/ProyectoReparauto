@@ -14,14 +14,14 @@ import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvTipo;
-import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
+import minimarketdemo.model.inventario.managers.ManagerInventario;
 
 @Named
 @SessionScoped
 public class BeanInvMaterial implements Serializable {
 
 	@EJB
-	private ManagerJefeTaller mJefeTaller;
+	private ManagerInventario mJefeTaller;
 	private List<InvMaterial> listaMateriales;
 	private List<InvMaterial> listaMaterialesElegidos;
 	private InvMaterial material;

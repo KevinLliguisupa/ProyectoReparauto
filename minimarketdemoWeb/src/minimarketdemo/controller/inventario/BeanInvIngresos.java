@@ -21,14 +21,14 @@ import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvTipo;
-import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
+import minimarketdemo.model.inventario.managers.ManagerInventario;
 
 @Named
 @SessionScoped
 public class BeanInvIngresos implements Serializable {
 
 	@EJB
-	private ManagerJefeTaller mJefeTaller;
+	private ManagerInventario mInventario;
 
 	private List<InvMaterialIngreso> detalleIngreso;
 	private List<InvMaterial> listaMateriales;
@@ -60,13 +60,13 @@ public class BeanInvIngresos implements Serializable {
 
 	@PostConstruct
 	public void inicializar() throws ParseException {
-		listaIngresos = mJefeTaller.findAllIngresos();
-		listaProveedor = mJefeTaller.findAllProveedor();
-		listaTipo = mJefeTaller.findAllTipoMaterial();
-		listaMatAux = mJefeTaller.findAllMaterial();
+		listaIngresos = mInventario.findAllIngresos();
+		listaProveedor = mInventario.findAllProveedor();
+		listaTipo = mInventario.findAllTipoMaterial();
+		listaMatAux = mInventario.findAllMaterial();
 		cantidadIngresar = 0;
 		idTipo = 0;
-		listaMateriales = new ArrayList<InvMaterial>();
+		listaMateriales =new ArrayList<InvMaterial>();
 		idMaterial = 0;
 		precioCompra = new BigDecimal(0);
 		material = new InvMaterial();
@@ -90,14 +90,14 @@ public class BeanInvIngresos implements Serializable {
 		List<InvIngreso> ingresosxFecha;
 
 		if (idProveedor != 0 && idMaterial != 0) {
-			listaConsulta = mJefeTaller.findIngresosByMaterialProveedor(idMaterial, idProveedor);
+			listaConsulta = mInventario.findIngresosByMaterialProveedor(idMaterial, idProveedor);
 		} else {
 			if (idMaterial != 0)
-				listaConsulta = mJefeTaller.findIngresosByMaterial(idMaterial);
+				listaConsulta = mInventario.findIngresosByMaterial(idMaterial);
 			if (idProveedor != 0)
-				listaConsulta = mJefeTaller.findIngresosByProveedor(idProveedor);
+				listaConsulta = mInventario.findIngresosByProveedor(idProveedor);
 		}
-		ingresosxFecha = mJefeTaller.findIngresoByFecha(fechaInicio, fechaFin);
+		ingresosxFecha = mInventario.findIngresoByFecha(fechaInicio, fechaFin);
 		if (listaConsulta.size() != 0) {
 			for (InvIngreso consultas : listaConsulta) {
 				for (InvIngreso fechas : ingresosxFecha) {
@@ -115,20 +115,20 @@ public class BeanInvIngresos implements Serializable {
 	}
 
 	public String actionCargarDetalles(int id) throws Exception {
-		ingreso = mJefeTaller.findIngresoById(id);
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+		ingreso = mInventario.findIngresoById(id);
+		detalleIngreso = mInventario.findAllDetallesByCabIngreso(ingreso);
 
 		return "maestroIngreso?faces-redirect=true";
 
 	}
 
 	public BigDecimal actioncalcularValorTotalIngreso(int idIngreso) throws Exception {
-		BigDecimal valorTotal = mJefeTaller.calcularValorTotalIngreso(idIngreso);
+		BigDecimal valorTotal = mInventario.calcularValorTotalIngreso(idIngreso);
 		return valorTotal;
 	}
 
 	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
-		return mJefeTaller.findMaterialIngreso(idIngreso);
+		return mInventario.findMaterialIngreso(idIngreso);
 	}
 
 	public void actionLimpiar() throws ParseException {
@@ -140,8 +140,8 @@ public class BeanInvIngresos implements Serializable {
 	public void actionListenerIngresarMaterial() throws Exception {
 		if (idProveedor != 0) {
 			try {
-				proveedor = mJefeTaller.findIdProveedor(idProveedor);
-				mJefeTaller.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
+				proveedor = mInventario.findIdProveedor(idProveedor);
+				mInventario.ingresarCabeceraIngreso(beanSegLogin.getLoginDTO(), proveedor);
 				proveedor = new InvProveedor();
 
 				JSFUtil.crearMensajeINFO("Ingreso creado correctamente. " );
@@ -153,7 +153,7 @@ public class BeanInvIngresos implements Serializable {
 			JSFUtil.crearMensajeERROR("Seleccione un proveedor");
 
 		}
-		ingreso=mJefeTaller.findAllIngresos().get(0);
+		ingreso=mInventario.findAllIngresos().get(0);
 	
 		
 	
@@ -161,11 +161,11 @@ public class BeanInvIngresos implements Serializable {
 		if (listaMateriales.size() != 0) {
 			try {
 				
-				mJefeTaller.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
+				mInventario.ingresarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, ingreso);
 				listaMateriales = new ArrayList<InvMaterial>();
-				listaMatAux = mJefeTaller.findAllMaterial();
+				listaMatAux = mInventario.findAllMaterial();
 				material = new InvMaterial();
-				listaIngresos = mJefeTaller.findAllIngresos();
+				listaIngresos = mInventario.findAllIngresos();
 				cantidadIngresar = 0;
 				
 			} catch (Exception e) {
@@ -182,12 +182,12 @@ public class BeanInvIngresos implements Serializable {
 	public void actionListenerSeleccionarMaterial() throws Exception {
 		if (precioCompra.compareTo(precioCompra.ZERO) != 0 && idMaterial != 0) {
 			try {
-				material = mJefeTaller.findMaterialId(idMaterial);
-				mJefeTaller.agregarMaterialSeleccion(listaMateriales, material, cantidadIngresar, precioCompra);
+				material = mInventario.findMaterialId(idMaterial);
+				mInventario.agregarMaterialSeleccion(listaMateriales, material, cantidadIngresar, precioCompra);
 				cantidadIngresar = 0;
 				precioCompra = new BigDecimal(0);
 				idMaterial = 0;
-				listaMatAux = mJefeTaller.findAllMaterial();
+				listaMatAux = mInventario.findAllMaterial();
 				JSFUtil.crearMensajeINFO("Material seleccionado.");
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
@@ -201,11 +201,11 @@ public class BeanInvIngresos implements Serializable {
 
 	public void actionListenerCrearMaterial() {
 		try {
-			InvTipo selectTipo = mJefeTaller.findTipoMaterialById(this.idTipo);
+			InvTipo selectTipo = mInventario.findTipoMaterialById(this.idTipo);
 			idTipo = 0;
-			mJefeTaller.createMaterial(beanSegLogin.getLoginDTO(),this.nuevoMaterial, selectTipo);
+			mInventario.createMaterial(beanSegLogin.getLoginDTO(),this.nuevoMaterial, selectTipo);
 			nuevoMaterial = new InvMaterial();
-			listaMatAux = mJefeTaller.findAllMaterial();
+			listaMatAux = mInventario.findAllMaterial();
 			JSFUtil.crearMensajeINFO("Material creado correctamente");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
@@ -215,7 +215,7 @@ public class BeanInvIngresos implements Serializable {
 
 	public void actionListenerClasificarMateriales() throws Exception {
 		if (idTipo != 0) {
-			listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
+			listaMatAux = mInventario.findAllMaterialesByTipo(idTipo);
 			JSFUtil.crearMensajeINFO("Datos de la categoria cargados.");
 		} else {
 			JSFUtil.crearMensajeERROR("Seleccione una categoria.");
@@ -223,21 +223,21 @@ public class BeanInvIngresos implements Serializable {
 	}
 
 	public void actionListenerUpdateSeleccionMat() throws Exception {
-		tipo = mJefeTaller.findTipoMaterialById(idTipo);
+		tipo = mInventario.findTipoMaterialById(idTipo);
 		material.setInvTipo(tipo);
 	}
 
 	public void actionListenerDeleteDetalleIngreso(InvMaterialIngreso detalle) throws Exception {
-		mJefeTaller.deleteDetalleIngreso(beanSegLogin.getLoginDTO(),detalle);
-		detalleIngreso = mJefeTaller.findAllDetallesByCabIngreso(ingreso);
+		mInventario.deleteDetalleIngreso(beanSegLogin.getLoginDTO(),detalle);
+		detalleIngreso = mInventario.findAllDetallesByCabIngreso(ingreso);
 	}
 
 	public void actionListenerDeleteSeleccionMaterial(InvMaterial material) throws Exception {
-		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
+		mInventario.eliminarSeleccionMaterial(listaMateriales, material);
 	}
 
 	public void actionListenerDatosActualizar(InvMaterial mat) throws Exception {
-		material = mJefeTaller.findMaterialByNameSeleccion(listaMateriales, mat);
+		material = mInventario.findMaterialByNameSeleccion(listaMateriales, mat);
 	}
 
 	// Getters and setters

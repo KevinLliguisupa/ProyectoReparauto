@@ -13,7 +13,6 @@ import javax.inject.Named;
 
 import minimarketdemo.model.core.entities.InvMaterial;
 import minimarketdemo.model.core.entities.RecServicio;
-import minimarketdemo.model.recepcion.managers.ManagerRecCotizacion;
 import minimarketdemo.model.recepcion.managers.ManagerRecepcion;
 
 @Named
@@ -21,7 +20,7 @@ import minimarketdemo.model.recepcion.managers.ManagerRecepcion;
 public class BeanRecCotizacion implements Serializable {
 
 	@EJB
-	private ManagerRecCotizacion mCotizacion;
+	private ManagerRecepcion mRecepcion;
 	
 	@Inject
 	private BeanRecepcion bRecepcion;
@@ -37,19 +36,19 @@ public class BeanRecCotizacion implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		listaServicios = mCotizacion.findAllServicios();
+		listaServicios = mRecepcion.findAllServicios();
 		listaServiciosSeleccionados = new ArrayList<RecServicio>();
 		precioTotalServicios = 0;
 	}
 
 	public void actionAgregarServicioSeleccion() throws Exception {
-		mCotizacion.agregarServiciosSeleccion(listaServiciosSeleccionados, idServicio);
-		precioTotalServicios=mCotizacion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
+		mRecepcion.agregarServiciosSeleccion(listaServiciosSeleccionados, idServicio);
+		precioTotalServicios=mRecepcion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
 	}
 
 	public void actionEliminarSeleccionServicio(int id) {
-		mCotizacion.deleteSeleccionServicio(listaServiciosSeleccionados, id);
-		precioTotalServicios=mCotizacion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
+		mRecepcion.deleteSeleccionServicio(listaServiciosSeleccionados, id);
+		precioTotalServicios=mRecepcion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
 	}
 
 	public void actionElegirSeleccionServicio(int id) {
@@ -57,7 +56,7 @@ public class BeanRecCotizacion implements Serializable {
 	}
 
 	public void actionActualizarSeleccionServicio() {
-		precioTotalServicios=mCotizacion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
+		precioTotalServicios=mRecepcion.calcularPrecioServiciosSeleccionados(listaServiciosSeleccionados);
 		idServicio = 0;
 	}
 	

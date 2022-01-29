@@ -13,14 +13,14 @@ import javax.inject.Named;
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvTipo;
-import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
+import minimarketdemo.model.inventario.managers.ManagerInventario;
 
 @Named
 @SessionScoped
 public class BeanInvTipoMaterial implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@EJB
-	private ManagerJefeTaller mJefeTaller;
+	private ManagerInventario mJefeTaller;
 	private List<InvTipo> listaTipos;
 	private InvTipo tipo;
 	@Inject

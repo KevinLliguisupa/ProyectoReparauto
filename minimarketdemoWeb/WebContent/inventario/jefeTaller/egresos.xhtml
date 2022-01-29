@@ -43,7 +43,7 @@
 						value="#{beanInvEgresos.idMaterial}">
 						<f:selectItem itemLabel="Seleccione el material..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanInvEgresos.listaMateriales}"
+						<f:selectItems value="#{beanInvEgresos.listaMatAux}"
 							var="material" itemLabel="#{material.matNombre}"
 							itemValue="#{material.matId}"></f:selectItems>
 					</p:selectOneMenu>

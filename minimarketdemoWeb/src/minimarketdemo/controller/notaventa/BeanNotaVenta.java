@@ -31,7 +31,6 @@ import minimarketdemo.model.core.entities.RecRecepcionDetalle;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
-import minimarketdemo.model.inventario.managers.ManagerGerente;
 import minimarketdemo.model.notaventa.managers.managerNotaVenta;
 
 @Named

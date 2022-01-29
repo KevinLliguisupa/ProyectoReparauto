@@ -28,7 +28,7 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de Recepción"></p:staticMessage>
+		<p:staticMessage severity="info" summary="Módulo de Servicio"></p:staticMessage>
 	</h:form>
 
 	<div>
@@ -36,11 +36,11 @@
 		<h:form id="form1">
 			<p:panelGrid columns="2" value="Añadir servicio">
 				<h:outputText value="Nombre del Servicio:" />
-				<p:inputText value="#{beanGerente.nuevoServicio.recSerNombre}" />
+				<p:inputText value="#{beanServicio.nuevoServicio.recSerNombre}" />
 				<h:outputText value="Precio del Servicio ($):" />
-				<p:inputText value="#{beanGerente.nuevoServicio.recSerPrecio}" />
+				<p:inputText value="#{beanServicio.nuevoServicio.recSerPrecio}" />
 				<p:commandButton value="Añadir "
-					actionListener="#{beanGerente.actionCreateServicio()}"
+					actionListener="#{beanServicio.actionCreateServicio()}"
 					update="@form,:form2" icon="pi pi-save" />
 			</p:panelGrid>
 		</h:form>
@@ -48,31 +48,31 @@
 			<p:panel header="SERVICIOS ACTUALES:" toggleable="true"
 				collapsed="false" style="width:75%; margin: 0 auto ">
 				<p:dataTable class="table table-bordered table-striped"
-					value="#{beanGerente.actionfindAllServicios()}" var="serv"
+					value="#{beanServicio.actionfindAllServicios()}" var="serv"
 					paginator="true" rows="10">
 
 					<p:column headerText="Opciones">
 						<p:commandButton id="cmdEdicion" icon="pi pi-pencil"
 							value="Editar"
-							actionListener="#{beanGerente.actionfindServicioByID(serv)}" />
+							actionListener="#{beanServicio.actionfindServicioByID(serv)}" />
 						<p:overlayPanel for="cmdEdicion" dynamic="true"
 							showCloseIcon="true" style="width:50%">
 							<p:panel header="Editar Servicio" style=" margin: auto ">
 								<p:panelGrid columns="2" style="margin: 0 auto">
 									<h:outputText value="Nombre: " />
-									<p:inputText value="#{beanGerente.servicio.recSerNombre}" />
+									<p:inputText value="#{beanServicio.servicio.recSerNombre}" />
 									<h:outputText value="Precio: " />
-									<p:inputText value="#{beanGerente.servicio.recSerPrecio}" />
+									<p:inputText value="#{beanServicio.servicio.recSerPrecio}" />
 								</p:panelGrid>
 								<p:commandButton value="Guardar cambios"
-									actionListener="#{beanGerente.actionUpdateServicio()}"
+									actionListener="#{beanServicio.actionUpdateServicio()}"
 									update="@form,:form2" icon="pi pi-save" />
 							</p:panel>
 						</p:overlayPanel>
 						<p:commandButton icon="pi pi-times-circle" title="Eliminar"
 							value="Eliminar" styleClass="ui-button-danger"
 							update="@form,:form2"
-							actionListener="#{beanGerente.actionListenerDeleteServicio(serv) }">
+							actionListener="#{beanServicio.actionListenerDeleteServicio(serv) }">
 							<p:confirm header="Confirmación"
 								message="Desea borrar este Servicio?" icon="pi pi-info-circle" />
 						</p:commandButton>

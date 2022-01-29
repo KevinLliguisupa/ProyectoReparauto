@@ -11,7 +11,7 @@ import javax.inject.Named;
 
 import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.RecCliente;
-import minimarketdemo.model.recepcion.managers.ManagerRecJefeTaller;
+import minimarketdemo.model.recepcion.managers.ManagerRecepcion;
 
 @Named
 @SessionScoped
@@ -20,7 +20,8 @@ public class BeanRecCliente implements Serializable{
 	@Inject
 	private BeanSegLogin beanSegLogin;
 	@EJB
-	private ManagerRecJefeTaller mJefeTaller;
+	private ManagerRecepcion mRecepcion;
+	
 	private List<RecCliente> listaClientes;
 	private RecCliente NuevoCliente;
 	private RecCliente Cliente;
@@ -30,26 +31,26 @@ public class BeanRecCliente implements Serializable{
 	}
 	@PostConstruct
 	public void inicializar() {
-		listaClientes=mJefeTaller.findAllClientes();
+		listaClientes=mRecepcion.findAllClientes();
 		NuevoCliente=new RecCliente();
 	}
 
 	public void actionRegistrarCliente() throws Exception {
-		mJefeTaller.ingresarCliente(NuevoCliente);
+		mRecepcion.ingresarCliente(NuevoCliente);
 		NuevoCliente=new RecCliente();
 	}
 
 	public void actionEliminarCliente(RecCliente Eliminado) throws Exception {
-		mJefeTaller.eliminarCliente(Eliminado);
+		mRecepcion.eliminarCliente(Eliminado);
 	}
 	public void actionActualizarCliente() throws Exception {
-		mJefeTaller.actualizarCliente(Cliente);
+		mRecepcion.actualizarCliente(Cliente);
 	}
 	public void actionfindClienteByID(RecCliente Cliente) throws Exception {
-		this.Cliente=mJefeTaller.findClienteByID(Cliente);
+		this.Cliente=mRecepcion.findClienteByID(Cliente);
 	}
 	public List<RecCliente> getListaClientes() {
-		return mJefeTaller.findAllClientes();
+		return mRecepcion.findAllClientes();
 	}
 	public void setListaClientes(List<RecCliente> listaClientes) {
 		this.listaClientes = listaClientes;

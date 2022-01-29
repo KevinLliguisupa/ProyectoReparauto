@@ -9,17 +9,16 @@
 		type="preRenderView"></f:event>
 </f:metadata>
 <h:head>
-	<title>Creación Ingresos</title>
+	<title>Menú Recepción</title>
 </h:head>
 <body>
-	<p:growl>
-		<p:autoUpdate />
-	</p:growl>
-
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="detalleRetiro" />
-
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+				<p:menuitem value="Administracion de Servicios" icon="pi pi-angle-double-up"
+				action="servicios" />
+				<p:menuitem value="Avance de Servicios"
+				icon="pi pi-angle-double-up" action="avanceServicios" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -29,30 +28,9 @@
 				</p:menuButton>
 			</f:facet>
 		</p:menubar>
-		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
+		<p:staticMessage severity="info" summary="Módulo de Recepcion"></p:staticMessage>
 	</h:form>
+	<div></div>
 
-
-	
-	<h:form id="formDatos12">
-
-		<p:dataTable value="#{beanInvEgresos.detalleSalida}" var="p">
-			
-			<p:column headerText="Id">
-				<h:outputText value="#{p.matSalId}" />
-			</p:column>
-			<p:column headerText="Material">
-				<h:outputText value="#{p.invMaterial.matNombre}" />
-			</p:column>
-			<p:column headerText="Cantidad Retirada">
-				<h:outputText value="#{p.matSalCantidad}" />
-			</p:column>
-			<p:column headerText="Precio Venta">
-				<h:outputText value="#{p.matSalPrecio}" />
-			</p:column>
-
-
-		</p:dataTable>
-	</h:form>
 </body>
 </html>

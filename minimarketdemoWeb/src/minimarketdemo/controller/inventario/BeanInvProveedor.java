@@ -13,15 +13,14 @@ import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvTipo;
-import minimarketdemo.model.inventario.managers.ManagerGerente;
-import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
+import minimarketdemo.model.inventario.managers.ManagerInventario;
 
 @Named
 @SessionScoped
 public class BeanInvProveedor implements Serializable {
 
 	@EJB
-	private ManagerGerente mGerente;
+	private ManagerInventario mGerente;
 	private List<InvProveedor> listaProveedores;
 	private InvProveedor proveedor;
 	@Inject

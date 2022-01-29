@@ -1,4 +1,4 @@
-package minimarketdemo.controller.recepcion;
+package minimarketdemo.controller.servicio;
 
 import java.io.Serializable;
 import java.util.List;
@@ -18,8 +18,7 @@ import minimarketdemo.model.core.entities.RecRecepcionDetalle;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
-import minimarketdemo.model.recepcion.managers.ManagerAvanceServicios;
-import minimarketdemo.model.recepcion.managers.ManagerRecJefeTaller;
+import minimarketdemo.model.servicio.managers.ManagerServicio;
 
 @Named
 @SessionScoped
@@ -29,7 +28,8 @@ public class BeanAvanceServicio implements Serializable {
 	private BeanSegLogin beanSegLogin;
 	@EJB
 
-	private ManagerAvanceServicios mAvanceServicios;
+	private ManagerServicio mServicios;
+	
 	private List<RecRecepcionCabecera> listaRecepcionCab;
 	private RecRecepcionCabecera recCabecera;
 	private int idRecepcionCab;
@@ -55,8 +55,8 @@ public class BeanAvanceServicio implements Serializable {
 	@PostConstruct
 	public void inicializar() throws Exception {
 
-		listaRecepcionCab = mAvanceServicios.findAllRecepcionCabecera();
-		listaEmpleados=mAvanceServicios.findAllEmpleados();
+		listaRecepcionCab = mServicios.findAllRecepcionCabecera();
+		listaEmpleados=mServicios.findAllEmpleados();
 		recCabecera = new RecRecepcionCabecera();
 		idRecepcionCab = 0;
 		idEmpleado=0;
@@ -72,16 +72,16 @@ public class BeanAvanceServicio implements Serializable {
 	// Metodo de Busqueda de cabecera por Id
 
 	public RecRecepcionCabecera ActionConsultarRecepcionCabId() throws Exception {
-		if (mAvanceServicios.findRecepcionCabeceraById(idRecepcionCab) != null) {
-			recCabecera = mAvanceServicios.findRecepcionCabeceraById(idRecepcionCab);
+		if (mServicios.findRecepcionCabeceraById(idRecepcionCab) != null) {
+			recCabecera = mServicios.findRecepcionCabeceraById(idRecepcionCab);
 		}
-		listaRecepcionDet = mAvanceServicios.findRecDetalleByIdCabecera(idRecepcionCab);
+		listaRecepcionDet = mServicios.findRecDetalleByIdCabecera(idRecepcionCab);
 		return recCabecera;
 	}
 
 	public RecRecepcionDetalle ActionConsultarRecepcionDetId() throws Exception {
-		if (mAvanceServicios.findRecepcionDetallerById(idrecDetalle) != null) {
-			recDetalle = mAvanceServicios.findRecepcionDetallerById(idrecDetalle);
+		if (mServicios.findRecepcionDetallerById(idrecDetalle) != null) {
+			recDetalle = mServicios.findRecepcionDetallerById(idrecDetalle);
 
 		}
 
@@ -91,7 +91,7 @@ public class BeanAvanceServicio implements Serializable {
 	// Metodo que cambia de estado al servicio detalle
 	public String estadoServicioConcluido(int idDetalle) throws Exception{
 		
-		recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
+		recDetalle = mServicios.findRecepcionDetallerById(idDetalle);
 		if (recDetalle.getRecDetConcluido())
 			return "Finalizado";
 		return "Pendiente";
@@ -102,7 +102,7 @@ public class BeanAvanceServicio implements Serializable {
 		if (recCabecera == null) {
 			return "Pendiente";
 		} else {
-			recCabecera = mAvanceServicios.findRecepcionCabeceraById(idRecepcionCab);
+			recCabecera = mServicios.findRecepcionCabeceraById(idRecepcionCab);
 			if (recCabecera.getRecCabTerminado())
 				return "Finalizado";
 			return "Pendiente";
@@ -114,8 +114,8 @@ public class BeanAvanceServicio implements Serializable {
 		if (recCabecera == null) {
 			return "";
 		} else {
-			listaAuxiliar1 = mAvanceServicios.findRecDetalleByIdCabecera(idRecepcionCab);
-			listaAuxiliar2 = mAvanceServicios.findRecDetalleByEstadoAndId(idRecepcionCab);
+			listaAuxiliar1 = mServicios.findRecDetalleByIdCabecera(idRecepcionCab);
+			listaAuxiliar2 = mServicios.findRecDetalleByEstadoAndId(idRecepcionCab);
 			if (listaAuxiliar2.size() == listaAuxiliar1.size()) {
 				return "Finalizado";
 			}
@@ -137,12 +137,12 @@ public class BeanAvanceServicio implements Serializable {
 	public void actionFinalizarRecDetalle(RecRecepcionDetalle detalle) throws Exception {
 		//recDetalle = mAvanceServicios.findRecepcionDetallerById(idDetalle);
 		System.out.println(""+detalle.getThmEmpleado().getIdThmEmpleado());
-		ThmEmpleado empleado = mAvanceServicios.findEmpleadoById(detalle.getThmEmpleado().getIdThmEmpleado());
+		ThmEmpleado empleado = mServicios.findEmpleadoById(detalle.getThmEmpleado().getIdThmEmpleado());
 		System.out.println(empleado.getSegUsuario().getNombres());
 		
 		detalle.setRecDetConcluido(true);
 		detalle.setThmEmpleado(empleado);
-		mAvanceServicios.actualizarRecDetalle(detalle);
+		mServicios.actualizarRecDetalle(detalle);
 	}
 
 	// Getters and Setters

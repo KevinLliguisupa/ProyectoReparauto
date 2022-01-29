@@ -1,5 +1,4 @@
-
-package minimarketdemo.model.recepcion.managers;
+package minimarketdemo.model.servicio.managers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,31 +8,62 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
-import minimarketdemo.model.core.entities.InvIngreso;
-import minimarketdemo.model.core.entities.InvMaterial;
-import minimarketdemo.model.core.entities.InvMaterialIngreso;
-import minimarketdemo.model.core.entities.RecCliente;
 import minimarketdemo.model.core.entities.RecRecepcionCabecera;
 import minimarketdemo.model.core.entities.RecRecepcionDetalle;
-import minimarketdemo.model.core.entities.RecVehiculo;
+import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.managers.ManagerDAO;
-import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
 /**
- * Session Bean implementation class ManagerAvanceServicios
+ * Session Bean implementation class ManagerServicio
  */
 @Stateless
 @LocalBean
-public class ManagerAvanceServicios {
+public class ManagerServicio {
+
 	@EJB
 	private ManagerDAO mDao;
+	@EJB
 	private ManagerAuditoria mAuditoria;
-
-	public ManagerAvanceServicios() {
-		mAuditoria = new ManagerAuditoria();
+	
+    public ManagerServicio() {
+        // TODO Auto-generated constructor stub
+    }
+    
+    public List<RecServicio> findAllServicios() {
+		return  mDao.findWhere(RecServicio.class, "rec_ser_estado=true", "rec_ser_nombre ASC");
 	}
 
+	public RecServicio findIdServicios(int id) throws Exception {
+		return (RecServicio) mDao.findById(RecServicio.class, id);
+	}
+
+	public void createServicios(RecServicio servicio) throws Exception {
+		//RecServicio NewServ = new RecServicio();
+		//NewServ.setRecSerId(findAllServicios().size() + 1);
+		//NewServ.setRecSerNombre(Servicio.getRecSerNombre());
+		//NewServ.setRecSerPrecio(Servicio.getRecSerPrecio());
+		servicio.setRecSerEstado(true);
+		mDao.insertar(servicio);
+	}
+
+	public void deleteServicio(RecServicio  Servicio) throws Exception {
+		Servicio.setRecSerEstado(false);
+		mDao.actualizar(Servicio);
+	}
+
+	public void updateServicios(RecServicio  Servicio) throws Exception {
+		mDao.actualizar(Servicio);
+	}
+
+	public RecServicio findIdServicio(int id) throws Exception {
+		return (RecServicio) mDao.findById(RecServicio.class, id);
+	}
+	
+	
+	
+	//Servicios
+	
 	public List<RecRecepcionCabecera> findAllRecepcionCabecera() {
 		List<RecRecepcionCabecera> lista = mDao.findAll(RecRecepcionCabecera.class, "recCabId", true);
 		List<RecRecepcionCabecera> listaRecCabe = new ArrayList<RecRecepcionCabecera>();
@@ -94,5 +124,4 @@ public class ManagerAvanceServicios {
     public void actualizarRecDetalle(RecRecepcionDetalle detalleUpdate) throws Exception {
     	mDao.actualizar(detalleUpdate);
     }
-
 }

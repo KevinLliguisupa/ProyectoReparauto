@@ -14,7 +14,7 @@ import minimarketdemo.controller.seguridades.BeanSegLogin;
 import minimarketdemo.model.core.entities.RecServicio;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.RecVehiculoExtra;
-import minimarketdemo.model.recepcion.managers.ManagerRecJefeTaller;
+import minimarketdemo.model.recepcion.managers.ManagerRecepcion;
 
 @Named
 @SessionScoped
@@ -23,7 +23,7 @@ public class BeanRecVehiculo implements Serializable {
 	@Inject
 	private BeanSegLogin beanSegLogin;
 	@EJB
-	private ManagerRecJefeTaller mJefeTaller;
+	private ManagerRecepcion mRecepcion;
 	
 	private List<RecVehiculo> listaRecVehiculos;
 	private Boolean actualizarVehiculo;
@@ -41,7 +41,7 @@ public class BeanRecVehiculo implements Serializable {
 
 	@PostConstruct
 	public void inicializar() {
-		listaRecVehiculos = mJefeTaller.findAllVehiculos();
+		listaRecVehiculos = mRecepcion.findAllVehiculos();
 		vehiculo = new RecVehiculo();
 		actualizarVehiculo = false;
 		idVehiculo = 0;
@@ -52,14 +52,14 @@ public class BeanRecVehiculo implements Serializable {
 	public String actionRegistrarVehiculo() throws Exception {
 
 		if (actualizarVehiculo) {
-			mJefeTaller.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+			mRecepcion.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+			listaRecVehiculos = mRecepcion.findAllVehiculos();
 			vehiculo = new RecVehiculo();
 			actualizarVehiculo = false;
 
 		} else {
-			mJefeTaller.insertarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+			mRecepcion.insertarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+			listaRecVehiculos = mRecepcion.findAllVehiculos();
 			vehiculo = new RecVehiculo();
 
 		}
@@ -75,9 +75,9 @@ public class BeanRecVehiculo implements Serializable {
 //			actualizarVehiculo = false;
 //
 //		} else {
-			mJefeTaller.insertarVehiculo(vehiculo, extras, beanSegLogin.getLoginDTO());
+			mRecepcion.insertarVehiculo(vehiculo, extras, beanSegLogin.getLoginDTO());
 			bRecepcion.setVehiculo(vehiculo);
-			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+			listaRecVehiculos = mRecepcion.findAllVehiculos();
 			bRecepcion.setListaVehiculos(listaRecVehiculos);
 			extras= new RecVehiculoExtra();
 			vehiculo = new RecVehiculo();
@@ -88,23 +88,23 @@ public class BeanRecVehiculo implements Serializable {
 	}
 
 	public void actionEliminarVehiculo(int id) throws Exception {
-		vehiculo = mJefeTaller.findVehiculoById(id);
-		mJefeTaller.eliminarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-		listaRecVehiculos = mJefeTaller.findAllVehiculos();
+		vehiculo = mRecepcion.findVehiculoById(id);
+		mRecepcion.eliminarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+		listaRecVehiculos = mRecepcion.findAllVehiculos();
 		vehiculo = new RecVehiculo();
 		JSFUtil.crearMensajeINFO("Vehiculo eliminado.");
 
 	}
 	public RecVehiculo ActionConsultarVehiculoById() throws Exception {
-		if (mJefeTaller.findVehiculoById(idVehiculo) != null) {
-			vehiculo = mJefeTaller.findVehiculoById(idVehiculo);
+		if (mRecepcion.findVehiculoById(idVehiculo) != null) {
+			vehiculo = mRecepcion.findVehiculoById(idVehiculo);
 		}
 
 		return vehiculo;
 	}
 
 	public String actionCargarDetallesVehiculo(int id) throws Exception {
-		vehiculo = mJefeTaller.findVehiculoById(id);
+		vehiculo = mRecepcion.findVehiculoById(id);
 		actualizarVehiculo = true;
 		return "ingresarVehiculo?faces-redirect=true";
 	}

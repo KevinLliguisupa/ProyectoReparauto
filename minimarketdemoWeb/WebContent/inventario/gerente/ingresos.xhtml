@@ -19,7 +19,7 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
-			
+			<p:menuitem value="Productos" icon="pi pi-briefcase" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -43,7 +43,7 @@
 						value="#{beanInvIngresos.idMaterial}">
 						<f:selectItem itemLabel="Seleccione el material..."
 							noSelectionOption="true" />
-						<f:selectItems value="#{beanInvIngresos.listaMateriales}"
+						<f:selectItems value="#{beanInvIngresos.listaMatAux}"
 							var="material" itemLabel="#{material.matNombre}"
 							itemValue="#{material.matId}"></f:selectItems>
 					</p:selectOneMenu>

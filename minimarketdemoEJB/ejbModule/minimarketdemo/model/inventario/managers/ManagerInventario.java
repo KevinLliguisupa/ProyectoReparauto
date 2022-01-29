@@ -31,14 +31,14 @@ import minimarketdemo.model.seguridades.dtos.LoginDTO;
  */
 @Stateless
 @LocalBean
-public class ManagerJefeTaller {
+public class ManagerInventario {
 	@EJB
 	private ManagerDAO mDao;
 	
 	@EJB
 	private ManagerAuditoria mAuditoria;
 	
-	public ManagerJefeTaller() {
+	public ManagerInventario() {
 
 	}
 
@@ -451,6 +451,46 @@ public class ManagerJefeTaller {
 		NewTipoMat.setTipId(TipoMat.getTipId());
 		NewTipoMat.setTipNombre(TipoMat.getTipNombre());
 		mDao.insertar(NewTipoMat);
+	}
+	
+	
+	
+	//Migracion de Managers
+	public List<InvProveedor> findAllProveedores() {
+		List<InvProveedor> lista= mDao.findAll(InvProveedor.class);
+		List<InvProveedor> nueva= new ArrayList<InvProveedor>();
+		for(InvProveedor l: lista) {
+			if(l.getProEstado()) {
+				nueva.add(l);
+			}
+		}
+		return nueva;
+	}
+	
+	public void createProveedores(LoginDTO loginDTO, InvProveedor Proveedor) throws Exception {
+		InvProveedor NewProv = new InvProveedor();
+		NewProv.setProCorreo(Proveedor.getProCorreo());
+		NewProv.setProEstado(true);
+		NewProv.setProId(Proveedor.getProId());
+		NewProv.setProNombre(Proveedor.getProNombre());
+		NewProv.setProTelefono(Proveedor.getProTelefono());
+		mDao.insertar(NewProv);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "createProveedores", "Proveedor ingresado: "+Proveedor.getProNombre());
+	}
+	
+	public InvProveedor findIdProveedores(int id) throws Exception {
+		return (InvProveedor) mDao.findById(InvProveedor.class, id);
+	}
+	
+	public void updateProveedores(LoginDTO loginDTO, InvProveedor Proveedor) throws Exception {
+		mDao.actualizar(Proveedor);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "updateProveedores", "Proveedor actulizado: "+Proveedor.getProId());
+	}
+	
+	public void deleteProveedores(LoginDTO loginDTO ,InvProveedor Proveedor) throws Exception {
+		Proveedor.setProEstado(false);
+		mDao.actualizar(Proveedor);
+		mAuditoria.mostrarLog(loginDTO, getClass(), "deleteProveedores", "Proveedor eliminado: "+Proveedor.getProNombre());
 	}
 }
 

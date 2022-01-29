@@ -22,14 +22,14 @@ import minimarketdemo.model.core.entities.InvSalida;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.core.entities.RecVehiculo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
-import minimarketdemo.model.inventario.managers.ManagerJefeTaller;
+import minimarketdemo.model.inventario.managers.ManagerInventario;
 
 @Named
 @SessionScoped
 public class BeanInvEgresos implements Serializable {
 
 	@EJB
-	private ManagerJefeTaller mJefeTaller;
+	private ManagerInventario mInventario;
 
 	private List<InvSalida> listaSalidas;
 	private List<ThmEmpleado> listaEmpleados;
@@ -38,7 +38,6 @@ public class BeanInvEgresos implements Serializable {
 	private List<InvTipo> listaTipo;
 	private List<InvMaterialSalida> detalleSalida;
 	private List<InvMaterial> listaMateriales;
-
 	private int id_vehiculos;
 	private int id_empleados;
 	private int idTipo;
@@ -61,14 +60,14 @@ public class BeanInvEgresos implements Serializable {
 
 	@PostConstruct
 	public void inicializar() throws ParseException {
-		listaVehiculos = mJefeTaller.findAllVehiculos();
-		listaEmpleados = mJefeTaller.findAllEmpleados();
-		listaSalidas = mJefeTaller.findAllSalidas();
-		
-		listaTipo = mJefeTaller.findAllTipoMaterial();
-		listaMatAux = mJefeTaller.findAllMaterial();
+		listaVehiculos = mInventario.findAllVehiculos();
+		listaEmpleados = mInventario.findAllEmpleados();
+		listaSalidas = mInventario.findAllSalidas();
+		//listaMateriales = mInventario.findAllMaterial();
+		listaMateriales =new ArrayList<InvMaterial>();
+		listaTipo = mInventario.findAllTipoMaterial();
+		listaMatAux = mInventario.findAllMaterial();
 		material = new InvMaterial();
-		listaMateriales = new ArrayList<InvMaterial>();
 		cantidadRetirar = 0;
 		idMaterial = 0;
 		id_vehiculos = 0;
@@ -85,10 +84,10 @@ public class BeanInvEgresos implements Serializable {
 	// Here are all the ACTION methods
 
 	public String actionCargarDetallesRetiro(int id) throws Exception {
-		salida = mJefeTaller.findSalidaById(id);
+		salida = mInventario.findSalidaById(id);
 		//listaMatAux = mJefeTaller.findAllMaterial();
 		//material = new InvMaterial();
-		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
+		detalleSalida = mInventario.finAllDetalleSalidaByCabRetiro(salida);
 		//listaTipo = mJefeTaller.findAllTipoMaterial();
 		//listaMateriales = new ArrayList<InvMaterial>();
 		//cantidadRetirar = 0;
@@ -102,14 +101,14 @@ public class BeanInvEgresos implements Serializable {
 		List<InvSalida> salidasxFecha;
 
 		if (id_vehiculos != 0 && idMaterial != 0) {
-			listaConsulta = mJefeTaller.findSalidasByMaterialVehiculo(idMaterial, id_vehiculos);
+			listaConsulta = mInventario.findSalidasByMaterialVehiculo(idMaterial, id_vehiculos);
 		} else {
 			if (idMaterial != 0)
-				listaConsulta = mJefeTaller.findSalidasByMaterial(idMaterial);
+				listaConsulta = mInventario.findSalidasByMaterial(idMaterial);
 			if (id_vehiculos != 0)
-				listaConsulta = mJefeTaller.findSalidasByVehiculo(id_vehiculos);
+				listaConsulta = mInventario.findSalidasByVehiculo(id_vehiculos);
 		}
-		salidasxFecha = mJefeTaller.findSalidaByFecha(fechaInicio, fechaFin);
+		salidasxFecha = mInventario.findSalidaByFecha(fechaInicio, fechaFin);
 		if (listaConsulta.size() != 0) {
 			for (InvSalida consultas : listaConsulta) {
 				for (InvSalida fechas : salidasxFecha) {
@@ -127,11 +126,11 @@ public class BeanInvEgresos implements Serializable {
 	}
 
 	public List<InvMaterialSalida> actionSeleccionarSalida(int idSalida) throws Exception {
-		return mJefeTaller.findMaterialSalida(idSalida);
+		return mInventario.findMaterialSalida(idSalida);
 	}
 
 	public BigDecimal actioncalcularValorTotalSalida(int idSalida) throws Exception {
-		BigDecimal valorTotal = mJefeTaller.calcularValorTotalSalida(idSalida);
+		BigDecimal valorTotal = mInventario.calcularValorTotalSalida(idSalida);
 		return valorTotal;
 	}
 
@@ -143,14 +142,14 @@ public class BeanInvEgresos implements Serializable {
 
 
 	public void actionListenerClasificarMateriales() {
-		listaMatAux = mJefeTaller.findAllMaterialesByTipo(idTipo);
+		listaMatAux = mInventario.findAllMaterialesByTipo(idTipo);
 	}
 
 	public void actionListenerSeleccinarMaterialRetirar() throws Exception {
 		if (idMaterial != 0) {
 			try {
-				material = mJefeTaller.findMaterialId(idMaterial);
-				mJefeTaller.agregarMaterialRetirar(listaMateriales, material, cantidadRetirar);
+				material = mInventario.findMaterialId(idMaterial);
+				mInventario.agregarMaterialRetirar(listaMateriales, material, cantidadRetirar);
 				cantidadRetirar=0;
 				idMaterial = 0;
 				JSFUtil.crearMensajeINFO("Material seleccionado.");
@@ -167,14 +166,14 @@ public class BeanInvEgresos implements Serializable {
 		
 		if (id_vehiculos != 0 && id_empleados != 0) {
 			try {
-				empleados = mJefeTaller.findEmpleadosById(id_empleados);
-				vehiculos = mJefeTaller.findVehiculosById(id_vehiculos);
-				mJefeTaller.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
+				empleados = mInventario.findEmpleadosById(id_empleados);
+				vehiculos = mInventario.findVehiculosById(id_vehiculos);
+				mInventario.ingresarCabeceraRetiro(beanSegLogin.getLoginDTO(), vehiculos, empleados);
 				id_empleados = 0;
 				id_vehiculos = 0;
 				empleados = new ThmEmpleado();
 				vehiculos = new RecVehiculo();
-				listaSalidas = mJefeTaller.findAllSalidas();
+				listaSalidas = mInventario.findAllSalidas();
 				JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
@@ -185,13 +184,13 @@ public class BeanInvEgresos implements Serializable {
 		}
 		
 		
-				salida=mJefeTaller.findAllSalidas().get(0);
+				salida=mInventario.findAllSalidas().get(0);
 		if (listaMateriales.size() != 0) {
 			try {
-				mJefeTaller.retirarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, salida);
+				mInventario.retirarMaterial(beanSegLogin.getLoginDTO(), listaMateriales, salida);
 				listaMateriales = new ArrayList<InvMaterial>();
-				detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
-				listaMatAux = mJefeTaller.findAllMaterial();
+				detalleSalida = mInventario.finAllDetalleSalidaByCabRetiro(salida);
+				listaMatAux = mInventario.findAllMaterial();
 				material = new InvMaterial();
 				cantidadRetirar = 0;
 				
@@ -206,16 +205,16 @@ public class BeanInvEgresos implements Serializable {
 	}
 
 	public void actionListenerDeleteSeleccionMaterial(InvMaterial material) throws Exception {
-		mJefeTaller.eliminarSeleccionMaterial(listaMateriales, material);
+		mInventario.eliminarSeleccionMaterial(listaMateriales, material);
 	}
 
 	public void actionListenerDatosActualizar(InvMaterial mat) throws Exception {
-		material = mJefeTaller.findMaterialByNameSeleccion(listaMateriales, mat);
+		material = mInventario.findMaterialByNameSeleccion(listaMateriales, mat);
 	}
 
 	public void actionListenerDeleteDetalleSalida(InvMaterialSalida detalle) throws Exception {
-		mJefeTaller.deleteDetalleSalida(beanSegLogin.getLoginDTO(),detalle);
-		detalleSalida = mJefeTaller.finAllDetalleSalidaByCabRetiro(salida);
+		mInventario.deleteDetalleSalida(beanSegLogin.getLoginDTO(),detalle);
+		detalleSalida = mInventario.finAllDetalleSalidaByCabRetiro(salida);
 	}
 
 	// Getters and setters
@@ -363,5 +362,8 @@ public class BeanInvEgresos implements Serializable {
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
 	}
+
+	
+	
 
 }
