@@ -19,7 +19,7 @@
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
 			<p:menuitem value="Nuevo Vehiculo" icon="pi pi-user-plus"
-				action="ingresarVehiculo" />
+				action="nuevoVehiculo" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -34,23 +34,20 @@
 		<h:form>
 			<p:dataTable value="#{beanRecVehiculo.listaRecVehiculos}" var="p"
 				paginator="true" rows="10">
-				
-				
+
+
 				<p:column headerText="OPCIONES">
 					<p:commandButton icon="pi pi-pencil" title="editar" value="Editar"
-						action="#{beanRecVehiculo.actionCargarDetallesVehiculo(p.vehId)}" />
-					<p:commandButton icon="pi pi-times-circle" title="eliminar" value="Eliminar"
-						styleClass="ui-button-danger" update="@form"
+						action="#{beanRecVehiculo.actionCargarDetallesVehiculo(p)}" />
+					<p:commandButton icon="pi pi-times-circle" title="eliminar"
+						value="Eliminar" styleClass="ui-button-danger" update="@form"
 						actionListener="#{beanRecVehiculo.actionEliminarVehiculo(p.vehId)}">
 						<p:confirm header="Confirmación"
 							message="Desea borrar este usuario?" icon="pi pi-info-circle" />
 					</p:commandButton>
 				</p:column>
-				
-				
-				<p:column headerText="ID" style="width:50px">
-					<h:outputText value="#{p.vehId}" />
-				</p:column>
+
+
 				<p:column headerText="Placa" filterBy="#{p.vehPlaca}"
 					filterMatchMode="contains">
 					<h:outputText value="#{p.vehPlaca}" />
@@ -81,12 +78,10 @@
 					filterMatchMode="contains">
 					<h:outputText value="#{p.vehClave}" />
 				</p:column>
-				<p:column headerText="Kilometraje" filterBy="#{p.vehKilometraje}"
-					filterMatchMode="contains">
+				<p:column headerText="Kilometraje">
 					<h:outputText value="#{p.vehKilometraje}" />
 				</p:column>
-				<p:column headerText="N.Combustible"
-					filterBy="#{p.vehNivelCombustible}" filterMatchMode="contains">
+				<p:column headerText="N.Combustible">
 					<h:outputText value="#{p.vehNivelCombustible}" />
 				</p:column>
 			</p:dataTable>

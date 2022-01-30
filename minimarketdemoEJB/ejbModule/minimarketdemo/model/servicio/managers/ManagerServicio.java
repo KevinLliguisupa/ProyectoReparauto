@@ -39,10 +39,6 @@ public class ManagerServicio {
 	}
 
 	public void createServicios(RecServicio servicio) throws Exception {
-		//RecServicio NewServ = new RecServicio();
-		//NewServ.setRecSerId(findAllServicios().size() + 1);
-		//NewServ.setRecSerNombre(Servicio.getRecSerNombre());
-		//NewServ.setRecSerPrecio(Servicio.getRecSerPrecio());
 		servicio.setRecSerEstado(true);
 		mDao.insertar(servicio);
 	}

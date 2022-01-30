@@ -52,7 +52,7 @@ public class BeanInvProveedor implements Serializable {
 	public void actionfindProveedorByID(int id) throws Exception {
 
 		try {
-			proveedor = mGerente.findIdProveedores(id);
+			proveedor = mGerente.findIdProveedor(id);
 			JSFUtil.crearMensajeINFO("Proveedor creado");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());

@@ -27,6 +27,7 @@ public class BeanRecVehiculo implements Serializable {
 	
 	private List<RecVehiculo> listaRecVehiculos;
 	private Boolean actualizarVehiculo;
+	private Boolean recepcion;
 	private RecVehiculo vehiculo;
 	private RecVehiculoExtra extras;
 	private RecVehiculoExtra extrasActualizacion;
@@ -46,46 +47,53 @@ public class BeanRecVehiculo implements Serializable {
 		actualizarVehiculo = false;
 		idVehiculo = 0;
 		extras= new RecVehiculoExtra();
+		recepcion=false;
 		
 	}
 
-	public String actionRegistrarVehiculo() throws Exception {
-
-		if (actualizarVehiculo) {
-			mRecepcion.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mRecepcion.findAllVehiculos();
-			vehiculo = new RecVehiculo();
-			actualizarVehiculo = false;
-
-		} else {
-			mRecepcion.insertarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-			listaRecVehiculos = mRecepcion.findAllVehiculos();
-			vehiculo = new RecVehiculo();
-
-		}
-		return "administrarVehiculos?faces-redirect=true";
-
-	}
-	
-	public String actionRegistarVehiculoRecepcion() throws Exception {
+//	public String actionRegistrarVehiculod() throws Exception {
+//
 //		if (actualizarVehiculo) {
-//			mJefeTaller.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
-//			listaRecVehiculos = mJefeTaller.findAllVehiculos();
+//			mRecepcion.actualizarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+//			listaRecVehiculos = mRecepcion.findAllVehiculos();
 //			vehiculo = new RecVehiculo();
 //			actualizarVehiculo = false;
 //
 //		} else {
-			mRecepcion.insertarVehiculo(vehiculo, extras, beanSegLogin.getLoginDTO());
-			bRecepcion.setVehiculo(vehiculo);
-			listaRecVehiculos = mRecepcion.findAllVehiculos();
-			bRecepcion.setListaVehiculos(listaRecVehiculos);
-			extras= new RecVehiculoExtra();
-			vehiculo = new RecVehiculo();
+//			mRecepcion.insertarVehiculo(vehiculo, beanSegLogin.getLoginDTO());
+//			listaRecVehiculos = mRecepcion.findAllVehiculos();
+//			vehiculo = new RecVehiculo();
+//
+//		}
+//		return "administrarVehiculos?faces-redirect=true";
+//
+//	}
 
-		//}
-			return "recepcion?faces-redirect=true";
+
+	public String actionRegistrarVehiculo() throws Exception {
+		if (actualizarVehiculo) {
+			mRecepcion.actualizarVehiculo(vehiculo, extras,beanSegLogin.getLoginDTO());
+			actualizarVehiculo = false;
+		}else {
+			mRecepcion.insertarVehiculo(vehiculo, extras, beanSegLogin.getLoginDTO());
+			if (recepcion) {
+				bRecepcion.setVehiculo(vehiculo);
+				bRecepcion.setListaVehiculos(listaRecVehiculos);
+				vehiculo = new RecVehiculo();
+				recepcion=false;
+				return "recepcion?faces-redirect=true";
+			}
+
+		}
+		extras= new RecVehiculoExtra();
+		listaRecVehiculos = mRecepcion.findAllVehiculos();
+		vehiculo = new RecVehiculo();
+		return "administrarVehiculos?faces-redirect=true";
 
 	}
+	
+	//administrarVehiculos
+	
 
 	public void actionEliminarVehiculo(int id) throws Exception {
 		vehiculo = mRecepcion.findVehiculoById(id);
@@ -103,12 +111,18 @@ public class BeanRecVehiculo implements Serializable {
 		return vehiculo;
 	}
 
-	public String actionCargarDetallesVehiculo(int id) throws Exception {
-		vehiculo = mRecepcion.findVehiculoById(id);
+	public String actionCargarDetallesVehiculo(RecVehiculo seleccion) throws Exception {
+		vehiculo = seleccion;
+		extras=mRecepcion.findExtrasByVehiculo(vehiculo.getVehId());
 		actualizarVehiculo = true;
-		return "ingresarVehiculo?faces-redirect=true";
+		return "nuevoVehiculo?faces-redirect=true";
 	}
-
+	
+	public String actionCrearVehiculoRecepcion() throws Exception {
+		recepcion = true;
+		return "nuevoVehiculo?faces-redirect=true";
+	}
+	
 	public List<RecVehiculo> getListaRecVehiculos() {
 		return listaRecVehiculos;
 	}

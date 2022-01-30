@@ -60,8 +60,6 @@ public class ManagerRecepcion {
 	}
 
 	public int findNumeroRecepcion() throws Exception {
-		// return mDao.obtenerValorMax(RecRecepcionCabecera.class, "recCabId");
-
 		Query q;
 		String sentenciaSQL;
 		int valorMax;
@@ -136,13 +134,6 @@ public class ManagerRecepcion {
 	
 	//Cotizacion
 	
-//	public List<RecServicio> findAllServicios() {
-//		return mDao.findWhere(RecServicio.class, "o.recSerEstado=true", null);
-//	}
-
-//	public RecServicio findServicioById(int id) throws Exception {
-//		return (RecServicio) mDao.findById(RecServicio.class, id);
-//	}
 
 	public void agregarServiciosSeleccion(List<RecServicio> listaServicios, int idServicio) throws Exception {
 		RecServicio servicio = this.findServicioById(idServicio);
@@ -185,19 +176,12 @@ public class ManagerRecepcion {
 	
 	//Servicios y vehiculos
 	
-//    public List<RecVehiculo> findAllVehiculos(){
-//    	List<RecVehiculo> lista= mDao.findAll(RecVehiculo.class, "vehId",true);
-//    	List<RecVehiculo> listaVehiculo= new ArrayList<RecVehiculo>();
-//    	for(RecVehiculo ve: lista) {
-//    		if(ve.getVehEstado()) {
-//    			listaVehiculo.add(ve);
-//    		}
-//    		
-//    	}
-//    	return listaVehiculo;
-//    }
+
     public RecVehiculo findVehiculoById(int id) throws Exception{
     	return (RecVehiculo) mDao.findById(RecVehiculo.class, id);
+    }
+    public RecVehiculoExtra findExtrasByVehiculo(int id) throws Exception {
+    	return (RecVehiculoExtra) mDao.findWhere(RecVehiculoExtra.class, "veh_id_rec_vehiculos="+id,null).get(0);
     }
     
     public void insertarVehiculo(RecVehiculo vehiculo, LoginDTO loginDto) throws Exception {
@@ -217,8 +201,9 @@ public class ManagerRecepcion {
     	mAuditoria.mostrarLog(loginDto, this.getClass(), "insertarVehiculo", "Registro de extras de Vehiculo de placa"+vehiculo.getVehPlaca());
     }
     
-    public void actualizarVehiculo(RecVehiculo vehiculo, LoginDTO loginDto) throws Exception {
+    public void actualizarVehiculo(RecVehiculo vehiculo, RecVehiculoExtra extras, LoginDTO loginDto) throws Exception {
     	mDao.actualizar(vehiculo);
+    	mDao.actualizar(extras);
     	mAuditoria.mostrarLog(loginDto, getClass(), "actualizarVehiculo", "Actualizadion de Vehiculo de placa"+vehiculo.getVehPlaca());
     }
     public void eliminarVehiculo(RecVehiculo vehiculo, LoginDTO loginDto) throws Exception {
@@ -228,21 +213,7 @@ public class ManagerRecepcion {
     }
     
     //Crud Clientes
-//    public List<RecCliente> findAllClientes(){
-//    	return mDao.findWhere(RecCliente.class, "cli_estado=true", null);
-//    }
-//    public void ingresarCliente(RecCliente ClienteNuevo) throws Exception {
-//    	RecCliente Tmp=new RecCliente();
-//    	Tmp.setCliCedula(ClienteNuevo.getCliCedula());
-//    	Tmp.setCliCelular(ClienteNuevo.getCliCelular());
-//    	Tmp.setCliCorreo(ClienteNuevo.getCliCorreo());
-//    	Tmp.setCliDireccion(ClienteNuevo.getCliDireccion());
-//    	Tmp.setCliNombreApellido(ClienteNuevo.getCliNombreApellido());
-//    	Tmp.setCliTelefono(ClienteNuevo.getCliTelefono());
-//    	Tmp.setCliEstado(true);
-//    	mDao.insertar(Tmp);
-//    	ClienteNuevo=new RecCliente();
-//    }
+
     public void eliminarCliente(RecCliente ClienteEliminado) throws Exception {
     	ClienteEliminado.setCliEstado(false);
     	mDao.actualizar(ClienteEliminado);
