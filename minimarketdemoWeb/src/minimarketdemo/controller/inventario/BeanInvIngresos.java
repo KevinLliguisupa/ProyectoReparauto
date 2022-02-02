@@ -6,13 +6,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletResponse;
+
+
 
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.controller.seguridades.BeanSegLogin;
@@ -22,6 +28,16 @@ import minimarketdemo.model.core.entities.InvMaterialIngreso;
 import minimarketdemo.model.core.entities.InvProveedor;
 import minimarketdemo.model.core.entities.InvTipo;
 import minimarketdemo.model.inventario.managers.ManagerInventario;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import java.util.Map;
+
+
 
 @Named
 @SessionScoped
@@ -126,6 +142,7 @@ public class BeanInvIngresos implements Serializable {
 		BigDecimal valorTotal = mInventario.calcularValorTotalIngreso(idIngreso);
 		return valorTotal;
 	}
+
 
 	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
 		return mInventario.findMaterialIngreso(idIngreso);
@@ -386,4 +403,31 @@ public class BeanInvIngresos implements Serializable {
 		this.nuevoMaterial = nuevoMaterial;
 	}
 
+	public String actionReporte(){
+		Map<String,Object> parametros=new HashMap<String,Object>();
+		/*parametros.put("p_titulo_principal",p_titulo_principal);
+		parametros.put("p_titulo",p_titulo);*/
+		FacesContext context=FacesContext.getCurrentInstance();
+		ServletContext servletContext=(ServletContext)context.getExternalContext().getContext();
+		String ruta=servletContext.getRealPath("inventario/gerente/reporteIngresoProductos.jasper");
+		System.out.println(ruta);
+		HttpServletResponse response=(HttpServletResponse)context.getExternalContext().getResponse();
+		response.addHeader("Content-disposition", "attachment;filename=reporte.pdf");
+		response.setContentType("application/pdf");
+		try {
+		Class.forName("org.postgresql.Driver");
+		Connection connection = null;
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/reparaAuto3","postgres", "root");
+		JasperPrint impresion=JasperFillManager.fillReport(ruta, parametros,connection);
+		JasperExportManager.exportReportToPdfStream(impresion, response.getOutputStream());
+		context.getApplication().getStateManager().saveView ( context ) ;
+		System.out.println("reporte generado.");
+		context.responseComplete();
+		} catch (Exception e) {
+		JSFUtil.crearMensajeERROR(e.getMessage());
+		e.printStackTrace();
+		}
+		return "";
+		}
+	
 }
