@@ -29,7 +29,7 @@ public class BeanAvanceServicio implements Serializable {
 	@EJB
 
 	private ManagerServicio mServicios;
-	
+
 	private List<RecRecepcionCabecera> listaRecepcionCab;
 	private RecRecepcionCabecera recCabecera;
 	private int idRecepcionCab;
@@ -56,11 +56,11 @@ public class BeanAvanceServicio implements Serializable {
 	public void inicializar() throws Exception {
 
 		listaRecepcionCab = mServicios.findAllRecepcionCabecera();
-		listaEmpleados=mServicios.findAllEmpleados();
+		listaEmpleados = mServicios.findAllEmpleados();
 		recCabecera = new RecRecepcionCabecera();
 		idRecepcionCab = 0;
-		idEmpleado=0;
-		otroId=0;
+		idEmpleado = 0;
+		otroId = 0;
 
 		recDetalle = new RecRecepcionDetalle();
 		estadoConcluidoCab = false;
@@ -89,15 +89,15 @@ public class BeanAvanceServicio implements Serializable {
 	}
 
 	// Metodo que cambia de estado al servicio detalle
-	public String estadoServicioConcluido(int idDetalle) throws Exception{
-		
+	public String estadoServicioConcluido(int idDetalle) throws Exception {
+
 		recDetalle = mServicios.findRecepcionDetallerById(idDetalle);
 		if (recDetalle.getRecDetConcluido())
 			return "Finalizado";
 		return "Pendiente";
 	}
 
-	// Metodo que cambia de estado al servicio cabecera - BORRAR 
+	// Metodo que cambia de estado al servicio cabecera - BORRAR
 	public String estadoServicioConcluidoCabecera() throws Exception {
 		if (recCabecera == null) {
 			return "Pendiente";
@@ -123,16 +123,32 @@ public class BeanAvanceServicio implements Serializable {
 		}
 	}
 
+	private void ActualizarEstadoCabecera() throws Exception {
+		try {
+			listaAuxiliar1 = mServicios.findRecDetalleByIdCabecera(idRecepcionCab);
+			listaAuxiliar2 = mServicios.findRecDetalleByEstadoAndId(idRecepcionCab);
+			if (listaAuxiliar2.size() == listaAuxiliar1.size()) {
+				recCabecera.setRecCabTerminado(true);
+				mServicios.actualizarRecCabecera(recCabecera);
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+
+	}
+
 	// Metodo actualizar servicios DETALLE
 
 	public void actionFinalizarRecDetalle(RecRecepcionDetalle detalle) throws Exception {
-		System.out.println(""+detalle.getThmEmpleado().getIdThmEmpleado());
+		System.out.println("" + detalle.getThmEmpleado().getIdThmEmpleado());
 		ThmEmpleado empleado = mServicios.findEmpleadoById(detalle.getThmEmpleado().getIdThmEmpleado());
 		System.out.println(empleado.getSegUsuario().getNombres());
-		
+
 		detalle.setRecDetConcluido(true);
 		detalle.setThmEmpleado(empleado);
 		mServicios.actualizarRecDetalle(detalle);
+		ActualizarEstadoCabecera();
 	}
 
 	// Getters and Setters
@@ -256,7 +272,5 @@ public class BeanAvanceServicio implements Serializable {
 	public void setOtroId(int otroId) {
 		this.otroId = otroId;
 	}
-	
-	
 
 }

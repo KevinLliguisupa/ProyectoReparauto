@@ -9,7 +9,7 @@
 		type="preRenderView"></f:event>
 </f:metadata>
 <h:head>
-	<title>Selección Materiales</title>
+	<title>Salida Material</title>
 </h:head>
 <body>
 	<p:growl>
@@ -57,6 +57,7 @@
 
 			<h:outputText value="Empleado" />
 			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				disabled="#{beanInvEgresos.activo}"
 				value="#{beanInvEgresos.id_empleados}">
 				<f:selectItem itemLabel="Seleccione un empleado..."
 					noSelectionOption="true" />
@@ -67,6 +68,7 @@
 
 			<h:outputText value="Vehiculo" />
 			<p:selectOneMenu filterMatchMode="contains" filter="true"
+				disabled="#{beanInvEgresos.activo}"
 				value="#{beanInvEgresos.id_vehiculos}">
 				<f:selectItem itemLabel="Seleccione un vehiculo..."
 					noSelectionOption="true" />
@@ -88,14 +90,16 @@
 			<p:spinner value="#{beanInvEgresos.cantidadRetirar}" min="1"
 				max="100" />
 
+			<p:commandButton value="Guardar" icon="pi pi-save"
+				actionListener="#{beanInvEgresos.actionListenerRetirarMaterial()}"
+				update="@form:,formDatos1,formDatos12"></p:commandButton>
+
 			<p:commandButton value="Elegir" icon="pi pi-save"
 				actionListener="#{beanInvEgresos.actionListenerSeleccinarMaterialRetirar()}"
 				update="@form:,formDatos1"></p:commandButton>
 
 
-			<p:commandButton value="Guardar" icon="pi pi-save"
-				actionListener="#{beanInvEgresos.actionListenerRetirarMaterial()}"
-				update="@form:,formDatos1,formDatos12"></p:commandButton>
+
 		</p:panelGrid>
 	</h:form>
 
@@ -104,13 +108,13 @@
 
 			<p:column headerText="Opciones">
 
-				
 
-				<p:commandButton id="Actualizar" title="Actualizar" 
+
+				<p:commandButton id="Actualizar" title="Actualizar"
 					value="Actualizar" icon="pi pi-pencil"
 					actionListener="#{beanInvEgresos.actionListenerDatosActualizar(p)}" />
 
-				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true" 
+				<p:overlayPanel for="Actualizar" dynamic="true" showCloseIcon="true"
 					style="width:50%">
 					<p:panel header="Actualizar Material" style=" margin: auto ">
 						<p:panelGrid columns="2">
@@ -155,7 +159,7 @@
 		</p:dataTable>
 	</h:form>
 
-	
+
 	<h:form id="formDatos12">
 
 		<p:dataTable value="#{beanInvEgresos.listaSalidas}" var="p"
@@ -180,8 +184,7 @@
 			</p:column>
 			<p:column headerText="Opciones">
 
-				<p:commandButton icon="pi pi-pencil" title="Detalle"
-					value="Detalle"
+				<p:commandButton icon="pi pi-pencil" title="Detalle" value="Detalle"
 					action="#{beanInvEgresos.actionCargarDetallesRetiro(p.salId)}" />
 			</p:column>
 		</p:dataTable>

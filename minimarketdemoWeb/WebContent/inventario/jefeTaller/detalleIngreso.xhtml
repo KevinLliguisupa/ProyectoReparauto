@@ -65,7 +65,7 @@
 		<p:panelGrid columns="2">
 			<h:outputText value="Proveedor" />
 
-			<p:selectOneMenu filterMatchMode="contains" filter="true"
+			<p:selectOneMenu filterMatchMode="contains" filter="true" disabled="#{beanInvIngresos.activo}"
 				value="#{beanInvIngresos.idProveedor}">
 				<f:selectItem itemLabel="Seleccione un proveedor..."
 					noSelectionOption="true" />
@@ -93,7 +93,7 @@
 
 			<p:commandButton value="Seleccionar" icon="pi pi-save"
 				actionListener="#{beanInvIngresos.actionListenerSeleccionarMaterial()}"
-				update="formDatos1"></p:commandButton>
+				update="@form:,formDatos1"></p:commandButton>
 
 			<p:commandButton value="Guardar" icon="pi pi-save"
 				actionListener="#{beanInvIngresos.actionListenerIngresarMaterial()}"

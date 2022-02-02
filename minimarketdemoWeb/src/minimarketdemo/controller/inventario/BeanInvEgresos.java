@@ -50,6 +50,7 @@ public class BeanInvEgresos implements Serializable {
 	private InvMaterial material;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private Boolean activo;
 
 	@Inject
 	private BeanSegLogin beanSegLogin;
@@ -72,6 +73,7 @@ public class BeanInvEgresos implements Serializable {
 		idMaterial = 0;
 		id_vehiculos = 0;
 		material.setMatId(1);
+		activo=false;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// Fecha de inicio:
@@ -85,12 +87,8 @@ public class BeanInvEgresos implements Serializable {
 
 	public String actionCargarDetallesRetiro(int id) throws Exception {
 		salida = mInventario.findSalidaById(id);
-		//listaMatAux = mJefeTaller.findAllMaterial();
-		//material = new InvMaterial();
 		detalleSalida = mInventario.finAllDetalleSalidaByCabRetiro(salida);
-		//listaTipo = mJefeTaller.findAllTipoMaterial();
-		//listaMateriales = new ArrayList<InvMaterial>();
-		//cantidadRetirar = 0;
+
 		return "maestroRetiro?faces-redirect=true";
 
 	}
@@ -153,6 +151,7 @@ public class BeanInvEgresos implements Serializable {
 				cantidadRetirar=0;
 				idMaterial = 0;
 				JSFUtil.crearMensajeINFO("Material seleccionado.");
+				activo=true;
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
 				e.printStackTrace();
@@ -175,6 +174,7 @@ public class BeanInvEgresos implements Serializable {
 				vehiculos = new RecVehiculo();
 				listaSalidas = mInventario.findAllSalidas();
 				JSFUtil.crearMensajeINFO("Egreso creado correctamente.");
+				activo=false;
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
 				e.printStackTrace();
@@ -361,6 +361,14 @@ public class BeanInvEgresos implements Serializable {
 
 	public void setFechaFin(Date fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
 	}
 
 	
