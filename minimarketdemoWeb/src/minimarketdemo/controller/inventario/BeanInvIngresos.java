@@ -66,6 +66,7 @@ public class BeanInvIngresos implements Serializable {
 	private InvTipo tipo;
 	private Date fechaInicio;
 	private Date fechaFin;
+	private Boolean activo;
 
 	@Inject
 	private BeanSegLogin beanSegLogin;
@@ -90,6 +91,7 @@ public class BeanInvIngresos implements Serializable {
 		tipo = new InvTipo();
 		material.setMatId(1);
 		idProveedor = 0;
+		activo=false;
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// Fecha de inicio:
@@ -143,7 +145,6 @@ public class BeanInvIngresos implements Serializable {
 		return valorTotal;
 	}
 
-
 	public List<InvMaterialIngreso> actionSeleccionarIngreso(int idIngreso) throws Exception {
 		return mInventario.findMaterialIngreso(idIngreso);
 	}
@@ -162,6 +163,7 @@ public class BeanInvIngresos implements Serializable {
 				proveedor = new InvProveedor();
 
 				JSFUtil.crearMensajeINFO("Ingreso creado correctamente. " );
+				activo=false;
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(proveedor + "");
 				e.printStackTrace();
@@ -206,6 +208,7 @@ public class BeanInvIngresos implements Serializable {
 				idMaterial = 0;
 				listaMatAux = mInventario.findAllMaterial();
 				JSFUtil.crearMensajeINFO("Material seleccionado.");
+				activo=true;
 			} catch (Exception e) {
 				JSFUtil.crearMensajeERROR(e.getMessage());
 				e.printStackTrace();
@@ -403,6 +406,7 @@ public class BeanInvIngresos implements Serializable {
 		this.nuevoMaterial = nuevoMaterial;
 	}
 
+
 	public String actionReporte(){
 		Map<String,Object> parametros=new HashMap<String,Object>();
 		/*parametros.put("p_titulo_principal",p_titulo_principal);
@@ -430,4 +434,14 @@ public class BeanInvIngresos implements Serializable {
 		return "";
 		}
 	
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
+	
+
 }

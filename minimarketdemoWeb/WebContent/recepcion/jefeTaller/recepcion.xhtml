@@ -227,14 +227,11 @@
 
 			<div style="text-align: right;">
 
-				<p:commandButton value="GENERAR RECEPCIÓN" icon="pi pi-upload"
-					title="Eliminar"
+				<p:commandButton value="GENERAR RECEPCIÓN" icon="pi pi-upload"  ajax="false"
+					title="generarRecepcion"
 					styleClass="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button-success p-mr-2 p-mb-2"
 					update="@form,:form2,infoCliente"
 					actionListener="#{beanRecepcion.actionListenerCrearRecepcion()}">
-
-					<p:confirm header="Confirmación"
-						message="Desea generar la recepcion?" icon="pi pi-info-circle" />
 				</p:commandButton>
 
 			</div>
@@ -355,12 +352,12 @@
 
 
 
-	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+	<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" 
 		responsive="true" width="350">
 		<p:commandButton value="No" type="button"
-			styleClass="ui-confirmdialog-no ui-button-flat" />
+			styleClass="ui-confirmdialog-no ui-button-flat" ajax="false"/>
 		<p:commandButton value="Sí" type="button"
-			styleClass="ui-confirmdialog-yes" />
+			styleClass="ui-confirmdialog-yes" ajax="false" />
 	</p:confirmDialog>
 
 </body>

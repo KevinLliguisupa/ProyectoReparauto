@@ -120,4 +120,7 @@ public class ManagerServicio {
     public void actualizarRecDetalle(RecRecepcionDetalle detalleUpdate) throws Exception {
     	mDao.actualizar(detalleUpdate);
     }
+    public void actualizarRecCabecera(RecRecepcionCabecera cabecera) throws Exception {
+    	mDao.actualizar(cabecera);
+    }
 }

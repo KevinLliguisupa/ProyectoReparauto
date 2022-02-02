@@ -8,22 +8,17 @@
 	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
 		type="preRenderView"></f:event>
 </f:metadata>
-<h:head></h:head>
+<h:head>
+	<title>Creación Ingresos</title>
+</h:head>
 <body>
+	<p:growl>
+		<p:autoUpdate />
+	</p:growl>
+
 	<h:form>
 		<p:menubar>
-			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
-			<p:menuitem value="Administrar Materiales" icon="pi pi-book"
-				action="materiales" />
-			<p:menuitem value="Compras de Material" icon="pi pi-users"
-				action="detalleIngreso" />
-			<p:menuitem value="Salidas de Material" icon="pi pi-angle-double-up"
-				action="detalleRetiro" />
-			<p:menuitem value="Actualizar Stock" icon="pi pi-users"
-				action="ingresarmaterialexistente" />
-			<p:menuitem value="Administrar Categorias"
-				icon="pi pi-angle-double-up" action="tipomateriales" />
-
+			<p:menuitem value="Regresar" icon="pi pi-home" action="detalleIngreso" />
 
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
@@ -36,6 +31,30 @@
 		</p:menubar>
 		<p:staticMessage severity="info" summary="Módulo de Inventario"></p:staticMessage>
 	</h:form>
-	<div></div>
+
+	
+	<h:form id="formDatos12">
+		<p:dataTable value="#{beanInvIngresos.detalleIngreso}" var="p">
+
+			
+			<p:column headerText="Id">
+				<h:outputText value="#{p.matEntId}" />
+			</p:column>
+			<p:column headerText="Material">
+				<h:outputText value="#{p.invMaterial.matNombre}" />
+			</p:column>
+			<p:column headerText="Precio Compra">
+				<h:outputText value="#{p.matIngPrecioCompra}" />
+			</p:column>
+			<p:column headerText="Cantidad">
+				<h:outputText value="#{p.matIngCantidad}" />
+			</p:column>
+			<p:column headerText="Tipo">
+				<h:outputText value="#{p.invMaterial.invTipo.tipNombre}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+	
 </body>
 </html>
