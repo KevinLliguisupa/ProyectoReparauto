@@ -421,7 +421,7 @@ public class BeanInvIngresos implements Serializable {
 		try {
 		Class.forName("org.postgresql.Driver");
 		Connection connection = null;
-		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/reparaAuto3","postgres", "root");
+		connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/DBReparauto","postgres", "Scorpion246");
 		JasperPrint impresion=JasperFillManager.fillReport(ruta, parametros,connection);
 		JasperExportManager.exportReportToPdfStream(impresion, response.getOutputStream());
 		context.getApplication().getStateManager().saveView ( context ) ;
